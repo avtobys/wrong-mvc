@@ -19,12 +19,14 @@ require '../include/debug.php';
 /* системный автозагрузчик */
 require '../classes/autoload.php';
 
-/* установка переменных среды приложения */
-new Wrong\Start\Env();
-
 /* автозагрузчик Composer */
 file_exists('../vendor/autoload.php') or dd('Автозагрузчик Composer пакетов ../vendor/autoload.php не найден! Выполните: composer install');
 require '../vendor/autoload.php';
+
+/* установка переменных среды приложения */
+new Wrong\Start\Env();
+
+
 
 /* Включается только если система не установлена */
 require '../install/install.php'; 

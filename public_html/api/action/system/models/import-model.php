@@ -12,7 +12,7 @@ if (empty($_FILES) || !preg_match('#\.zip$#', $_FILES['file']['name'])) {
 }
 
 $zip = new ZipArchive;
-$res = $zip->open($_FILES['file']['tmp_name'], ZipArchive::RDONLY);
+$res = $zip->open($_FILES['file']['tmp_name']);
 if (!$res) {
     exit(json_encode(['error' => 'Ошибка открытия архива']));
 }

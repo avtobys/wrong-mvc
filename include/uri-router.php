@@ -147,7 +147,7 @@ if ($arr = Wrong\Models\Pages::all($request, 'request')) { // запросы к 
 // $rx = "#^/(" . implode('|', array_column(Wrong\Database\Controller::all('', 'id', 'my-categories'), 'url')) . ")/([^/]+)$#";
 // if (
 //     preg_match($rx, $request, $matches) &&
-//     ($data_page = Wrong\Database\Controller::find($matches[2], 'url', 'my-pages'))($arr = Wrong\Models\Pages::all('/request-dinamic-model-name', 'request'))
+//     ($data_page = Wrong\Database\Controller::find($matches[2], 'url', 'my-pages')) && ($arr = Wrong\Models\Pages::all('/request-dinamic-model-name', 'request'))
 // ) {
 //     $arr = Wrong\Rights\Group::weightSort($arr);
 //     $arr = array_filter($arr, function ($row) {
