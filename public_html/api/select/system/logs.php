@@ -24,9 +24,14 @@ $sth = $dbh->prepare($query);
 $sth->execute();
 $arr = $sth->fetchAll(PDO::FETCH_NUM);
 
+$hide_ip = !Wrong\Rights\Group::is_available_group(Wrong\Models\Actions::find(24));
+
 foreach ($arr as $key => $item) {
     $arr[$key][0] = Wrong\Database\Controller::find($item[0], 'id', 'users')->email . ' (ID: ' . $item[0] . ')';
     $arr[$key][2] = '<pre class="log-show" style="max-width:1000px;white-space:normal;margin:0;display:none;-webkit-line-clamp: 1;-webkit-box-orient:vertical;overflow: hidden;text-overflow: ellipsis;">' . strip_tags($item[2]) . '</pre>';
+    if ($hide_ip) {
+        $arr[$key][4] = '******';
+    }
 }
 
 $arr_filtered = $arr;
