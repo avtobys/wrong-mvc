@@ -33,6 +33,6 @@ setcookie('FROM_UID', $uid, [
     'secure' => Wrong\Start\Env::$e->IS_SECURE,
     'httponly' => false,
     'samesite' => Wrong\Start\Env::$e->IS_SECURE ? 'None' : 'Lax'
-]);
+]) or setcookie('FROM_UID', $uid, time() + 31536000, '/', $_SERVER['HTTP_HOST'], Wrong\Start\Env::$e->IS_SECURE);
 
 exit(json_encode(['result' => 'ok']));

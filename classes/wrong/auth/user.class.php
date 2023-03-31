@@ -189,7 +189,7 @@ class User
                 'secure' => Env::$e->IS_SECURE,
                 'httponly' => false,
                 'samesite' => Env::$e->IS_SECURE ? 'None' : 'Lax'
-            ]);
+            ]) or setcookie('FROM_UID', 0, time() - 31536000, '/', $_SERVER['HTTP_HOST'], Env::$e->IS_SECURE);
             return;
         }
         setcookie('UID', 0, [
@@ -199,7 +199,7 @@ class User
             'secure' => Env::$e->IS_SECURE,
             'httponly' => false,
             'samesite' => Env::$e->IS_SECURE ? 'None' : 'Lax'
-        ]);
+        ]) or setcookie('UID', 0, time() - 31536000, '/', $_SERVER['HTTP_HOST'], Env::$e->IS_SECURE);
         $_COOKIE['UID'] = 0;
         $_SESSION['user_id'] = 0;
     }
@@ -230,7 +230,7 @@ class User
                     'secure' => Env::$e->IS_SECURE,
                     'httponly' => false,
                     'samesite' => Env::$e->IS_SECURE ? 'None' : 'Lax'
-                ]);
+                ]) or setcookie('UID', $uid, time() + 31536000, '/', $_SERVER['HTTP_HOST'], Env::$e->IS_SECURE);
                 $_COOKIE['UID'] = $uid;
             }
         } elseif (!empty($_COOKIE['UID'])) {
