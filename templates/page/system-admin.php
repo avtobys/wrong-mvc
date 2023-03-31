@@ -17,7 +17,6 @@ ob_clean();
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $row->name ?></title>
-    <meta name="description" content="Унифицированная среда WEB разработки Wrong MVC с визуализацией моделей и автоматизацией действий">
     <link rel="icon" type="image/png" sizes="64x64" href="/assets/system/img/favicon-64.png">
     <?= Wrong\Html\Get::style($_SERVER['DOCUMENT_ROOT'] . '/assets/system/css/system-admin.min.css') ?>
     <?= Wrong\Html\Get::style($_SERVER['DOCUMENT_ROOT'] . '/assets/system/css/main.min.css') ?>

@@ -83,7 +83,7 @@ CREATE TABLE `crontabs` (
 
 LOCK TABLES `crontabs` WRITE;
 /*!40000 ALTER TABLE `crontabs` DISABLE KEYS */;
-INSERT INTO `crontabs` VALUES (1,'/api/action/toggle',1,'* * * * *','POST','[]','{\"id\":\"3\",\"table\":\"groups\"}',2,'2023-03-31 07:38:00','Включает/отключает группу модераторы каждую минуту',1),(2,'/api/action/clean-logs',1,'*/15 * * * *','POST','[]','[]',2,'2023-03-31 07:45:00','Периодическая очистка логов',1),(3,'/api/action/erase-group',1,'0 0 * * *','POST','[]','{\"table\":\"groups\",\"id\":\"5\"}',2,'2023-04-01 00:00:00','Очистка от всех демо моделей раз в сутки',1),(4,'/api/action/anycomment',1,'0 */8 * * *','GET','[]','[]',2,'2023-03-31 08:00:00','Обновление инфы о новых комментариях и запросах в тех поддержку',1);
+INSERT INTO `crontabs` VALUES (1,'/api/action/toggle',1,'* * * * *','POST','[]','{\"id\":\"3\",\"table\":\"groups\"}',2,'2023-03-31 07:44:00','Включает/отключает группу модераторы каждую минуту',1),(2,'/api/action/clean-logs',1,'0 0 */5 * *','POST','[]','[]',2,'2023-04-05 00:00:00','Периодическая очистка логов',1),(3,'/api/action/erase-group',1,'0 0 * * *','POST','[]','{\"table\":\"groups\",\"id\":\"5\"}',2,'2023-04-01 00:00:00','Очистка от всех демо моделей раз в сутки',1),(4,'/api/action/anycomment',1,'0 */8 * * *','GET','[]','[]',2,'2023-03-31 08:00:00','Обновление инфы о новых комментариях и запросах в тех поддержку',1);
 /*!40000 ALTER TABLE `crontabs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -370,4 +370,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-03-31  7:37:32
+-- Dump completed on 2023-03-31  7:44:09
