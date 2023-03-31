@@ -26,7 +26,7 @@
  * 
  *
  * @code
- * git clone закрытое beta тестирование
+ * git clone https://github.com/avtobys/wrong-mvc.git
  * cd wrong-mvc/
  * composer install
  * npm install

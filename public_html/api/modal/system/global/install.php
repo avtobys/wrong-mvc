@@ -27,7 +27,7 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
                         <li>nodejs >= 16 (если нужна сборка фронтендов)</li>
                     </ul>
                     <code class="d-flex flex-column mt-3">
-                        <kbd class="d-flex justify-content-start text-nowrap overflow-auto"><span class="text-muted mr-1">$</span><span class="copy-text">git clone закрытое beta тестирование</span><a class="text-muted ml-auto" href="#"><i class="fa fa-copy" aria-hidden="true"></i></a></kbd>
+                        <kbd class="d-flex justify-content-start text-nowrap overflow-auto"><span class="text-muted mr-1">$</span><span class="copy-text">git clone https://github.com/avtobys/wrong-mvc.git</span><a class="text-muted ml-auto" href="#"><i class="fa fa-copy" aria-hidden="true"></i></a></kbd>
                         <kbd class="d-flex justify-content-start text-nowrap overflow-auto mt-1"><span class="text-muted mr-1">$</span><span class="copy-text">cd wrong-mvc/</span><a class="text-muted ml-auto" href="#"><i class="fa fa-copy" aria-hidden="true"></i></a></kbd>
                         <kbd class="d-flex justify-content-start text-nowrap overflow-auto mt-1"><span class="text-muted mr-1">$</span><span class="copy-text">composer install</span><a class="text-muted ml-auto" href="#"><i class="fa fa-copy" aria-hidden="true"></i></a></kbd>
                         <kbd class="d-flex justify-content-start text-nowrap overflow-auto mt-1"><span class="text-muted mr-1">$</span><span class="copy-text">npm install</span><a class="text-muted ml-auto" href="#"><i class="fa fa-copy" aria-hidden="true"></i></a></kbd>
