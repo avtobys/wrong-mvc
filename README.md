@@ -1,4 +1,4 @@
-# README
+# Wrong MVC - система для WEB разработки
 
 [Документация по установке и использованию wrong-mvc](https://wrong-mvc.com/documentation)
 
