@@ -14,14 +14,11 @@ set_time_limit(90);
 /* отладочные функции */
 require '../include/debug.php';
 
-/* системный автозагрузчик */
-require '../classes/autoload.php';
+/* автозагрузчик */
+require '../vendor/autoload.php';
 
 /* установка переменных среды приложения */
 new Wrong\Start\Env();
-
-/* автозагрузчик Composer */
-require '../vendor/autoload.php';
 
 $dbh = Wrong\Database\Connect::start();
 try {

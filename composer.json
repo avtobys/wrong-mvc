@@ -3,5 +3,10 @@
         "mtdowling/cron-expression": "^1.2",
         "matthiasmullie/minify": "^1.3",
         "phpmailer/phpmailer": "^6.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Wrong\\": "classes/system"
+        }
     }
 }
