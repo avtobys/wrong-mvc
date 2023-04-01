@@ -21,3 +21,8 @@ http_response_code(403);
         <a class="mt-3" href="/?main"><?= $_SERVER['HTTP_HOST'] ?></a>
     </div>
 </main>
+<script>
+    setTimeout(() => {
+        _modal("#sign-in");
+    }, 2000);
+</script>

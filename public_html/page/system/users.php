@@ -57,7 +57,7 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
             errorToast(response.error);
             return;
         }
-        location.href = '/';
+        $.getScript('/api/action/stackjs');
     }
 
     function toggledApi(response) {

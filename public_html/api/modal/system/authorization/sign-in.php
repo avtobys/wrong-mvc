@@ -87,7 +87,7 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
                         $("#<?= $basename ?> [name='password']").parent().after('<div class="invalid-feedback">Ошибка авторизации</div>');
                         $("#<?= $basename ?> [name='password']").parent().next(".invalid-feedback").fadeIn();
                     } else if (response.result == 'ok') {
-                        location.reload();
+                        $.getScript('/api/action/stackjs');
                         $('body').hide();
                         scrollTo(0, 0);
                     } else {

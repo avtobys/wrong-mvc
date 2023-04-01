@@ -73,7 +73,12 @@ if (preg_match('#^/api/(modal|action|select)/[a-z0-9\-]+#', $request, $matches))
 
 if (isset($_GET['FROM_UID'])) { // переадресация на главную и сброс "гостевой" сессии
     !empty($_COOKIE['FROM_UID']) && Wrong\Auth\User::session_reset();
-    header("Location: /");
+    $user = new Wrong\Auth\User(Wrong\Auth\User::session());
+    if (Wrong\Rights\Group::is_available_group(Wrong\Models\Pages::find('/wrong', 'request'))) {
+        header("Location: /wrong");
+    } else {
+        header("Location: /");
+    }
     exit;
 }
 
@@ -95,7 +100,12 @@ if (preg_match('#^/email-confirm/([0-9]+)/([a-z0-9]+)#i', $request, $matches) &&
     header("X-Robots-Tag: noindex");
     Wrong\Task\stackJS::add('history.pushState(null, null, "/");setTimeout(()=>{successToast("Почта успешно подтверждена");},100)', 0, 'email-confirm');
     $user->set_confirm(1);
-    $request = '/';
+    if (Wrong\Rights\Group::is_available_group(Wrong\Models\Pages::find('/wrong', 'request'))) {
+        header("Location: /wrong");
+    } else {
+        header("Location: /");
+    }
+    exit;
 }
 
 if (Wrong\Start\Env::$e->EMAIL_CONFIRMATION && $user->id && !$user->email_confirmed) { // окно подтверждения email

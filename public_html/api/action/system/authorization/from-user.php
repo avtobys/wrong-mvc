@@ -35,4 +35,10 @@ setcookie('FROM_UID', $uid, [
     'samesite' => Wrong\Start\Env::$e->IS_SECURE ? 'None' : 'Lax'
 ]) or setcookie('FROM_UID', $uid, time() + 31536000, '/', $_SERVER['HTTP_HOST'], Wrong\Start\Env::$e->IS_SECURE);
 
+if (Wrong\Rights\Group::is_available_group(Wrong\Models\Pages::find('/wrong', 'request'), $row->id)) {
+    Wrong\Task\stackJS::add('location.href="/wrong";', 0, 'location');
+} else {
+    Wrong\Task\stackJS::add('location.href="/";', 0, 'location');
+}
+
 exit(json_encode(['result' => 'ok']));

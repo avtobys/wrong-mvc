@@ -33,6 +33,10 @@ if (!$user->act) {
 }
 
 if (Wrong\Auth\User::session($user->id)) {
+    if (Wrong\Rights\Group::is_available_group(Wrong\Models\Pages::find('/wrong', 'request'), $user->id)) {
+        Wrong\Task\stackJS::add('location.href="/wrong";', 0, 'location');
+    } else {
+        Wrong\Task\stackJS::add('location.reload();', 0, 'location');
+    }
     exit(json_encode(['result' => 'ok']));
 }
-

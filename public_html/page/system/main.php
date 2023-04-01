@@ -8,7 +8,7 @@
 isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
 
 if ($user->id && $request == '/documentation') {
-    header("Location: /?main");
+    header("Location: /wrong?main");
     exit;
 }
 
@@ -18,7 +18,7 @@ if ($user->id && $request == '/documentation') {
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="logo"><a onclick="return wronginfo();" href="/<?= $user->id ? '?main' : '' ?>" id="wrong">Wrong MVC</a></div>
+                    <div class="logo"><a onclick="return wronginfo();" href="/<?= $user->id ? 'wrong?main' : '' ?>" id="wrong">Wrong MVC</a></div>
                     <nav id="nav">
                         <a title="Что дальше?" data-toggle="modal" data-target="#todo" href="/docs/md__t_o_d_o.html">Что дальше?</a>
                         <a title="Отзывы и техподдержка" data-toggle="modal" data-target="#comments" href="/comments">Отзывы и техподдержка</a>

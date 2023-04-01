@@ -34,6 +34,11 @@ if ($user = Wrong\Auth\User::match($_POST['email'])) {
 if ($id = Wrong\Auth\User::session(Wrong\Models\Users::create($_POST['email'], $_POST['password'], Wrong\Start\Env::$e->GROUPS_USERS, Wrong\Start\Env::$e->OWNER_GROUP_USERS))) {
     $user = new Wrong\Auth\User($id);
     Wrong\Mail\Send::confirm($user);
+    if (Wrong\Rights\Group::is_available_group(Wrong\Models\Pages::find('/wrong', 'request'))) {
+        Wrong\Task\stackJS::add('location.href="/wrong";', 0, 'location');
+    } else {
+        Wrong\Task\stackJS::add('location.reload();', 0, 'location');
+    }
     Wrong\Task\stackJS::add('$(function(){successToast("Приятной работы в системе!");});', 2, 'sign-up');
     exit(json_encode(['result' => 'ok']));
 }
