@@ -315,8 +315,13 @@ class Group
      */
     public static function delete_all_owner_models($id)
     {
+        global $user;
         $tables = ['actions', 'modals', 'selects', 'templates', 'pages', 'users', 'groups', 'crontabs'];
-        $headers = ['Cookie: ' . session_name() . '=' . session_id()];
+        if (Env::$e->API && $user->api_act && $user->x_auth_token) {
+            $headers = ['X-Auth-Token: ' . $user->x_auth_token];
+        } else {
+            $headers = ['Cookie: ' . session_name() . '=' . session_id()];
+        }
         foreach ($tables as $table) {
             foreach (Controller::all($id, 'owner_group', $table) as $row) {
                 $data = http_build_query(['table' => $table, 'id' => $row->id, 'CSRF' => Env::$e->CSRF]);
@@ -351,7 +356,8 @@ class Group
      * 
      * @return int Количество моделей, в группах доступа которых есть данный идентификатор.
      */
-    public static function count_all_available_models($id) {
+    public static function count_all_available_models($id)
+    {
         global $dbh;
         $tables = ['actions', 'modals', 'selects', 'templates', 'pages', 'users'];
         $count = 0;

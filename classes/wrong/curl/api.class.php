@@ -31,8 +31,6 @@ class API
     public static function req($request, $method = 'GET', $data = '', $headers = [], $timeout = 0)
     {
 
-        $curl = curl_init();
-
         switch (Env::$e->SERVER_PORT) {
             case 80:
                 $CURLOPT_URL = 'http://' . Env::$e->SERVER_ADDR . $request;
@@ -45,6 +43,7 @@ class API
                 break;
         }
 
+        $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $CURLOPT_URL,
             CURLOPT_HEADER => false,
@@ -57,7 +56,7 @@ class API
             CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_CUSTOMREQUEST => $method,
             CURLOPT_POSTFIELDS => $data,
-            CURLOPT_HTTPHEADER => array_merge(['Host: ' . Env::$e->HTTP_HOST], $headers),
+            CURLOPT_HTTPHEADER => array_merge(['Host: ' . Env::$e->HTTP_HOST], $headers)
         ));
 
         $response = curl_exec($curl);
