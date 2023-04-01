@@ -2,18 +2,14 @@
 
 /**
  * @file
- * @brief обработчик
+ * @brief обработчик выполнения cron задачи по кнокпе из таблицы
  */
 
 isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
 
 header("Content-type: application/json");
 
-array_walk_recursive($_POST, function (&$item) {
-    $item = trim(htmlspecialchars($item, ENT_QUOTES));
-});
-
-if (!($row = Wrong\Database\Controller::find($_POST['id'], 'id', $_POST['table']))) {
+if (!($row = Wrong\Models\Crontabs::find($_POST['id']))) {
     exit(json_encode(['error' => 'Ошибка']));
 }
 

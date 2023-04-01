@@ -24,13 +24,11 @@ require '../vendor/autoload.php';
 /* установка переменных среды приложения */
 new Wrong\Start\Env();
 
-
 /* Включается только если система не установлена */
 require '../install/install.php'; 
 
 /* авторизация и сессии, подключение к бд */
 require '../include/session.php';
-
 
 /* Маршрутизатор. uri контроллер, который отвечает за маршрутизацию запроса к соответствующей модели. */
 require '../include/uri-router.php';

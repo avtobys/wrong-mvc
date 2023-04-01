@@ -31,9 +31,8 @@ class Cron
         $dbh = Connect::start();
         $sth = $dbh->query("SELECT * FROM `crontabs` WHERE `run_at` BETWEEN NOW() - INTERVAL 1 YEAR AND NOW() AND `act` = 1");
         while ($row = $sth->fetch()) {
-            self::execute($row);
+            API::req('/cron.php?' . mt_rand(), 'POST', "id=$row->id", ['X-Auth-Token: ' . Env::$e->SYSTEM_SECRET_KEY], 0.001);
         }
-
         self::set_run_at();
         $sth = null;
         $dbh = null;

@@ -51,6 +51,7 @@ function ld(...$vars)
 {
     $filename = $_SERVER['DOCUMENT_ROOT'] . '/../temp/ld';
     if (empty($vars) || $vars[0] == 'rm') {
+        header("Content-Type: text/plain; charset=utf-8");
         echo file_get_contents($filename);
         if ($vars[0] == 'rm') {
             unlink($filename);
@@ -62,11 +63,12 @@ function ld(...$vars)
     }
     $str = '';
     foreach ($vars as $v) {
-        $str .= '<pre style="display:block;font-size:12px;color:#dcdcaa;background:#1e1e1e;line-height:16px;padding:10px;font-family:monospace;margin:8px 0;margin-top:50px;soverflow:auto;position:relative;">';
-        $str .= var_export($v, true);
-        $str .= '<pre style="display:inline-block;font-size:9px;color:#000000;background:rgba(255, 255, 255, 0.6);padding:2px;font-family:monospace;margin:0;overflow:auto;position:absolute;top:0;right:0;">' . (date('r')) . '; exec time: ' . round((microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']), 5) . '</pre>';
-        $str .= '</pre>';
+        $str .= "---------- ";
+        $str .= (date('r')) . '; exec time: ' . round((microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']), 5);
+        $str .= " ----------\n\n";
+        $str .= var_export($v, true) . "\n\n";
     }
+    $str .= "\n\n*************************************************************************\n\n\n\n";
 
     $file = new \SplFileObject($filename, 'a+b');
     $file->flock(LOCK_EX);

@@ -24,7 +24,7 @@ class API
      * @param string $method Используемый HTTP-метод.
      * @param string $data urlencode данные для отправки на сервер.
      * @param headers массив заголовков для отправки с запросом
-     * @param int $timeout таймаут выполнения
+     * @param float $timeout таймаут выполнения в секундах, допускается использование дробных чисел 0.001 если запросу требуется отвалиться сразу же, не дожидаясь ответа
      * 
      * @return object|string Ответ на запрос.
      */
@@ -50,7 +50,7 @@ class API
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => $timeout,
+            CURLOPT_TIMEOUT_MS => $timeout * 1000,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_SSL_VERIFYPEER => false,
@@ -72,7 +72,7 @@ class API
      * @param string $method Используемый HTTP-метод.
      * @param string $data urlencode данные для отправки на сервер.
      * @param headers массив заголовков для отправки с запросом
-     * @param int $timeout таймаут выполнения
+     * @param float $timeout таймаут выполнения в секундах, допускается использование дробных чисел 0.001 если запросу требуется отвалиться сразу же, не дожидаясь ответа
      * 
      * @return object|string Ответ на запрос.
      */
@@ -87,7 +87,7 @@ class API
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => $timeout,
+            CURLOPT_TIMEOUT_MS => $timeout * 1000,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_SSL_VERIFYPEER => false,

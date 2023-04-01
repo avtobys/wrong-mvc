@@ -30,9 +30,10 @@ class Env
         foreach (parse_ini_file(self::PATH) as $prop => $value) {
             $this->$prop = $value;
         }
-        $this->IP         = $this->ip();
-        $this->IS_SECURE  = $this->is_secure();
-        self::$e          = $this;
+        $this->IP                 = $this->ip();
+        $this->IS_SECURE          = $this->is_secure();
+        $this->SYSTEM_SECRET_KEY  = md5($this->DB_PASSWORD . $this->DB_DATABASE . $this->HTTP_HOST . __FILE__);
+        self::$e                  = $this;
     }
 
     /**
