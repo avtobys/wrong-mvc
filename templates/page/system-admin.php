@@ -28,8 +28,8 @@ ob_clean();
 
 <body>
     <nav id="admin-navbar" class="navbar navbar-expand-lg navbar-dark fixed-top p-0 small" style="background:#3B4346 url(/assets/system/img/bg02.jpg);">
-        <a title="Установка, документация" class="btn btn-secondary rounded-circle p-0 mx-2 overflow-hidden" href="/wrong?main"><img style="height:25px;" src="/assets/system/img/tux.jpg" alt="."></a>
-        <a id="main-link" class="text-gray-500 mr-auto text-decoration-none font-weight-bold d-inline-block d-lg-none" href="/wrong?main">Wrong MVC</a>
+        <a title="Установка, документация" class="btn btn-secondary rounded-circle p-0 mx-2 overflow-hidden" href="/system?main"><img style="height:25px;" src="/assets/system/img/tux.jpg" alt="."></a>
+        <a id="main-link" class="text-gray-500 mr-auto text-decoration-none font-weight-bold d-inline-block d-lg-none" href="/system?main">Wrong MVC</a>
         <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
