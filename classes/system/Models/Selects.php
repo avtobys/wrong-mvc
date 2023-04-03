@@ -87,30 +87,30 @@ class Selects extends Controller
         if (in_array($table, ['actions', 'modals', 'selects', 'templates', 'pages', 'crontabs'])) {
             if ($table == 'crontabs') {
                 foreach ($arr as $key => $row) {
-                    $arr[$key][] = '<a title="Выполнить задачу сейчас" data-id="' . $row[0] . '" data-table="' . $table . '" data-copy="true" data-callback="callbackAction" data-action="' . Actions::name(46) . '" data-confirm="true" data-header="Выполнить сейчас <b>ID ' . $row[0] . '</b>?" data-body="Выполнить задачу <b>ID ' . $row[0] . '</b> сейчас?" class="d-block text-center editable-act" href="#"><i class="fa fa-play"></i></a>';
+                    $arr[$key][] = '<a title="Выполнить задачу сейчас" data-id="' . $row[0] . '" data-table="' . $table . '" data-copy="true" data-precallback="precallbackShedule" data-callback="callbackAction" data-action="' . Actions::name(46) . '" data-confirm="true" data-header="Выполнить сейчас <b>ID ' . $row[0] . '</b>?" data-body="Выполнить задачу <b>ID ' . $row[0] . '</b> сейчас? Задача будет выполнена в одном потоке, вне зависимости от настроек потоков." class="d-block text-center editable-act px-1" href="#"><i class="fa fa-play"></i></a>';
                 }
             }
             foreach ($arr as $key => $row) {
-                $arr[$key][] = '<a title="Копировать модель" data-id="' . $row[0] . '" data-table="' . $table . '" data-copy="true" data-callback="callbackAction" data-action="' . Actions::name(37) . '" data-confirm="true" data-header="Копировать <b>ID ' . $row[0] . '</b>?" data-body="Копировать модель <b>ID ' . $row[0] . '</b> и добавить копию?" class="d-block text-center editable-act" href="#"><i class="fa fa-copy"></i></a>';
-                $arr[$key][] = '<a title="Экспорт модели" data-id="' . $row[0] . '" data-table="' . $table . '" data-action="' . Actions::name(37) . '" data-confirm="false" data-header="Экспорт <b>ID ' . $row[0] . '</b>?" data-body="Экспортировать модель <b>ID ' . $row[0] . '</b>?" data-response="script" class="d-block text-center editable-act" href="#"><i class="fa fa-download"></i></a>';
+                $arr[$key][] = '<a title="Копировать модель" data-id="' . $row[0] . '" data-table="' . $table . '" data-copy="true" data-callback="callbackAction" data-action="' . Actions::name(37) . '" data-confirm="true" data-header="Копировать <b>ID ' . $row[0] . '</b>?" data-body="Копировать модель <b>ID ' . $row[0] . '</b> и добавить копию?" class="d-block text-center editable-act px-1" href="#"><i class="fa fa-copy"></i></a>';
+                $arr[$key][] = '<a title="Экспорт модели" data-id="' . $row[0] . '" data-table="' . $table . '" data-action="' . Actions::name(37) . '" data-confirm="false" data-header="Экспорт <b>ID ' . $row[0] . '</b>?" data-body="Экспортировать модель <b>ID ' . $row[0] . '</b>?" data-response="script" class="d-block text-center editable-act px-1" href="#"><i class="fa fa-download"></i></a>';
             }
         }
 
         if ($table == 'groups') {
             foreach ($arr as $key => $row) {
                 if ($key_column && $arr[$key][$key_column] == 1) {
-                    $arr[$key][] = '<a title="Очистить от моделей" onclick="errorToast(\'Системный функционал удалять нельзя!\');setTimeout(()=>{$(\'.editable\').removeClass(\'editable\');},100);return false;" class="text-danger d-block text-center editable-act" href="#"><i class="fa fa-eraser"></i></a>';
+                    $arr[$key][] = '<a title="Очистить от моделей" onclick="errorToast(\'Системный функционал удалять нельзя!\');setTimeout(()=>{$(\'.editable\').removeClass(\'editable\');},100);return false;" class="text-danger d-block text-center editable-act px-1" href="#"><i class="fa fa-eraser"></i></a>';
                 } else {
-                    $arr[$key][] = '<a title="Очистить от моделей" data-id="' . $row[0] . '" data-table="' . $table . '" data-action="' . Actions::name(36) . '" data-confirm="true" data-header="Очистить <b>ID ' . $row[0] . '</b>?" data-body="Очистить <b>ID ' . $row[0] . '</b> от всех принадлежащих группе моделей? ' . ($table == 'groups' ? '<b>Внимание!</b> Все модели, файлы, группы, пользователи и функционал принадлежащий данной группе будут удалены!' : '') . '" data-callback="afterRemoved" class="text-danger d-block text-center editable-act" href="#"><i class="fa fa-eraser"></i></a>';
+                    $arr[$key][] = '<a title="Очистить от моделей" data-id="' . $row[0] . '" data-table="' . $table . '" data-action="' . Actions::name(36) . '" data-confirm="true" data-header="Очистить <b>ID ' . $row[0] . '</b>?" data-body="Очистить <b>ID ' . $row[0] . '</b> от всех принадлежащих группе моделей? ' . ($table == 'groups' ? '<b>Внимание!</b> Все модели, файлы, группы, пользователи и функционал принадлежащий данной группе будут удалены!' : '') . '" data-callback="afterRemoved" class="text-danger d-block text-center editable-act px-1" href="#"><i class="fa fa-eraser"></i></a>';
                 }
             }
         }
 
         foreach ($arr as $key => $row) {
             if ($key_column && $arr[$key][$key_column] == 1) {
-                $arr[$key][] = '<a title="Удалить" onclick="errorToast(\'Системный функционал удалять нельзя!\');setTimeout(()=>{$(\'.editable\').removeClass(\'editable\');},100);return false;" class="text-danger d-block text-center editable-act" href="#"><i class="fa fa-trash"></i></a>';
+                $arr[$key][] = '<a title="Удалить" onclick="errorToast(\'Системный функционал удалять нельзя!\');setTimeout(()=>{$(\'.editable\').removeClass(\'editable\');},100);return false;" class="text-danger d-block text-center editable-act px-1" href="#"><i class="fa fa-trash"></i></a>';
             } else {
-                $arr[$key][] = '<a title="Удалить" data-id="' . $row[0] . '" data-table="' . $table . '" data-action="' . Actions::name(9) . '" data-confirm="true" data-header="Удалить <b>ID ' . $row[0] . '</b>?" data-body="Удалить <b>ID ' . $row[0] . '</b> навсегда из системы? ' . ($table == 'groups' ? '<b>Внимание!</b> Все модели, файлы, группы, пользователи и функционал принадлежащий данной группе будут тоже удалены!' : '') . '" data-callback="afterRemoved" class="text-danger d-block text-center editable-act" href="#"><i class="fa fa-trash"></i></a>';
+                $arr[$key][] = '<a title="Удалить" data-id="' . $row[0] . '" data-table="' . $table . '" data-action="' . Actions::name(9) . '" data-confirm="true" data-header="Удалить <b>ID ' . $row[0] . '</b>?" data-body="Удалить <b>ID ' . $row[0] . '</b> навсегда из системы? ' . ($table == 'groups' ? '<b>Внимание!</b> Все модели, файлы, группы, пользователи и функционал принадлежащий данной группе будут тоже удалены!' : '') . '" data-callback="afterRemoved" class="text-danger d-block text-center editable-act px-1" href="#"><i class="fa fa-trash"></i></a>';
             }
         }
 
@@ -149,7 +149,7 @@ class Selects extends Controller
             foreach ($arr as $key => $item) {
                 $data_system = $item[$key_owner] == 1 ? 'onclick="$(this).data(\'confirm\', $(this).prev().is(\':checked\'));" data-confirm="false" data-header="Предупреждение" data-body="Владелец Система. Отключение системного функционала может привести к нежелательным последствиям! Отключить всё равно?"' : '';
                 $arr[$key][$key_column] = '<input class="tgl tgl-flip" id="tgl-' . $item[0] . '" type="checkbox" ' . ($item[$key_column] ? 'checked' : '') . '>
-                    <label data-owner="' . intval(in_array($item[$key_owner], $user->groups)) . '" data-action="' . Actions::name(6) . '" ' . $data_system . ' data-table="' . $table . '" data-id="' . $item[0] . '" data-callback="toggled" class="tgl-btn mx-auto" data-tg-off="Выкл" data-tg-on="Вкл" for="tgl-' . $item[0] . '"></label>';
+                    <label title="' . ($item[$key_column] ? 'Выключить' : 'Включить') . '" data-owner="' . intval(in_array($item[$key_owner], $user->groups)) . '" data-action="' . Actions::name(6) . '" ' . $data_system . ' data-table="' . $table . '" data-id="' . $item[0] . '" data-callback="toggled" class="tgl-btn mx-auto" data-tg-off="Выкл" data-tg-on="Вкл" for="tgl-' . $item[0] . '"></label>';
             }
         }
 
@@ -169,13 +169,13 @@ class Selects extends Controller
 
         if ($key_column = array_search('file', $columns)) {
             foreach ($arr as $key => $item) {
-                $arr[$key][$key_column] = '<div class="edit-wrapper editable-act" data-id="' . $item[0] . '" data-target="#edit-file" data-toggle="modal" data-table="' . $table . '">' . $item[$key_column] . '<i class="fa fa-edit"></i></div>';
+                $arr[$key][$key_column] = '<div title="' . $item[$key_column] . '" class="edit-wrapper editable-act" data-id="' . $item[0] . '" data-target="#edit-file" data-toggle="modal" data-table="' . $table . '">' . $item[$key_column] . '<i class="fa fa-edit"></i></div>';
             }
         }
 
         if (($key_column = array_search('request', $columns)) && $table != 'users') {
             foreach ($arr as $key => $item) {
-                $arr[$key][$key_column] = '<div class="edit-wrapper edit-wrapper-text editable-act" data-id="' . $item[0] . '" data-target="#edit-request" data-toggle="modal" data-table="' . $table . '">' . $item[$key_column] . '<i class="fa fa-edit"></i></div>';
+                $arr[$key][$key_column] = '<div title="' . $item[$key_column] . '" class="edit-wrapper edit-wrapper-text editable-act" data-id="' . $item[0] . '" data-target="#edit-request" data-toggle="modal" data-table="' . $table . '">' . $item[$key_column] . '<i class="fa fa-edit"></i></div>';
             }
         }
 
@@ -247,7 +247,7 @@ class Selects extends Controller
         if (($key_column = array_search('logs', $columns))) {
             foreach ($arr as $key => $item) {
                 $arr[$key][$key_column] = '<input class="tgl tgl-flip" id="tgl-log-' . $item[0] . '" type="checkbox" ' . ($item[$key_column] ? 'checked' : '') . '>
-                    <label data-action="' . Actions::name(22) . '" data-id="' . $item[0] . '" data-callback="toggledLogs" class="tgl-btn mx-auto" data-tg-off="Выкл" data-tg-on="Вкл" for="tgl-log-' . $item[0] . '"></label>';
+                    <label title="' . ($item[$key_column] ? 'Выключить' : 'Включить') . '" data-action="' . Actions::name(22) . '" data-id="' . $item[0] . '" data-callback="toggledLogs" class="tgl-btn mx-auto" data-tg-off="Выкл" data-tg-on="Вкл" for="tgl-log-' . $item[0] . '"></label>';
             }
         }
 
@@ -255,7 +255,7 @@ class Selects extends Controller
             $key_column = array_search('api_act', $columns);
             foreach ($arr as $key => $item) {
                 $arr[$key][$key_column] = '<input class="tgl tgl-flip" id="tgl-api-' . $item[0] . '" type="checkbox" ' . ($item[$key_column] ? 'checked' : '') . '>
-                        <label data-action="' . Actions::name(28) . '" data-id="' . $item[0] . '" data-callback="toggledApi" class="tgl-btn mx-auto" data-tg-off="Выкл" data-tg-on="Вкл" for="tgl-log-' . $item[0] . '"></label>';
+                        <label title="' . ($item[$key_column] ? 'Выключить' : 'Включить') . '" data-action="' . Actions::name(28) . '" data-id="' . $item[0] . '" data-callback="toggledApi" class="tgl-btn mx-auto" data-tg-off="Выкл" data-tg-on="Вкл" for="tgl-log-' . $item[0] . '"></label>';
             }
 
             $key_column = array_search('id', $columns);
@@ -279,7 +279,7 @@ class Selects extends Controller
                     $shedules[] = $cron->getNextRunDate(null, $i)->format('Y-m-d H:i:s');
                 }
 
-                $arr[$key][$key_column] = '<div data-placement="left" title="<small style=\'line-height:1;\'>' . implode("<br>", $shedules) . '</small>">' . $shedules[0] . '</div>';
+                $arr[$key][$key_column] = '<div data-placement="left" title="<div class=\'text-left font-weight-bold\'>Расписание:</div><small style=\'line-height:1;\'>' . implode("<br>", $shedules) . '</small>">' . substr($shedules[0], 0, -3) . '</div>';
             }
 
             $key_column = array_search('user_id', $columns);

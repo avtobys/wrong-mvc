@@ -145,6 +145,12 @@ if (!Wrong\Rights\Group::is_available_group(Wrong\Models\Actions::find(25))) { /
                             </div>
                             <div class="bg-light-info border mt-2 px-2 py-1 rounded">
                                 <div class="custom-control custom-checkbox small">
+                                    <input type="checkbox" name="CRON_CLI" class="custom-control-input" id="CRON_CLI" <?= Wrong\Database\Controller::find('CRON_CLI', 'name', 'settings')->value ? 'checked' : '' ?>>
+                                    <label class="custom-control-label" for="CRON_CLI"><?= Wrong\Database\Controller::find('CRON_CLI', 'name', 'settings')->description ?></label>
+                                </div>
+                            </div>
+                            <div class="bg-light-info border mt-2 px-2 py-1 rounded">
+                                <div class="custom-control custom-checkbox small">
                                     <input type="checkbox" name="SUBORDINATE_MODELS" class="custom-control-input" id="SUBORDINATE_MODELS" <?= Wrong\Database\Controller::find('SUBORDINATE_MODELS', 'name', 'settings')->value ? 'checked' : '' ?>>
                                     <label class="custom-control-label" for="SUBORDINATE_MODELS"><?= Wrong\Database\Controller::find('SUBORDINATE_MODELS', 'name', 'settings')->description ?></label>
                                 </div>

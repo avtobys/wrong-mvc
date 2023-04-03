@@ -19,13 +19,13 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
                 <th>Email</th>
                 <th>Время онлайна</th>
                 <th>Время регистрации</th>
-                <th data-hide>Крайний IP</th>
-                <th data-hide>Крайний Request</th>
-                <th data-hide>Email</th>
+                <th>Крайний IP</th>
+                <th>Крайний Request</th>
+                <th>Email</th>
                 <th>X-Auth-Token</th>
                 <th style="max-width:200px;">Комментарий</th>
                 <th>API</th>
-                <th>Вкл / Выкл</th>
+                <th data-name="Вкл / выкл" style="width:60px;"><i class="fa fa-power-off"></i></th>
                 <th data-name="Удалить" style="width: 25px;"><i class="fa fa-trash"></i></th>
             </tr>
         </thead>
@@ -37,7 +37,7 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
         window.dataTablesConfigs[0].ajax = '<?= Wrong\Models\Selects::find(7)->request ?>';
         window.dataTablesConfigs[0].columnDefs = [{
             orderable: false,
-            targets: 13
+            targets: [12, 13]
         }];
         window.dataTablesConfigs[0].initComplete = function() {
             $('#table-users_length label').append('<button class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#add-user" style="font-size:12px;margin-left:7px;"><i class="fa fa-plus-circle"></i> Добавить</button><button class="btn btn-outline-primary btn-sm autoupdate" data-toggle="button" title="Автообновление таблицы" style="font-size:12px;margin-left:5px;"><i class="fa fa-play"></i></button><button class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#hide-table-cols" title="Видимость колонок таблицы <b>' + $('title').text() + '</b>" style="font-size:12px;margin-left:5px;"><i class="fa fa-table"></i></button>');
@@ -74,6 +74,9 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
         } else {
             successToast(response.message);
         }
+        setTimeout(() => {
+            $('.dataTable').DataTable().ajax.reload(null, false);
+        }, 350);
     }
 
     $(document).on('click', '.autoupdate', function() {

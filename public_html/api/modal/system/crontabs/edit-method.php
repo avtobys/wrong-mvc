@@ -11,6 +11,14 @@ if (!($row = Wrong\Database\Controller::find($_GET['id'], 'id', $_GET['table']))
     exit('<script>errorToast("Ошибка!");</script>');
 }
 
+if (!in_array($row->owner_group, $user->subordinate_groups)) {
+    exit('<script>errorToast("Недостаточно прав!");</script>');
+}
+
+if ($row->method == 'CLI') {
+    exit('<script>errorToast("У CLI задач нельзя менять метод!");</script>');
+}
+
 ?>
 <div class="modal fade" id="<?= $basename ?>" tabindex="-1" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -30,10 +38,10 @@ if (!($row = Wrong\Database\Controller::find($_GET['id'], 'id', $_GET['table']))
                             <span class="input-group-text w-100">Метод</span>
                         </div>
                         <select name="method" class="custom-select">
-                            <option value="GET" <?= ($row->method == 'GET' ? 'selected' : '') ?>>GET</option>
-                            <option value="POST" <?= ($row->method == 'POST' ? 'selected' : '') ?>>POST</option>
-                            <option value="PUT" <?= ($row->method == 'PUT' ? 'selected' : '') ?>>PUT</option>
-                            <option value="DELETE" <?= ($row->method == 'DELETE' ? 'selected' : '') ?>>DELETE</option>
+                            <option value="GET" <?= ($row->method == 'GET' ? 'selected' : '') ?>>HTTP GET</option>
+                            <option value="POST" <?= ($row->method == 'POST' ? 'selected' : '') ?>>HTTP POST</option>
+                            <option value="PUT" <?= ($row->method == 'PUT' ? 'selected' : '') ?>>HTTP PUT</option>
+                            <option value="DELETE" <?= ($row->method == 'DELETE' ? 'selected' : '') ?>>HTTP DELETE</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-sm btn-block btn-success mt-3">Сохранить</button>

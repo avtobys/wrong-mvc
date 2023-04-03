@@ -7,6 +7,14 @@
 
 isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
 
+if (!($row = Wrong\Database\Controller::find($_GET['id'], 'id', $_GET['table']))) {
+    exit('<script>errorToast("Ошибка!");</script>');
+}
+
+if (!in_array($row->owner_group, $user->subordinate_groups)) {
+    exit('<script>errorToast("Недостаточно прав!");</script>');
+}
+
 ?>
 <div class="modal fade" id="<?= $basename ?>" tabindex="-1" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -19,7 +27,9 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
             </div>
             <div class="modal-body pt-2">
                 <form action="<?= Wrong\Models\Actions::find(0)->request ?>">
-                    
+                    <input type="hidden" name="id" value="<?= $row->id ?>">
+                    <input type="hidden" name="table" value="<?= $_GET['table'] ?>">
+
                     <button type="submit" class="btn btn-sm btn-block btn-success mt-3">Сохранить</button>
                 </form>
             </div>

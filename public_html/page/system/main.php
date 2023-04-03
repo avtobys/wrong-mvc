@@ -62,7 +62,7 @@ if ($user->id && $request == '/documentation') {
             <li><a href="/docs/hcaptcha.html">Защита форм с внедрением Hcaptcha</a></li>
             <li><a href="/docs/loadlibs.html">Подгрузка javascript библиотек по факту применения</a></li>
             <li><a href="/docs/stackjs.html">Javascript-PHP стеки, отложенное выполнение</a></li>
-            <li><a href="/docs/cron.html">Встроенные CRON задачи</a></li>
+            <li><a href="/docs/cron.html">Встроенные CRON задачи, многопотоки</a></li>
             <li><a href="/docs/code_editor.html">Встроенный редактор кода</a></li>
             <li><a href="/docs/files.html">Список файлов</a></li>
             <li><a href="/docs/hierarchy.html">Иерархия классов</a></li>

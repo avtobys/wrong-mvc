@@ -33,9 +33,9 @@ if (!in_array($row->owner_group, $user->subordinate_groups)) {
     exit(json_encode(['error' => 'Недостаточно прав!']));
 }
 
-$sth = $dbh->prepare("UPDATE `{$_POST['table']}` SET `name` = ? WHERE `id` = ?");
-$sth->bindValue(1, $_POST['name']);
-$sth->bindValue(2, $_POST['id']);
+$sth = $dbh->prepare("UPDATE `{$_POST['table']}` SET `name` = :name WHERE `id` = :id");
+$sth->bindValue(':name', $_POST['name']);
+$sth->bindValue(':id', $_POST['id']);
 $sth->execute();
 if ($sth->errorCode() == '00000') {
     exit(json_encode(['result' => 'ok', 'message' => 'Успешно переименовано']));

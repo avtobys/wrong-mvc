@@ -9,7 +9,7 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
 
 ?>
 <div class="modal fade" id="<?= $basename ?>" tabindex="-1" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-lg modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title"><i class="fa fa-user mr-2"></i>Добавить пользователя</h5>

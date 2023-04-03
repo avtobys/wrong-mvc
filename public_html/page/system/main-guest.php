@@ -26,7 +26,7 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
             <div class="row">
                 <div class="col-6 col-12-medium">
                     <h1>Wrong MVC - система созданная для создания других систем...</h1>
-                    <a data-toggle="modal" data-target="#install" data-aos="zoom-in" href="#" class="button-large text-decoration-none shadow-lg mt-4"><i class="fa fa-download mr-3"></i>Установить Wrong MVC</a>
+                    <a data-toggle="modal" data-target="#install" data-aos="zoom-in" href="/docs/" class="button-large text-decoration-none shadow-lg mt-4"><i class="fa fa-download mr-3"></i>Установить Wrong MVC</a>
                     <div class="small mt-3 mt-xl-4" data-aos="zoom-in-left" data-aos-duration="1000">Текущая актуальная версия: <?= Wrong\Start\Env::$e->VERSION ?></div>
                 </div>
                 <div class="col-6 col-12-medium imp-medium">

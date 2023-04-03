@@ -27,7 +27,8 @@ class Crontabs extends Controller
      */
     public static function create($arr)
     {
-        $sth = Connect::$dbh->prepare("INSERT INTO `crontabs` (`request`, `user_id`, `shedule`, `method`, `headers`, `data`, `owner_group`, `note`, `run_at`) VALUES (:request, :user_id, :shedule, :method, :headers, :data, :owner_group, :note, :run_at)");
+        $sth = Connect::$dbh->prepare("INSERT INTO `crontabs` (`cli`, `request`, `user_id`, `shedule`, `method`, `headers`, `data`, `owner_group`, `note`, `run_at`) VALUES (:cli, :request, :user_id, :shedule, :method, :headers, :data, :owner_group, :note, :run_at)");
+        $sth->bindValue(':cli', $arr['cli']);
         $sth->bindValue(':request', $arr['request']);
         $sth->bindValue(':user_id', $arr['user_id']);
         $sth->bindValue(':shedule', $arr['shedule']);

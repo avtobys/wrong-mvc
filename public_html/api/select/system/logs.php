@@ -65,5 +65,8 @@ $length = $length == -1 ? $response['recordsTotal'] : $length;
 $response['recordsFiltered'] = count($arr_filtered);
 $response['data'] = array_slice($arr_filtered, $start, $length);
 $response['draw'] = abs(intval($_GET['draw']));
+if ($user->id == 1) {
+    $response['uptime'] = shell_exec('uptime');
+}
 
 exit(json_encode($response, JSON_UNESCAPED_UNICODE));

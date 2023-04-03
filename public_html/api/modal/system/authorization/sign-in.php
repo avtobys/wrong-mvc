@@ -7,6 +7,10 @@
 
 isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
 
+if (Wrong\Rights\Group::is_available_group(Wrong\Models\Pages::find('/system', 'request'))) {
+    exit('<script>location.href="/system";</script>');
+}
+
 ?>
 <div class="modal fade" id="<?= $basename ?>" tabindex="-1" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">

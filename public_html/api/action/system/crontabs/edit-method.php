@@ -21,6 +21,9 @@ if (!in_array($row->owner_group, $user->subordinate_groups)) {
     exit(json_encode(['error' => 'Недостаточно прав!']));
 }
 
+if (empty($_POST['method']) || !in_array($_POST['method'], ['GET', 'POST', 'PUT', 'DELETE', 'CLI'])) {
+    exit(json_encode(['error' => 'Метод запроса указан некорректно']));
+}
 
 $sth = $dbh->prepare("UPDATE `crontabs` SET `method` = :method WHERE `id` = :id");
 $sth->bindValue(':method', $_POST['method']);

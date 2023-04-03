@@ -9,10 +9,10 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
 
 ?>
 <div class="modal fade" id="<?= $basename ?>" tabindex="-1" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><i class="fa fa-clock"></i> Добавить задачу</h5>
+                <h5 class="modal-title"><i class="fa fa-clock"></i> Добавить <span>HTTP</span> задачу</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -34,11 +34,29 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
                     </div>
                     <div class="input-group input-group-sm mt-2">
                         <div class="input-group-prepend w-50">
+                            <span class="input-group-text w-100">Метод</span>
+                        </div>
+                        <select name="method" class="custom-select">
+                            <option value="GET">HTTP GET</option>
+                            <option value="POST">HTTP POST</option>
+                            <option value="PUT">HTTP PUT</option>
+                            <option value="DELETE">HTTP DELETE</option>
+                            <option value="CLI">CLI COMMAND</option>
+                        </select>
+                    </div>
+                    <div class="input-group input-group-sm mt-2" data-cli="false" hidden>
+                        <div class="input-group-prepend w-50">
                             <span class="input-group-text w-100">Запрос</span>
                         </div>
-                        <input type="text" name="request" class="form-control" value="/request" placeholder="/request" autocomplete="off" required>
+                        <input type="text" name="request" class="form-control" value="/request" placeholder="/request" autocomplete="off">
                     </div>
-                    <div class="input-group input-group-sm mt-2">
+                    <div class="input-group input-group-sm mt-2" data-cli="true" hidden>
+                        <div class="input-group-prepend w-50">
+                            <span class="input-group-text w-100">CLI команда</span>
+                        </div>
+                        <input type="text" name="cli" class="form-control" value="" placeholder="CLI команда" autocomplete="off">
+                    </div>
+                    <div class="input-group input-group-sm mt-2" data-cli="false" hidden>
                         <div class="input-group-prepend w-50">
                             <span class="input-group-text w-100">ID исполнителя(опционально)</span>
                         </div>
@@ -53,18 +71,7 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
                             <a onclick="$(this).data({'shedule':$(this).parents('.input-group').find('[name=shedule]').val(),'id':Date.now()});initSheduleNextPopover();" data-action="show-next-crontabs" data-callback="showNextCrontabs" title="Посмотреть расписание ближайших выполнений" href="#" class="btn btn-primary" role="button"><i class="fa fa-clock-o"></i></a>
                         </div>
                     </div>
-                    <div class="input-group input-group-sm mt-2">
-                        <div class="input-group-prepend w-50">
-                            <span class="input-group-text w-100">Метод</span>
-                        </div>
-                        <select name="method" class="custom-select">
-                            <option value="GET">GET</option>
-                            <option value="POST">POST</option>
-                            <option value="PUT">PUT</option>
-                            <option value="DELETE">DELETE</option>
-                        </select>
-                    </div>
-                    <div class="input-group input-group-sm mt-2">
+                    <div class="input-group input-group-sm mt-2" data-cli="false" hidden>
                         <div class="input-group-prepend w-50">
                             <span class="input-group-text w-100">Content-Type</span>
                         </div>
@@ -74,7 +81,7 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
                             <option value="Content-Type: application/json; charset=utf-8">application/json; charset=utf-8</option>
                         </select>
                     </div>
-                    <div class="input-group input-group-sm mt-2">
+                    <div class="input-group input-group-sm mt-2" data-cli="false" hidden>
                         <div class="input-group-prepend w-50">
                             <span class="input-group-text w-100">Дополнительные заголовки(опционально)</span>
                         </div>
@@ -86,7 +93,7 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
                             <button title="Добавить ещё поле" type="button" class="btn btn-primary add-header"><i class="fa fa-plus"></i></button>
                         </div>
                     </div>
-                    <div class="input-group input-group-sm mt-2">
+                    <div class="input-group input-group-sm mt-2" data-cli="false" hidden>
                         <div class="input-group-prepend w-50">
                             <span class="input-group-text w-100">Данные json объекта или post формы(опционально)</span>
                         </div>
@@ -102,7 +109,7 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
                         <div class="input-group-prepend w-50">
                             <span class="input-group-text w-100">Комментарий</span>
                         </div>
-                        <input type="text" name="note" class="form-control" value="" placeholder="Необязательный комментарий" autocomplete="off">
+                        <input type="text" name="note" class="form-control" value="" placeholder="Необязательный комментарий к задаче" autocomplete="off">
                     </div>
                     <button type="submit" class="btn btn-sm btn-block btn-success mt-3">Сохранить</button>
                 </form>
@@ -171,5 +178,17 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
                 $("#<?= $basename ?> .rm-data").hide();
             }
         });
+
+        $("#<?= $basename ?> [name=method]").change(function() {
+            if (this.value == "CLI") {
+                $("#<?= $basename ?> [data-cli='false']").attr("hidden", true);
+                $("#<?= $basename ?> [data-cli='true']").attr("hidden", false);
+                $('#<?= $basename ?> .modal-title span').html('CLI');
+            } else {
+                $("#<?= $basename ?> [data-cli='false']").attr("hidden", false);
+                $("#<?= $basename ?> [data-cli='true']").attr("hidden", true);
+                $('#<?= $basename ?> .modal-title span').html('HTTP');
+            }
+        }).trigger("change");
     </script>
 </div>

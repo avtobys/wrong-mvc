@@ -15,6 +15,10 @@ if (!in_array($row->owner_group, $user->subordinate_groups)) {
     exit('<script>errorToast("Недостаточно прав!");</script>');
 }
 
+if ($row->method == 'CLI') {
+    exit('<script>errorToast("У CLI задач нельзя менять данные!");</script>');
+}
+
 $data = json_decode($row->data, true);
 foreach ($data as $key => $value) {
     $data[$key] = "$key: $value";

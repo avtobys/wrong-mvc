@@ -21,7 +21,7 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
                 <th>Шаблон</th>
                 <th>Название - Title</th>
                 <th style="max-width:200px;">Комментарий</th>
-                <th>Вкл / Выкл</th>
+                <th data-name="Вкл / выкл" style="width:60px;"><i class="fa fa-power-off"></i></th>
                 <th data-name="Редактор кода" style="width:25px;"><i class="fa fa-file-code-o"></i></th>
                 <th data-name="Копия" style="width:25px;"><i class="fa fa-copy"></i></th>
                 <th data-name="Экспорт" style="width:25px;"><i class="fa fa-download"></i></th>
@@ -36,7 +36,7 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
         window.dataTablesConfigs[0].ajax = '<?= Wrong\Models\Selects::find(4)->request ?>';
         window.dataTablesConfigs[0].columnDefs = [{
             orderable: false,
-            targets: [9, 10, 11, 12]
+            targets: [8, 9, 10, 11, 12]
         }];
         window.dataTablesConfigs[0].initComplete = function() {
             $('#table-pages_length label').append('<button class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#add-page" style="font-size:12px;margin-left:7px;"><i class="fa fa-plus-circle"></i> Добавить</button><button class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#hide-table-cols" title="Видимость колонок таблицы <b>'+$('title').text()+'</b>" style="font-size:12px;margin-left:5px;"><i class="fa fa-table"></i></button>');

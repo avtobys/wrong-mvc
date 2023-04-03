@@ -87,6 +87,10 @@ $sth = $dbh->prepare("UPDATE `settings` SET `value` = :value WHERE `name` = 'CRO
 $sth->bindValue(':value', intval(isset($_POST['CRON_ACT'])));
 $sth->execute();
 
+$sth = $dbh->prepare("UPDATE `settings` SET `value` = :value WHERE `name` = 'CRON_CLI'");
+$sth->bindValue(':value', intval(isset($_POST['CRON_CLI'])));
+$sth->execute();
+
 $sth = $dbh->prepare("UPDATE `settings` SET `value` = :value WHERE `name` = 'SUBORDINATE_MODELS'");
 $sth->bindValue(':value', intval(isset($_POST['SUBORDINATE_MODELS'])));
 $sth->execute();

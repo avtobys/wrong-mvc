@@ -49,7 +49,7 @@ function rd(...$vars)
  */
 function ld(...$vars)
 {
-    $filename = $_SERVER['DOCUMENT_ROOT'] . '/../temp/ld';
+    $filename = __DIR__ . '/../temp/ld';
     if (empty($vars) || $vars[0] == 'rm') {
         header("Content-Type: text/plain; charset=utf-8");
         echo file_get_contents($filename);

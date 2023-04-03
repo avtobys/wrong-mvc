@@ -9,9 +9,11 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
 
 header("Content-type: application/json");
 
+$cli = $_POST['cli'];
 array_walk_recursive($_POST, function (&$item) {
     $item = trim(htmlspecialchars($item, ENT_QUOTES));
 });
+$_POST['cli'] = $cli;
 
 if (empty($_POST['owner_group']) || !in_array($_POST['owner_group'], $user->subordinate_groups)) {
     exit(json_encode(['error' => '"Группа владелец" не найдена среди подчиненных групп']));
@@ -21,7 +23,7 @@ if (($models_limit = Wrong\Database\Controller::find($_POST['owner_group'], 'id'
     exit(json_encode(['error' => 'Лимит моделей для данной группы исчерпан']));
 }
 
-if (empty($_POST['request']) || !preg_match('#^/[a-z0-9]*#i', $_POST['request'])) {
+if (empty($_POST['cli']) && (empty($_POST['request']) || !preg_match('#^/[a-z0-9]*#i', $_POST['request']))) {
     exit(json_encode(['error' => 'Неверный формат для "Запрос"']));
 }
 
@@ -55,8 +57,12 @@ if (count($shedules) != 25) {
 
 $_POST['run_at'] = $shedules[0];
 
-if (empty($_POST['method']) || !in_array($_POST['method'], ['GET', 'POST', 'PUT', 'DELETE'])) {
+if (empty($_POST['method']) || !in_array($_POST['method'], ['GET', 'POST', 'PUT', 'DELETE', 'CLI'])) {
     exit(json_encode(['error' => 'Метод запроса указан некорректно']));
+}
+
+if ($_POST['method'] == 'CLI') {
+    $_POST['headers'] = $_POST['request'] = '';
 }
 
 $_POST['headers'] = array_map('trim', $_POST['headers']);

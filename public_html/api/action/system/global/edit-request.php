@@ -28,9 +28,9 @@ if (!in_array($row->owner_group, $user->subordinate_groups)) {
 
 Wrong\Check\Model::request($_POST, $_POST['table']);
 
-$sth = $dbh->prepare("UPDATE `{$_POST['table']}` SET `request` = ? WHERE `id` = ?");
-$sth->bindValue(1, $_POST['request']);
-$sth->bindValue(2, $_POST['id']);
+$sth = $dbh->prepare("UPDATE `{$_POST['table']}` SET `request` = :request WHERE `id` = :id");
+$sth->bindValue(':request', $_POST['request']);
+$sth->bindValue(':id', $_POST['id']);
 $sth->execute();
 if ($sth->errorCode() == '00000') {
     exit(json_encode(['result' => 'ok', 'message' => 'Запрос успешно переименован']));

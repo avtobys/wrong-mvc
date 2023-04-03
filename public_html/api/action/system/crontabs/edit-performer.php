@@ -21,6 +21,10 @@ if (!in_array($row->owner_group, $user->subordinate_groups)) {
     exit(json_encode(['error' => 'Недостаточно прав!']));
 }
 
+if ($row->method == 'CLI') {
+    exit(json_encode(['error' => 'У CLI задач нельзя менять исполнителя!']));
+}
+
 if (!empty($_POST['user_id'])) {
     $row = Wrong\Auth\User::get($_POST['user_id']);
     if (!$row) {

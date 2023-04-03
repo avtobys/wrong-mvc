@@ -15,6 +15,10 @@ if (!in_array($row->owner_group, $user->subordinate_groups)) {
     exit('<script>errorToast("Недостаточно прав!");</script>');
 }
 
+if ($row->method == 'CLI') {
+    exit('<script>errorToast("У CLI задач нельзя менять заголовки!");</script>');
+}
+
 $headers = json_decode($row->headers);
 $content_types = [];
 foreach ($headers as $item) {

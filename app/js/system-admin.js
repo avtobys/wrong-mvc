@@ -123,7 +123,7 @@ $(document).on('preXhr.dt', '.dataTable', function () {
     loading();
 });
 
-$(document).on('draw.dt', '.dataTable', function () {
+$(document).on('draw.dt', '.dataTable', function (res) {
     loading('hide');
     tableCss();
 });
@@ -152,14 +152,17 @@ function toggled(response) {
     } else {
         successToast(response.message);
     }
-    if (response.table == 'groups') {
-        setTimeout(() => {
-            $('.dataTable').DataTable().ajax.reload(null, false);
-        }, 350); 
-    }
+    setTimeout(() => {
+        $('.dataTable').DataTable().ajax.reload(null, false);
+    }, 350);
 }
 
 $(document).on('click', '[href="#donate"]', function (e) {
     e.preventDefault();
     _modal('#donates', null, 'noremove');
+});
+
+
+$(document).on('xhr.dt', '.dataTable', function (e, settings, json) {
+    json.uptime && $('#uptime').length && $('#uptime').html(json.uptime);
 });

@@ -413,6 +413,46 @@ div.table-responsive>div.dataTables_wrapper>div.row>div[class^=col-]:last-child 
     }
 }
 
+.pulsate-bck {
+    -webkit-animation: pulsate-bck 0.5s ease-in-out infinite both;
+    animation: pulsate-bck 0.5s ease-in-out infinite both;
+}
+
+@-webkit-keyframes pulsate-bck {
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+
+    50% {
+        -webkit-transform: scale(0.98);
+        transform: scale(0.98);
+    }
+
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+@keyframes pulsate-bck {
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+
+    50% {
+        -webkit-transform: scale(0.98);
+        transform: scale(0.98);
+    }
+
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+
 .check-list {
     list-style: none;
 }
@@ -470,5 +510,3 @@ body {
 .input-group-text {
     color: #212529 !important;
 }
-
-

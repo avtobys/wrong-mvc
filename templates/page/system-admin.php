@@ -77,9 +77,14 @@ ob_clean();
     <div class="container-fluid py-2" style="margin-top:35px;">
         <?= $TEMPLATE_DATA ?>
         <footer class="border-top mt-2 pt-2">
-            <div class="row">
-                <div class="col-12 col-md">
-                    <small class="d-block mb-3 text-muted">&copy; <a class="text-muted" href="//wrong-mvc.com" target="_blank">wrong-mvc.com</a> <?= Wrong\Start\Env::$e->VERSION ?></small>
+            <div class="row mb-3">
+                <div class="col-6">
+                    <small class="d-block text-muted">&copy; <a class="text-muted" href="//wrong-mvc.com" target="_blank">wrong-mvc.com</a> <?= Wrong\Start\Env::$e->VERSION ?></small>
+                </div>
+                <div class="col-6">
+                    <?php if ($user->id == 1) : ?>
+                        <small id="uptime" class="d-block text-<?= intval(shell_exec("echo $(nproc) $(cat /proc/loadavg | awk '{print $1}') | awk '$2>$1 {print 1}'")) ? 'danger font-weight-bold pulsate-bck' : 'muted' ?> text-right"><?= shell_exec('uptime') ?></small>
+                    <?php endif; ?>
                 </div>
             </div>
         </footer>

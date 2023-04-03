@@ -5,23 +5,25 @@
  * @brief запуск cron задач
  */
 
-
 ignore_user_abort(true);
-header('Connection: close');
-header('Content-Encoding: none');
-header('Content-length: 0');
-function_exists('fastcgi_finish_request') && fastcgi_finish_request();
 error_reporting(0);
 set_time_limit(90);
 
 /* отладочные функции */
-require '../include/debug.php';
+require __DIR__ . '/../include/debug.php';
 
 /* автозагрузчик */
-require '../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 /* установка переменных среды приложения */
 new Wrong\Start\Env();
+
+if (!Wrong\Start\Env::$e->IS_CLI) {
+    header('Connection: close');
+    header('Content-Encoding: none');
+    header('Content-length: 0');
+}
+function_exists('fastcgi_finish_request') && fastcgi_finish_request();
 
 $dbh = Wrong\Database\Connect::start();
 
@@ -31,9 +33,14 @@ try {
     dd($dbh->errorInfo());
 }
 
-if (isset($_POST['id']) && $_SERVER['HTTP_X_AUTH_TOKEN'] == Wrong\Start\Env::$e->SYSTEM_SECRET_KEY) { // выполнение каждой отдельной задачи
-    Wrong\Task\Cron::execute(Wrong\Models\Crontabs::find($_POST['id']));
+if (Wrong\Start\Env::$e->IS_CLI && !empty($argv[1]) && is_numeric($argv[1])) { // выполнение каждой отдельной задачи, консольный запуск
+    Wrong\Task\Cron::execute(Wrong\Models\Crontabs::find($argv[1]));
     $dbh = null;
+    exit('success');
+}
+
+if (Wrong\Start\Env::$e->IS_CLI && !empty($argv[1]) && is_string($argv[1]) && is_numeric($argv[2])) { // запуск форков для поддержания потоков
+    Wrong\Task\Cron::fork(Wrong\Models\Crontabs::find($argv[2]));
     exit;
 }
 

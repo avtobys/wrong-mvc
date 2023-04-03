@@ -19,6 +19,10 @@ if (!in_array($row->owner_group, $user->subordinate_groups)) {
     exit('<script>errorToast("Недостаточно прав!");</script>');
 }
 
+if ($_GET['table'] == 'crontabs' && $row->method == 'CLI') {
+    exit('<script>errorToast("У CLI задач нельзя менять запрос!");</script>');
+}
+
 ?>
 <div class="modal fade" id="<?= $basename ?>" tabindex="-1" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">

@@ -127,11 +127,11 @@ if ($arr = Wrong\Models\Pages::all($request, 'request')) { // запросы к 
             (function () {
                 global $request, $user, $dbh, $row;
                 require $_SERVER['DOCUMENT_ROOT'] . $row->file;
-            })();;
-            if ($file = $_SERVER['DOCUMENT_ROOT'] . $dbh->query("SELECT `file` FROM `templates` WHERE `id` = $row->template_id")->fetchColumn()) {
-                require $file;
+            })();
+            if ($file = Wrong\Models\Templates::find($row->template_id)->file) {
+                require $_SERVER['DOCUMENT_ROOT'] . $file;
             } else {
-                require $_SERVER['DOCUMENT_ROOT'] . $dbh->query("SELECT `file` FROM `templates` WHERE `id` = 3")->fetchColumn();
+                require $_SERVER['DOCUMENT_ROOT'] . Wrong\Models\Templates::find(3)->file;
             }
             $user->set_request($request);
             exit;
@@ -173,10 +173,10 @@ if ($arr = Wrong\Models\Pages::all($request, 'request')) { // запросы к 
 //                 global $request, $user, $dbh, $row, $data_page;
 //                 require $_SERVER['DOCUMENT_ROOT'] . $row->file;
 //             })();
-//             if ($file = $_SERVER['DOCUMENT_ROOT'] . $dbh->query("SELECT `file` FROM `templates` WHERE `id` = $row->template_id")->fetchColumn()) {
-//                 require $file;
+//             if ($file = Wrong\Models\Templates::find($row->template_id)->file) {
+//                 require $_SERVER['DOCUMENT_ROOT'] . $file;
 //             } else {
-//                 require $_SERVER['DOCUMENT_ROOT'] . $dbh->query("SELECT `file` FROM `templates` WHERE `id` = 3")->fetchColumn();
+//                 require $_SERVER['DOCUMENT_ROOT'] . Wrong\Models\Templates::find(3)->file;
 //             }
 //             $user->set_request($request);
 //             exit;

@@ -2,12 +2,12 @@
 
 /**
  * @file
- * @brief окно редактирования id пользователя-исполнителя cron задачи
+ * @brief окно изменения cli команды для cron задачи
  */
 
 isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
 
-if (!($row = Wrong\Database\Controller::find($_GET['id'], 'id', $_GET['table']))) {
+if (!($row = Wrong\Models\Crontabs::find($_GET['id']))) {
     exit('<script>errorToast("Ошибка!");</script>');
 }
 
@@ -15,29 +15,28 @@ if (!in_array($row->owner_group, $user->subordinate_groups)) {
     exit('<script>errorToast("Недостаточно прав!");</script>');
 }
 
-if ($row->method == 'CLI') {
-    exit('<script>errorToast("У CLI задач нельзя менять исполнителя!");</script>');
+if ($row->method != 'CLI') {
+    exit('<script>errorToast("Это HTTP задача, ей нельзя установить команду!");</script>');
 }
 
 ?>
 <div class="modal fade" id="<?= $basename ?>" tabindex="-1" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Изменить исполнителя</h5>
+                <h5 class="modal-title">Изменить CLI команду</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form action="<?= Wrong\Models\Actions::find(31)->request ?>">
+            <div class="modal-body pt-2">
+                <form action="<?= Wrong\Models\Actions::find(49)->request ?>">
                     <input type="hidden" name="id" value="<?= $row->id ?>">
-                    <input type="hidden" name="table" value="<?= $_GET['table'] ?>">
                     <div class="input-group input-group-sm">
-                        <div class="input-group-prepend w-50">
-                            <span class="input-group-text w-100">ID исполнителя</span>
+                        <div class="input-group-prepend w-25">
+                            <span class="input-group-text w-100">Команда</span>
                         </div>
-                        <input type="number" name="user_id" class="form-control" value="<?= $row->user_id ?>" min="0" placeholder="ID исполнителя">
+                        <input type="text" name="cli" class="form-control" value="<?= $row->cli ?>" placeholder="Команда CLI" autocomplete="off" required>
                     </div>
                     <button type="submit" class="btn btn-sm btn-block btn-success mt-3">Сохранить</button>
                 </form>

@@ -157,6 +157,9 @@ function _action(data, callback) {
         }
     }
     loading();
+    if (data.precallback) {
+        window[data.precallback](data);
+    }
     $.ajax({
         type: "POST",
         url: "/api/action/" + data.action,
