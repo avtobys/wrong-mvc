@@ -11,10 +11,6 @@ if (!($row = Wrong\Models\Crontabs::find($_GET['id']))) {
     exit('<script>errorToast("Ошибка!");</script>');
 }
 
-if (!in_array($row->owner_group, $user->subordinate_groups)) {
-    exit('<script>errorToast("Недостаточно прав!");</script>');
-}
-
 if ($row->method != 'CLI') {
     exit('<script>errorToast("Это HTTP задача, ей нельзя установить команду!");</script>');
 }

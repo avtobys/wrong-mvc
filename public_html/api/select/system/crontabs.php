@@ -28,7 +28,7 @@ foreach ($arr as $key => $item) {
     $threads = json_decode($item[1], true) ?: Wrong\Task\Cron::DEFAULT_THERADS_SET;
     $threads['curr'] = intval(shell_exec("ps aux | grep 'php -f " . dirname(__DIR__, 3) . "/cron\.php " . $item[0] . "' | wc -l"));
     $text = "{$threads['curr']} / {$threads['min']} / {$threads['max']} / {$threads['load']}% / " . ($threads['fixed'] ? '+' : '-');
-    $title = '<div class=\'text-left small\'>Потоков в процессе: <b>' . $threads['curr'] . '</b><br>Минимум потоков: <b>' . $threads['min'] . '</b><br>Максимум потоков: <b>' . $threads['max'] . '</b><br>Предел нагрузки: <b>' . $threads['load'] . '%</b><br>Держать потоки: <b>' . ($threads['fixed'] ? 'да' : 'нет') . '</b></div>';
+    $title = '<div class=\'text-left small\'>Потоков в работе: <b>' . $threads['curr'] . '</b><br>Минимум потоков: <b>' . $threads['min'] . '</b><br>Максимум потоков: <b>' . $threads['max'] . '</b><br>Предел нагрузки: <b>' . $threads['load'] . '%</b><br>Держать потоки: <b>' . ($threads['fixed'] ? 'да' : 'нет') . '</b></div>';
     $arr[$key][1] = '<div title="' . $title . '" class="edit-wrapper editable-act" data-toggle="modal" data-target="#edit-threads" data-id="' . $item[0] . '">' . $text . '<i class="fa fa-edit"></i></div>';
     $arr[$key][2] = htmlspecialchars($item[2], ENT_QUOTES);
     $arr[$key][2] = '<div title="' . $item[2] . '" class="edit-wrapper editable-act" data-id="' . $item[0] . '" data-target="#edit-cli" data-toggle="modal" data-table="' . $table . '">' . $item[2] . '<i class="fa fa-edit"></i></div>';

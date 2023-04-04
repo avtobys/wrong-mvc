@@ -11,10 +11,6 @@ if (!($row = Wrong\Models\Crontabs::find($_GET['id']))) {
     exit('<script>errorToast("Ошибка!");</script>');
 }
 
-if (!in_array($row->owner_group, $user->subordinate_groups)) {
-    exit('<script>errorToast("Недостаточно прав!");</script>');
-}
-
 $threads = json_decode($row->threads, true) ?: Wrong\Task\Cron::DEFAULT_THERADS_SET;
 
 ?>
