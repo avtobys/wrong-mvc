@@ -57,7 +57,7 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
                     <a data-fancybox="gallery" class="bordered-feature-image" href="/assets/system/img/page.png"><img src="/assets/system/img/page.png"></a>
                     <h2>Полный контроль</h2>
                     <p>
-                        Групповые политики доступа с полным контролем над всей системой и её отдельными компонентами. Создание и отключение моделей в один клик.
+                        Групповые политики доступа с полным контролем над всей системой и её отдельными компонентами. Создание и отключение функционала в один клик.
                     </p>
                 </section>
 
