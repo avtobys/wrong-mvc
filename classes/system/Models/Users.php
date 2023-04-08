@@ -9,8 +9,6 @@
 namespace Wrong\Models;
 
 use Wrong\Database\Controller;
-use Wrong\Database\Connect;
-use Wrong\Rights\Group;
 use Wrong\Start\Env;
 
 /**

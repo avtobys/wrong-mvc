@@ -10,6 +10,7 @@ namespace Wrong\Auth;
 
 use Wrong\Rights\Group;
 use Wrong\Start\Env;
+use Wrong\Rights\Access;
 
 /**
  * @brief User отвечает за работу с данными пользователя
@@ -306,4 +307,46 @@ class User
         $dbh->query("UPDATE `users` SET `email_confirmed` = $email_confirmed WHERE `id` = $this->id");
         $this->email_confirmed = $email_confirmed;
     }
+
+
+    /**
+     * Проверяет права доступа к модели для пользователя, ниже аргументы для методов проверок класса Access
+     * 
+     * @param object $row объект строки модели из бд
+     * @param string $request строка запроса к модели
+     * @param int $id идентификатор модели
+     * 
+     * $user->access()->read($row); - проверка прав доступа на чтение по объекту строки модели
+     * 
+     * $user->access()->write($row); - проверка прав доступа на запись(изменение) по объекту строки модели
+     * 
+     * $user->access()->write($row, true); - расширенная проверка прав доступа на запись(изменение) по объекту строки модели, включает системные модели
+     * 
+     * $user->access()->is_system($row); - проверяет является ли владельцем данной модели группа система
+     * 
+     * $user->access()->page($request); - проверка прав доступа на чтение по request запросу модели страницы (доступен ли такой request)
+     * 
+     * $user->access()->page($id); - проверка прав доступа на чтение по id модели страницы (доступна ли модель с таким id)
+     * 
+     * $user->access()->modal($request); - проверка прав доступа на чтение по request запросу модели модального окна (доступен ли такой request)
+     * 
+     * $user->access()->modal($id); - проверка прав доступа на чтение по id модели модального окна (доступна ли модель с таким id)
+     * 
+     * $user->access()->action($request); - проверка прав доступа на чтение по request запросу модели действия (доступен ли такой request)
+     * 
+     * $user->access()->action($id); - проверка прав доступа на чтение по id модели действия (доступна ли модель с таким id)
+     * 
+     * $user->access()->select($request); - проверка прав доступа на чтение по request запросу модели выборки (доступен ли такой request)
+     * 
+     * $user->access()->select($id); - проверка прав доступа на чтение по id модели выборки (доступна ли модель с таким id)
+     * 
+     * $user->access()->template($id); - проверка прав доступа на чтение по id модели шаблона (доступна ли модель с таким id)
+     * 
+     * @return object объект Access класса с методами проверок
+     */
+    public function access()
+    {
+        return new Access($this);
+    }
+
 }

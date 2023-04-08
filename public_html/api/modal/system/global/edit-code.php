@@ -44,7 +44,7 @@ if (!($row = Wrong\Database\Controller::find($_GET['id'], 'id', $_GET['table']))
                     <textarea id="code" name="code" style="width:100%;display:none;"><?= htmlentities(file_get_contents($_SERVER['DOCUMENT_ROOT'] . $row->file)) ?></textarea>
                 </form>
             </div>
-            <div class="border-0 m-0 p-0 rounded-0 <?= !Wrong\Rights\Group::is_available_group(Wrong\Models\Actions::find(43)) ? 'd-none' : '' ?>">
+            <div class="border-0 m-0 p-0 rounded-0" <?= !$user->access()->action('/api/action/edit-code') ? 'hidden' : '' ?>>
                 <button style="display:none;" form="edit-code-form" type="submit" class="btn btn-sm btn-block btn-success rounded-0 border-0">Сохранить и закрыть</button>
             </div>
         </div>

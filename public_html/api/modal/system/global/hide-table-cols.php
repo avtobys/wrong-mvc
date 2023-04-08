@@ -32,7 +32,7 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
             console.log(error);
         }
 
-        $('.dataTable th').each((i, th) => {
+        $('.dataTable thead:first th').each((i, th) => {
             let name = $(th).attr('data-name') || $(th).text();
             let table = location.pathname.split('/').pop();
             let visible = true;

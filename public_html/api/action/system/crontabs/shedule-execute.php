@@ -15,7 +15,7 @@ if (!($row = Wrong\Models\Crontabs::find($_POST['id']))) {
     exit(json_encode(['error' => 'Ошибка']));
 }
 
-if (!in_array($row->owner_group, $user->subordinate_groups)) {
+if (!$user->access()->write($row)) {
     exit(json_encode(['error' => 'Недостаточно прав!']));
 }
 

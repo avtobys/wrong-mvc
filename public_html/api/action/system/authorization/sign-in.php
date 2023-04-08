@@ -32,8 +32,8 @@ if (!$user->act) {
     exit(json_encode(['error' => 'unknown']));
 }
 
-if (Wrong\Auth\User::session($user->id)) {
-    if (Wrong\Rights\Group::is_available_group(Wrong\Models\Pages::find('/system', 'request'), $user->id)) {
+if ($user = new Wrong\Auth\User(Wrong\Auth\User::session($user->id))) {
+    if ($user->access()->page('/system')) {
         Wrong\Task\stackJS::add('location.href="/system";', 0, 'location');
     } else {
         Wrong\Task\stackJS::add('location.reload();', 0, 'location');

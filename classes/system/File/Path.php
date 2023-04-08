@@ -39,7 +39,7 @@ class Path
             $result = true;
         }
         $dir = dirname($filename);
-        if (!(new \FilesystemIterator($dir))->valid() && rmdir($dir)) {
+        if (is_dir($dir) && file_exists($dir) && !(new \FilesystemIterator($dir))->valid() && rmdir($dir)) {
             $result = true;
             self::rm($dir);
         }
@@ -49,7 +49,7 @@ class Path
     /**
      * если каталог пуст, удаляет его, а затем рекурсивно вызывает функцию в родительском каталоге.
      * 
-     * @param string $filename Файл каталога.
+     * @param string $filename уже несуществующий файл каталога.
      */
     public static function rmdir($filename)
     {

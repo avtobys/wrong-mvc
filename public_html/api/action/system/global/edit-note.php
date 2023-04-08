@@ -17,7 +17,7 @@ if (!($row = Wrong\Database\Controller::find($_POST['id'], 'id', $_POST['table']
     exit(json_encode(['error' => 'Ошибка']));
 }
 
-if (!in_array($row->owner_group, $user->subordinate_groups) && !in_array($row->owner_group, $user->groups)) {
+if (!$user->access()->write($row, true)) {
     exit(json_encode(['error' => 'Недостаточно прав!']));
 }
 

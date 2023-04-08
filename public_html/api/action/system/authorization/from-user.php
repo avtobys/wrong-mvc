@@ -13,7 +13,7 @@ array_walk_recursive($_POST, function (&$item) {
     $item = trim(htmlspecialchars($item, ENT_QUOTES));
 });
 
-if (!($row = Wrong\Database\Controller::find($_POST['id'], 'id', 'users'))) {
+if (!($row = Wrong\Models\Users::find($_POST['id']))) {
     exit(json_encode(['error' => 'Ошибка']));
 }
 
@@ -21,7 +21,7 @@ if ($row->id == $user->id) {
     exit(json_encode(['error' => 'Нельзя зайти из под самого себя']));
 }
 
-if (!in_array($row->owner_group, $user->subordinate_groups)) {
+if (!$user->access()->write($row)) {
     exit(json_encode(['error' => 'Недостаточно прав!']));
 }
 
@@ -35,7 +35,8 @@ setcookie('FROM_UID', $uid, [
     'samesite' => Wrong\Start\Env::$e->IS_SECURE ? 'None' : 'Lax'
 ]) or setcookie('FROM_UID', $uid, time() + 31536000, '/', $_SERVER['HTTP_HOST'], Wrong\Start\Env::$e->IS_SECURE);
 
-if (Wrong\Rights\Group::is_available_group(Wrong\Models\Pages::find('/system', 'request'), $row->id)) {
+$user = new Wrong\Auth\User($row->id);
+if ($user->access()->page('/system')) {
     Wrong\Task\stackJS::add('location.href="/system";', 0, 'location');
 } else {
     Wrong\Task\stackJS::add('location.href="/";', 0, 'location');

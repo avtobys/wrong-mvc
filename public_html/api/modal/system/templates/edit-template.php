@@ -7,16 +7,8 @@
 
 isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
 
-if (!($row = Wrong\Database\Controller::find($_GET['id'], 'id', $_GET['table']))) {
+if (!($row = Wrong\Models\Pages::find($_GET['id']))) {
     exit('<script>errorToast("Ошибка!");</script>');
-}
-
-if ($row->owner_group == 1) {
-    exit('<script>errorToast("Изменить шаблон системного функционала нельзя!");</script>');
-}
-
-if (!in_array($row->owner_group, $user->subordinate_groups)) {
-    exit('<script>errorToast("Недостаточно прав!");</script>');
 }
 
 $template_id = $row->template_id;

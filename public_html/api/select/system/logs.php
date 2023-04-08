@@ -24,7 +24,7 @@ $sth = $dbh->prepare($query);
 $sth->execute();
 $arr = $sth->fetchAll(PDO::FETCH_NUM);
 
-$hide_ip = !Wrong\Rights\Group::is_available_group(Wrong\Models\Actions::find(24));
+$hide_ip = !$user->access()->action(24);
 
 foreach ($arr as $key => $item) {
     $arr[$key][0] = Wrong\Models\Users::find($item[0])->email . ' (ID: ' . $item[0] . ')';

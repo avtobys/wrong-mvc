@@ -33,15 +33,16 @@ class Cron
     {
 
         if (!Env::$e->CRON_ACT) return;
-        $dbh = Connect::start();
-        $sth = $dbh->query("SELECT * FROM `crontabs` WHERE `run_at` BETWEEN NOW() - INTERVAL 1 YEAR AND NOW() AND `act` = 1");
+        if (!Connect::$dbh) {
+            Connect::$dbh = Connect::start();
+        }
+        $sth = Connect::$dbh->query("SELECT * FROM `crontabs` WHERE `run_at` BETWEEN NOW() - INTERVAL 1 YEAR AND NOW() AND `act` = 1");
         self::set_run_at();
         while ($row = $sth->fetch()) {
             $threads = json_decode($row->threads, true) ?: self::DEFAULT_THERADS_SET;
             self::run_stack($row->id, self::available_threads($row->id, $threads), $threads);
         }
         $sth = null;
-        $dbh = null;
         Connect::close();
     }
 
@@ -95,6 +96,9 @@ class Cron
     private static function get_token($user_id)
     {
         if (!Env::$e->API) return;
+        if (!Connect::$dbh) {
+            Connect::$dbh = Connect::start();
+        }
         $user = Connect::$dbh->query("SELECT * FROM `users` WHERE `id` = $user_id")->fetch();
         if (!$user->act || !$user->api_act || !$user->x_auth_token) return;
         return $user->x_auth_token;
@@ -107,6 +111,9 @@ class Cron
     public static function set_run_at()
     {
 
+        if (!Connect::$dbh) {
+            Connect::$dbh = Connect::start();
+        }
         $sth = Connect::$dbh->query("SELECT * FROM `crontabs`");
         while ($row = $sth->fetch()) {
             $cron = CronExpression::factory($row->shedule);
@@ -161,7 +168,7 @@ class Cron
         }
 
         if ($threads['fixed']) {
-            exec('(sleep 0.5 && php -f ' . dirname(__DIR__, 3) . '/public_html/cron.php fork ' . $id . ' &) > /dev/null 2>&1');
+            exec('(sleep 0.4 && php -f ' . dirname(__DIR__, 3) . '/public_html/cron.php fork ' . $id . ' &) > /dev/null 2>&1');
         }
         
         Locker::unlock("cron-stack-$id");

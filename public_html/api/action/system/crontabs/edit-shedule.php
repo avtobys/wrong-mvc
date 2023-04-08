@@ -13,11 +13,11 @@ array_walk_recursive($_POST, function (&$item) {
     $item = trim(htmlspecialchars($item, ENT_QUOTES));
 });
 
-if (!($row = Wrong\Database\Controller::find($_POST['id'], 'id', $_POST['table']))) {
+if (!($row = Wrong\Models\Crontabs::find($_POST['id']))) {
     exit(json_encode(['error' => 'Ошибка']));
 }
 
-if (!in_array($row->owner_group, $user->subordinate_groups)) {
+if (!$user->access()->write($row)) {
     exit(json_encode(['error' => 'Недостаточно прав!']));
 }
 
@@ -45,6 +45,8 @@ $sth->bindValue(':id', $row->id);
 $sth->execute();
 
 if ($sth->errorCode() == '00000') {
+    $mem = new Wrong\Memory\Cache('cron');
+    $mem->delete($row->id);
     exit(json_encode(['result' => 'ok', 'message' => 'Расписание успешно установлено']));
 }
 

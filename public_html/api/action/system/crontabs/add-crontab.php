@@ -32,8 +32,7 @@ if (!empty($_POST['user_id'])) {
     if (!$row) {
         exit(json_encode(['error' => 'Исполнитель не найден в системе!']));
     }
-    $performer = new Wrong\Auth\User($row->id);
-    if ($performer->weight > $user->weight) {
+    if (!$user->access()->write($row, true)) {
         exit(json_encode(['error' => 'Недостаточно прав для выполнения задач от этого пользователя']));
     }
 } else {

@@ -14,7 +14,6 @@ array_walk_recursive($_POST, function (&$item) {
 });
 
 
-
 $sth = $dbh->prepare("UPDATE `settings` SET `value` = :value WHERE `name` = 'HCAPTCHA_SITEKEY'");
 $sth->bindValue(':value', $_POST['HCAPTCHA_SITEKEY']);
 $sth->execute();
@@ -119,6 +118,8 @@ $sth = $dbh->prepare("UPDATE `settings` SET `value` = :value WHERE `name` = 'SMT
 $sth->bindValue(':value', $_POST['SMTP_PASSWORD']);
 $sth->execute();
 
+$mem = new Wrong\Memory\Cache('env-cron');
+$mem->delete('env-cron');
 
 exit(json_encode(['result' => 'ok', 'message' => 'Настройки успешно сохранены!']));
 

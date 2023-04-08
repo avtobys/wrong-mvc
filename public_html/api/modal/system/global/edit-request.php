@@ -11,14 +11,6 @@ if (!($row = Wrong\Database\Controller::find($_GET['id'], 'id', $_GET['table']))
     exit('<script>errorToast("Ошибка!");</script>');
 }
 
-if ($row->owner_group == 1) {
-    exit('<script>errorToast("Изменить запрос системного функционала нельзя!");</script>');
-}
-
-if (!in_array($row->owner_group, $user->subordinate_groups)) {
-    exit('<script>errorToast("Недостаточно прав!");</script>');
-}
-
 if ($_GET['table'] == 'crontabs' && $row->method == 'CLI') {
     exit('<script>errorToast("У CLI задач нельзя менять запрос!");</script>');
 }

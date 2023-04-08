@@ -7,19 +7,9 @@
 
 isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
 
-if (!($row = Wrong\Database\Controller::find($_GET['id'], 'id', $_GET['table']))) {
+if (!($row = Wrong\Models\Groups::find($_GET['id']))) {
     exit('<script>errorToast("Ошибка!");</script>');
 }
-
-if ($row->owner_group == 1) {
-    exit('<script>errorToast("Изменить вес системного функционала нельзя!");</script>');
-}
-
-if (!in_array($row->owner_group, $user->subordinate_groups)) {
-    exit('<script>errorToast("Недостаточно прав!");</script>');
-}
-
-$weight = $row->weight;
 
 ?>
 <div class="modal fade" id="<?= $basename ?>" tabindex="-1" data-backdrop="static" data-keyboard="false">
@@ -39,7 +29,7 @@ $weight = $row->weight;
                         <div class="input-group-prepend w-50">
                             <span class="input-group-text w-100">Системный вес</span>
                         </div>
-                        <input type="number" name="weight" class="form-control" value="<?= $weight ?>" min="0" max="<?= $user->weight_subordinate ?>" placeholder="Системный вес">
+                        <input type="number" name="weight" class="form-control" value="<?= $row->weight ?>" min="0" max="<?= $user->weight_subordinate ?>" placeholder="Системный вес">
                     </div>
                     <button type="submit" class="btn btn-sm btn-block btn-success mt-3">Сохранить</button>
                 </form>

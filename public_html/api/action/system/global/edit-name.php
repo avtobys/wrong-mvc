@@ -17,8 +17,12 @@ if (!($row = Wrong\Database\Controller::find($_POST['id'], 'id', $_POST['table']
     exit(json_encode(['error' => 'Ошибка']));
 }
 
-if ($row->owner_group == 1) {
+if ($user->access()->is_system($row)) {
     exit(json_encode(['error' => 'Изменить название системного функционала нельзя!']));
+}
+
+if (!$user->access()->write($row)) {
+    exit(json_encode(['error' => 'Недостаточно прав!']));
 }
 
 if (
@@ -27,10 +31,6 @@ if (
     !in_array($_POST['table'], ['pages'])
 ) {
     exit(json_encode(['error' => 'Уже есть запись с таким именем!']));
-}
-
-if (!in_array($row->owner_group, $user->subordinate_groups)) {
-    exit(json_encode(['error' => 'Недостаточно прав!']));
 }
 
 $sth = $dbh->prepare("UPDATE `{$_POST['table']}` SET `name` = :name WHERE `id` = :id");

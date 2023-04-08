@@ -7,7 +7,7 @@
 
 isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
 
-if (!($row = Wrong\Database\Controller::find($_GET['id'], 'id', $_GET['table']))) {
+if (!($row = Wrong\Models\Crontabs::find($_GET['id']))) {
     exit('<script>errorToast("Ошибка!");</script>');
 }
 

@@ -67,7 +67,7 @@ if (!empty($_GET['code'])) {
                     Wrong\Task\stackJS::add('$(function(){successToast("Приятной работы в системе!");});', 2, 'sign-up');
                 }
             }
-            if (Wrong\Rights\Group::is_available_group(Wrong\Models\Pages::find('/system', 'request'))) {
+            if ($user->access()->page('/system')) {
                 exit('<!DOCTYPE html><html lang="en"><head><title>...</title></head><body><script>if(window.opener){window.opener.location.href="/system";window.close();}else{location.href="/system";}</script></body></html>');
             } else {
                 exit('<!DOCTYPE html><html lang="en"><head><title>...</title></head><body><script>if(window.opener){window.opener.location.reload();window.close();}else{location.href="/";}</script></body></html>');

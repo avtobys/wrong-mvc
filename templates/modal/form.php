@@ -11,7 +11,7 @@ if (!($row = Wrong\Database\Controller::find($_GET['id'], 'id', $_GET['table']))
     exit('<script>errorToast("Ошибка!");</script>');
 }
 
-if (!in_array($row->owner_group, $user->subordinate_groups)) {
+if (!$user->access()->write($row)) {
     exit('<script>errorToast("Недостаточно прав!");</script>');
 }
 

@@ -55,6 +55,8 @@ class Get
      * @param string $filename Путь к файлу CSS, который вы хотите подключить.
      * 
      * @return string Строка с тегом.
+     * 
+     * TODO: добавить генерацию мин версий
      */
     public static function stylesrc($filename)
     {

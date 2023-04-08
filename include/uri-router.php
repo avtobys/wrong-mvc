@@ -50,8 +50,8 @@ if (Wrong\Start\Env::$e->SYSTEM_CLOSED && $user->main_group_id != 1) { // сис
 if (preg_match('#^/api/(modal|action|select)/[a-z0-9\-]+#', $request, $matches)) { // включение запросов к модалкам/дейсвиям/выборкам
     if ($arr = Wrong\Database\Controller::all($request, 'request', $matches[1] . 's')) {
         $arr = Wrong\Rights\Group::weightSort($arr);
-        $arr = array_filter($arr, function ($row) {
-            return Wrong\Rights\Group::is_available_group($row);
+        $arr = array_filter($arr, function ($row) use ($user) {
+            return $user->access()->read($row);
         });
         if (!$arr) {
             $request = '/forbidden';
@@ -74,7 +74,7 @@ if (preg_match('#^/api/(modal|action|select)/[a-z0-9\-]+#', $request, $matches))
 if (isset($_GET['FROM_UID'])) { // переадресация на главную и сброс "гостевой" сессии
     !empty($_COOKIE['FROM_UID']) && Wrong\Auth\User::session_reset();
     $user = new Wrong\Auth\User(Wrong\Auth\User::session());
-    if (Wrong\Rights\Group::is_available_group(Wrong\Models\Pages::find('/system', 'request'))) {
+    if ($user->access()->page('/system')) {
         header("Location: /system");
     } else {
         header("Location: /");
@@ -100,7 +100,7 @@ if (preg_match('#^/email-confirm/([0-9]+)/([a-z0-9]+)#i', $request, $matches) &&
     header("X-Robots-Tag: noindex");
     Wrong\Task\stackJS::add('history.pushState(null, null, "/");setTimeout(()=>{successToast("Почта успешно подтверждена");},100)', 0, 'email-confirm');
     $user->set_confirm(1);
-    if (Wrong\Rights\Group::is_available_group(Wrong\Models\Pages::find('/system', 'request'))) {
+    if ($user->access()->page('/system')) {
         header("Location: /system");
     } else {
         header("Location: /");
@@ -115,8 +115,8 @@ if (Wrong\Start\Env::$e->EMAIL_CONFIRMATION && $user->id && !$user->email_confir
 
 if ($arr = Wrong\Models\Pages::all($request, 'request')) { // запросы к url страницам
     $arr = Wrong\Rights\Group::weightSort($arr);
-    $arr = array_filter($arr, function ($row) {
-        return Wrong\Rights\Group::is_available_group($row);
+    $arr = array_filter($arr, function ($row) use ($user) {
+        return $user->access()->read($row);
     });
     if (!$arr) {
         $request = '/forbidden';
@@ -160,8 +160,8 @@ if ($arr = Wrong\Models\Pages::all($request, 'request')) { // запросы к 
 //     ($data_page = Wrong\Database\Controller::find($matches[2], 'url', 'my-pages')) && ($arr = Wrong\Models\Pages::all('/request-dinamic-model-name', 'request'))
 // ) {
 //     $arr = Wrong\Rights\Group::weightSort($arr);
-//     $arr = array_filter($arr, function ($row) {
-//         return Wrong\Rights\Group::is_available_group($row);
+//     $arr = array_filter($arr, function ($row) use ($user) {
+//         return $user->access()->read($row);
 //     });
 //     if (!$arr) {
 //         $request = '/forbidden';

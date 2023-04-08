@@ -11,14 +11,6 @@ if (!($row = Wrong\Database\Controller::find($_GET['id'], 'id', $_GET['table']))
     exit('<script>errorToast("Ошибка!");</script>');
 }
 
-if ($row->owner_group == 1) {
-    exit('<script>errorToast("Изменить название системного функционала нельзя!");</script>');
-}
-
-if (!in_array($row->owner_group, $user->subordinate_groups)) {
-    exit('<script>errorToast("Недостаточно прав!");</script>');
-}
-
 ?>
 <div class="modal fade" id="<?= $basename ?>" tabindex="-1" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">

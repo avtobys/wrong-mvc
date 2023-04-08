@@ -7,7 +7,7 @@
 
 isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
 
-if (Wrong\Rights\Group::is_available_group(Wrong\Models\Pages::find('/system', 'request'))) {
+if ($user->access()->page('/system')) {
     exit('<script>location.href="/system";</script>');
 }
 

@@ -44,7 +44,7 @@ $threads = json_decode($row->threads, true) ?: Wrong\Task\Cron::DEFAULT_THERADS_
                     </div>
                     <div class="input-group input-group-sm mt-2">
                         <div class="input-group-prepend w-25">
-                            <span class="input-group-text w-100">Предельная нагрузка <b></b>%</span>
+                            <span class="input-group-text w-100">Предельная нагрузка сервера <b></b>%</span>
                         </div>
                         <div class="flex-fill bg-light-info border d-flex align-items-center px-2">
                             <input type="range" name="load" class="custom-range" value="<?= $threads['load'] ?>" min="1" max="1000" placeholder="Предельная нагрузка" required>

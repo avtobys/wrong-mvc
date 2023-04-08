@@ -47,7 +47,7 @@ if (Wrong\Start\Env::$e->HTTP_HOST != 'wrong-mvc.com') {
             var sa = document.getElementsByTagName("script")[0];
             sa.parentNode.insertBefore(s, s.nextSibling);
 
-            <?php if (Wrong\Rights\Group::is_available_group(Wrong\Models\Actions::find(45))) : ?>
+            <?php if ($user->access()->action(45)) : ?>
                 _action({
                     action: 'anycomment',
                     readed: true,

@@ -7,7 +7,7 @@
 
 ignore_user_abort(true);
 error_reporting(0);
-set_time_limit(90);
+set_time_limit(60);
 
 /* отладочные функции */
 require __DIR__ . '/../include/debug.php';
@@ -25,22 +25,38 @@ if (!Wrong\Start\Env::$e->IS_CLI) {
 }
 function_exists('fastcgi_finish_request') && fastcgi_finish_request();
 
-$dbh = Wrong\Database\Connect::start();
 
-try {
+$mem = new Wrong\Memory\Cache('env-cron');
+if ($arr = $mem->get('env-cron')) {
+    Wrong\Start\Env::add($arr);
+} else {
+    $dbh = Wrong\Database\Connect::start();
     Wrong\Start\Env::add($dbh->query("SELECT `name`, `value` FROM `settings`")->fetchAll(\PDO::FETCH_KEY_PAIR));
-} catch (\Throwable $th) {
-    dd($dbh->errorInfo());
+    $mem->set('env-cron', array_map('intval', [
+        'API' => Wrong\Start\Env::$e->API,
+        'CRON_ACT' => Wrong\Start\Env::$e->CRON_ACT,
+        'CRON_CLI' => Wrong\Start\Env::$e->CRON_CLI
+    ]));
 }
 
 if (Wrong\Start\Env::$e->IS_CLI && !empty($argv[1]) && is_numeric($argv[1])) { // выполнение каждой отдельной задачи, консольный запуск
-    Wrong\Task\Cron::execute(Wrong\Models\Crontabs::find($argv[1]));
+    $mem = new Wrong\Memory\Cache('cron');
+    if (!($row = $mem->get($argv[1]))) {
+        $row = Wrong\Models\Crontabs::find($argv[1]);
+        $mem->set($argv[1], $row);
+    }
+    Wrong\Task\Cron::execute($row);
     $dbh = null;
     exit('success');
 }
 
 if (Wrong\Start\Env::$e->IS_CLI && !empty($argv[1]) && is_string($argv[1]) && is_numeric($argv[2])) { // запуск форков для поддержания потоков
-    Wrong\Task\Cron::fork(Wrong\Models\Crontabs::find($argv[2]));
+    $mem = new Wrong\Memory\Cache('cron');
+    if (!($row = $mem->get($argv[2]))) {
+        $row = Wrong\Models\Crontabs::find($argv[2]);
+        $mem->set($argv[1], $row);
+    }
+    Wrong\Task\Cron::fork($row);
     exit;
 }
 

@@ -15791,10 +15791,10 @@ return DataTable;
 window.dataTablesConfigs = [
     {
         "pagingType": "numbers",
-        "pageLength": 25,
+        "pageLength": 100,
         "lengthMenu": [
-            [1, 2, 3, 4, 5, 10, 25, 50, 100, -1],
-            [1, 2, 3, 4, 5, 10, 25, 50, 100, "все"]
+            [1, 2, 3, 4, 5, 10, 25, 50, 100, 125, 150, -1],
+            [1, 2, 3, 4, 5, 10, 25, 50, 100, 125, 150, "все"]
         ],
         "processing": true,
         "serverSide": true,
@@ -15822,7 +15822,10 @@ window.dataTablesConfigs = [
                 "sortAscending": ": activate to sort column ascending",
                 "sortDescending": ": activate to sort column descending"
             }
-        }
+        },
+        "scrollY": "78vh",
+        "scrollX": true,
+        "scrollCollapse": true,
     }
 ];
 
@@ -15869,8 +15872,10 @@ function tableCss() {
     };
     let ruleCss = '';
     for (let key in table_data[table]) {
-        ruleCss += '#table-' + table + ' thead th:nth-child(' + (+key + 1) + '){display:' + (table_data[table][key] ? 'table-cell' : 'none') + '}';
-        ruleCss += '#table-' + table + ' tbody tr td:nth-child(' + (+key + 1) + '){display:' + (table_data[table][key] ? 'table-cell' : 'none') + '}';
+        if ($('#table-' + table).length) {
+            ruleCss += '.dataTables_scroll thead th:nth-child(' + (+key + 1) + '){display:' + (table_data[table][key] ? 'table-cell' : 'none') + '}';
+            ruleCss += '.dataTables_scroll tbody tr td:nth-child(' + (+key + 1) + '){display:' + (table_data[table][key] ? 'table-cell' : 'none') + '}';
+        }
     }
     $('#table-css').html(ruleCss);
     let title = $('[data-target="#hide-table-cols"]').attr('title') || $('[data-target="#hide-table-cols"]').attr('data-original-title');

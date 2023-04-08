@@ -17,7 +17,7 @@ if (!($row = Wrong\Models\Crontabs::find($_POST['id']))) {
     exit(json_encode(['error' => 'Ошибка']));
 }
 
-if (!in_array($row->owner_group, $user->subordinate_groups)) {
+if (!$user->access()->write($row)) {
     exit(json_encode(['error' => 'Недостаточно прав!']));
 }
 
@@ -30,6 +30,8 @@ $threads = array_map('intval', ['min' => $_POST['min'], 'max' => $_POST['max'], 
 $sth = $dbh->query("UPDATE `crontabs` SET `threads` = '" . json_encode($threads) . "' WHERE `id` = $row->id");
 
 if ($sth->errorCode() == '00000') {
+    $mem = new Wrong\Memory\Cache('cron');
+    $mem->delete($row->id);
     exit(json_encode(['result' => 'ok', 'message' => 'Данные успешно установлены']));
 }
 

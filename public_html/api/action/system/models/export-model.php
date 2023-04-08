@@ -7,20 +7,11 @@
 
 isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
 
-$_REQUEST = array_map(function ($item) {
-    if (is_string($item)) {
-        return trim(htmlspecialchars($item, ENT_QUOTES));
-    } else {
-        return $item;
-    }
-}, $_REQUEST);
-
-
 if (!($row = Wrong\Database\Controller::find($_REQUEST['id'], 'id', $_REQUEST['table']))) {
     exit('errorToast("Ошибка!");');
 }
 
-if (!in_array($row->owner_group, $user->subordinate_groups) && !in_array($row->owner_group, $user->groups)) {
+if (!$user->access()->write($row, true)) {
     if (isset($_POST['copy'])) {
         exit(json_encode(['error' => 'Недостаточно прав!']));
     }

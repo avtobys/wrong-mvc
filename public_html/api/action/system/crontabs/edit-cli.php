@@ -13,7 +13,7 @@ if (!($row = Wrong\Models\Crontabs::find($_POST['id']))) {
     exit(json_encode(['error' => 'Ошибка']));
 }
 
-if (!in_array($row->owner_group, $user->subordinate_groups)) {
+if (!$user->access()->write($row)) {
     exit(json_encode(['error' => 'Недостаточно прав!']));
 }
 
@@ -22,8 +22,9 @@ $sth->bindValue(':cli', $_POST['cli']);
 $sth->bindValue(':id', $_POST['id']);
 $sth->execute();
 if ($sth->errorCode() == '00000') {
+    $mem = new Wrong\Memory\Cache('cron');
+    $mem->delete($row->id);
     exit(json_encode(['result' => 'ok', 'message' => 'Команда обновлена!']));
 }
 
 exit(json_encode(['error' => 'Ошибка']));
-

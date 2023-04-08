@@ -11,10 +11,6 @@ if (!($row = Wrong\Database\Controller::find($_GET['id'], 'id', $_GET['table']))
     exit('<script>errorToast("Ошибка!");</script>');
 }
 
-if (!in_array($row->owner_group, $user->subordinate_groups) && !in_array($row->owner_group, $user->groups)) {
-    exit('<script>errorToast("Недостаточно прав!");</script>');
-}
-
 ?>
 <div class="modal fade" id="<?= $basename ?>" tabindex="-1" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">

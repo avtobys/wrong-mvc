@@ -11,14 +11,6 @@ if (!($row = Wrong\Database\Controller::find($_GET['id'], 'id', $_GET['table']))
     exit('<script>errorToast("Ошибка!");</script>');
 }
 
-if ($row->owner_group == 1) {
-    exit('<script>errorToast("Изменить владельца системного функционала нельзя!");</script>');
-}
-
-if (!in_array($row->owner_group, $user->subordinate_groups)) {
-    exit('<script>errorToast("Недостаточно прав!");</script>');
-}
-
 $owner_group = $row->owner_group;
 
 ?>

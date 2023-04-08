@@ -80,7 +80,7 @@ class Selects extends Controller
         if (in_array($table, ['actions', 'modals', 'selects', 'templates', 'pages'])) {
             $key_file = array_search('file', $columns);
             foreach ($arr as $key => $row) {
-                $arr[$key][] = '<a title="<div class=\'text-left small\'>Файл: ' . $arr[$key][$key_file] . '<br>Последнее изменение: ' . date('Y-m-d H:i:s', filemtime($_SERVER['DOCUMENT_ROOT'] . $arr[$key][$key_file])) . '<div>" data-id="' . $row[0] . '" data-table="' . $table . '" data-target="#edit-code" data-toggle="modal" class="d-block text-center editable-act" href="#"><i class="fa fa-file-code-o"></i></a>';
+                $arr[$key][] = '<a title="<div class=\'text-left small\'>Файл: ' . $arr[$key][$key_file] . '<br>Последнее изменение: ' . date('Y-m-d H:i:s', filemtime($_SERVER['DOCUMENT_ROOT'] . $arr[$key][$key_file])) . '<div>" data-id="' . $row[0] . '" data-table="' . $table . '" data-target="#edit-code" data-toggle="modal" class="d-block text-center editable-act px-1" href="#"><i class="fa fa-file-code-o"></i></a>';
             }
         }
 
@@ -169,7 +169,7 @@ class Selects extends Controller
 
         if ($key_column = array_search('file', $columns)) {
             foreach ($arr as $key => $item) {
-                $arr[$key][$key_column] = '<div title="' . $item[$key_column] . '" class="edit-wrapper editable-act" data-id="' . $item[0] . '" data-target="#edit-file" data-toggle="modal" data-table="' . $table . '">' . $item[$key_column] . '<i class="fa fa-edit"></i></div>';
+                $arr[$key][$key_column] = '<div title="' . $item[$key_column] . '" class="edit-wrapper editable-act px-1" data-id="' . $item[0] . '" data-target="#edit-file" data-toggle="modal" data-table="' . $table . '">' . $item[$key_column] . '<i class="fa fa-edit"></i></div>';
             }
         }
 
@@ -179,11 +179,6 @@ class Selects extends Controller
             }
         }
 
-        if ($key_column = array_search('template_id', $columns)) {
-            foreach ($arr as $key => $item) {
-                $arr[$key][$key_column] = '<div class="edit-wrapper editable-act" data-id="' . $item[0] . '" data-target="#edit-template" data-toggle="modal" data-table="' . $table . '">' . Templates::find($item[$key_column])->name . '<i class="fa fa-edit"></i></div>';
-            }
-        }
 
         if ($key_column = array_search('name', $columns)) {
             foreach ($arr as $key => $item) {
@@ -224,9 +219,16 @@ class Selects extends Controller
         }
 
         if ($table == 'pages') {
-            $key_column = array_search('id', $columns);
-            foreach ($arr as $key => $item) {
-                $arr[$key][$key_column] = '<a title="Открыть в новом окне" class="link-wrapper" target="_blank" href="' . Pages::find($item[$key_column])->request . '">' . $item[$key_column] . '<i class="fa fa-external-link"></i></a>';
+            if ($key_column = array_search('template_id', $columns)) {
+                foreach ($arr as $key => $item) {
+                    $arr[$key][$key_column] = '<div class="edit-wrapper editable-act" data-id="' . $item[0] . '" data-target="#edit-template" data-toggle="modal" data-table="' . $table . '">' . Templates::find($item[$key_column])->name . '<i class="fa fa-edit"></i></div>';
+                }
+            }
+
+            if ($key_column = array_search('id', $columns)) {
+                foreach ($arr as $key => $item) {
+                    $arr[$key][$key_column] = '<a title="Открыть в новом окне" class="link-wrapper" target="_blank" href="' . Pages::find($item[$key_column])->request . '">' . $item[$key_column] . '<i class="fa fa-external-link"></i></a>';
+                }
             }
         }
 
@@ -265,7 +267,7 @@ class Selects extends Controller
 
             $key_column = array_search('email_confirmed', $columns);
             foreach ($arr as $key => $item) {
-                $arr[$key][$key_column] = '<div class="text-center">' . ($item[$key_column] ? '<i title="Email подтверждён" class="fa fa-check-circle text-success"></i>' : '<i title="Email не подтверждён" class="fa fa-times-circle text-secondary"></i>') . '</div>';
+                $arr[$key][$key_column] = '<div class="text-center px-1">' . ($item[$key_column] ? '<i title="Email подтверждён" class="fa fa-check-circle text-success"></i>' : '<i title="Email не подтверждён" class="fa fa-times-circle text-secondary"></i>') . '</div>';
             }
         }
 

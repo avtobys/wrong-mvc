@@ -11,44 +11,30 @@ set_time_limit(0);
 
 header("Content-type: application/json");
 
-$_POST = array_map(function ($item) {
-    if (is_string($item)) {
-        return trim($item);
-    } else {
-        return $item;
-    }
-}, $_POST);
-
-if (!($table = Wrong\Database\Controller::table($_POST['table']))) {
-    exit(json_encode(['error' => 'Ошибка!']));
+if (!($row = Wrong\Database\Controller::find($_POST['id'], 'id', $_POST['table']))) {
+    exit(json_encode(['error' => 'Ошибка']));
 }
 
-$id = abs(intval($_POST['id']));
-
-$sth = $dbh->prepare("SELECT * FROM `$table` WHERE `id` = ?");
-$sth->execute([$id]);
-$row = $sth->fetch();
-
-if (!isset($row->owner_group) || (!in_array($row->owner_group, $user->groups) && !in_array($row->owner_group, $user->subordinate_groups))) {
-    if (in_array($row->owner_group, array_column(Wrong\Rights\Group::$groups, 'id'))) {
-        exit(json_encode(['error' => 'Недостаточно прав']));
-    }
+if (!$user->access()->write($row)) {
+    exit(json_encode(['error' => 'Недостаточно прав']));
 }
 
-if ($row->owner_group == 1) {
+if ($user->access()->is_system($row)) {
     exit(json_encode(['error' => 'Системный функционал удалять нельзя!']));
 }
 
-$table_comment = $dbh->query("SHOW TABLE STATUS WHERE Name = '$table'")->fetch()->Comment;
-
-$sth = $dbh->query("DELETE FROM `$table` WHERE `id` = $row->id LIMIT 1");
+$sth = $dbh->query("DELETE FROM `{$_POST['table']}` WHERE `id` = $row->id LIMIT 1");
 if ($sth->rowCount()) {
+    if ($_POST['table'] == 'crontabs') {
+        $mem = new Wrong\Memory\Cache('cron');
+        $mem->delete($row->id);
+    }
     if (Wrong\Rights\Group::is_one_owner_file($row->file)) { // файл не используется другими владельцами
         if ($row->file && !Wrong\Database\Controller::find($row->file, 'file', $table) && !Wrong\File\Path::rm($_SERVER['DOCUMENT_ROOT'] . $row->file)) {
             exit(json_encode(['error' => 'Неизвестная ошибка! Возможно что-то не так с правами на создание файлов и каталогов.']));
         }
     }
-    if ($table == 'groups') {
+    if ($_POST['table'] == 'groups') {
         Wrong\Rights\Group::delete_all_owner_models($id);
         foreach (['actions', 'modals', 'selects', 'pages', 'users', 'templates'] as $table) {
             foreach ($dbh->query("SELECT * FROM `$table`") as $row) {
@@ -61,7 +47,7 @@ if ($sth->rowCount()) {
             }
         }
     }
-    exit(json_encode(['id' => $id, 'message' => $table_comment . ' - успешно удалено!']));
+    exit(json_encode(['id' => $id, 'message' => $dbh->query("SHOW TABLE STATUS WHERE Name = '{$_POST['table']}'")->fetch()->Comment . ' - успешно удалено!']));
 }
 
 exit(json_encode(['error' => 'Неизвестная ошибка!']));

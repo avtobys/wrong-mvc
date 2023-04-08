@@ -7,7 +7,7 @@
 
 isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
 
-if (!Wrong\Rights\Group::is_available_group(Wrong\Models\Actions::find(25))) { // скрываем некоторые данные для тех у кого недоступно само действие изменения настроек
+if (!$user->access()->action('/api/action/settings')) { // скрываем некоторые данные для тех у кого недоступно само действие изменения настроек
     foreach (Wrong\Start\Env::$e as $key => $value) {
         if (stripos($key, 'secret') !== false || stripos($key, 'password') !== false) {
             Wrong\Start\Env::$e->$key = '******';
@@ -29,7 +29,7 @@ if (!Wrong\Rights\Group::is_available_group(Wrong\Models\Actions::find(25))) { /
                 <form id="form-system-settings" action="<?= Wrong\Models\Actions::find(25)->request ?>">
                     <div class="row row-cols-1 row-cols-xl-2">
                         <div class="col">
-                            <div class="badge badge-warning">API ключи:</div>
+                            <div class="badge badge-warning px-2">API ключи:</div>
                             <div class="input-group input-group-sm mt-1">
                                 <div class="input-group-prepend w-50">
                                     <span class="input-group-text w-100"><?= Wrong\Database\Controller::find('HCAPTCHA_SITEKEY', 'name', 'settings')->description ?></span>
@@ -72,7 +72,7 @@ if (!Wrong\Rights\Group::is_available_group(Wrong\Models\Actions::find(25))) { /
                                 </div>
                                 <input type="text" name="ANYCOMMENT_SECRET" class="form-control" value="<?= Wrong\Start\Env::$e->ANYCOMMENT_SECRET ?>" placeholder="ANYCOMMENT_SECRET" autocomplete="off">
                             </div>
-                            <div class="badge badge-warning mt-2">Новые пользователи:</div>
+                            <div class="badge badge-warning px-2 mt-2">Новые пользователи:</div>
                             <div class="input-group input-group-sm mt-1">
                                 <div class="input-group-prepend w-50">
                                     <span class="input-group-text w-100"><?= Wrong\Database\Controller::find('OWNER_GROUP_USERS', 'name', 'settings')->description ?></span>
@@ -112,7 +112,10 @@ if (!Wrong\Rights\Group::is_available_group(Wrong\Models\Actions::find(25))) { /
                             </div>
                         </div>
                         <div class="col">
-                            <div class="badge badge-warning">Система:</div>
+                            <div>
+                                <div class="badge badge-warning px-2">Система:</div>
+                                <a class="badge badge-danger px-2" data-action="cache-clean" data-confirm="true" data-header="Очистить кеш?" data-body="Очистить системный кеш полностью?" data-callback="afterCleanCache" href="#" role="button">Очистить кеш <span id="cache-size"><i class="fa fa-circle-o-notch fa-spin small"></i></span></a>
+                            </div>
                             <div class="bg-light-info border mt-1 px-2 py-1 rounded">
                                 <div class="custom-control custom-checkbox small">
                                     <input type="checkbox" name="RETURN_TO_REQUEST" class="custom-control-input" id="RETURN_TO_REQUEST" <?= Wrong\Database\Controller::find('RETURN_TO_REQUEST', 'name', 'settings')->value ? 'checked' : '' ?>>
@@ -161,7 +164,7 @@ if (!Wrong\Rights\Group::is_available_group(Wrong\Models\Actions::find(25))) { /
                                     <label class="custom-control-label text-danger" for="SYSTEM_CLOSED"><?= Wrong\Database\Controller::find('SYSTEM_CLOSED', 'name', 'settings')->description ?></label>
                                 </div>
                             </div>
-                            <div class="badge badge-warning mt-2">Отправка почты:</div>
+                            <div class="badge badge-warning px-2 mt-2">Отправка почты:</div>
                             <div class="bg-light-info border mt-1 px-2 py-1 rounded">
                                 <div class="custom-control custom-checkbox small">
                                     <input type="checkbox" name="EMAIL" class="custom-control-input" id="EMAIL" <?= Wrong\Database\Controller::find('EMAIL', 'name', 'settings')->value ? 'checked' : '' ?>>
@@ -259,5 +262,16 @@ if (!Wrong\Rights\Group::is_available_group(Wrong\Models\Actions::find(25))) { /
                 $("#<?= $basename ?> [name=EMAIL]").prop("checked", true);
             }
         });
+
+        $('#cache-size').load('/api/select/cache-size');
+
+        function afterCleanCache(response) {
+            if (response.error) {
+                errorToast(response.error);
+                return;
+            }
+            successToast(response.message);
+            $('#cache-size').html(response.size);
+        }
     </script>
 </div>

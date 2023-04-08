@@ -13,11 +13,11 @@ if (!($row = Wrong\Database\Controller::find($_POST['id'], 'id', $_POST['table']
     exit(json_encode(['error' => 'Ошибка']));
 }
 
-if ($row->owner_group == 1) {
+if ($user->access()->is_system($row)) {
     exit(json_encode(['error' => 'Изменить код файла обработчика системного функционала нельзя!']));
 }
 
-if (!in_array($row->owner_group, $user->subordinate_groups)) {
+if (!$user->access()->write($row)) {
     exit(json_encode(['error' => 'Недостаточно прав!']));
 }
 
