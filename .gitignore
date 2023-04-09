@@ -4,5 +4,6 @@ vendor
 public_html/docs
 temp
 wrong-mvc.mp4
+public_html/assets/system/video
 package-lock.json
 composer.lock
