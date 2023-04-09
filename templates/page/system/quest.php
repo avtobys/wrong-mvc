@@ -17,7 +17,7 @@ ob_clean();
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $row->name ?></title>
-    <meta name="description" content="Унифицированная среда WEB разработки Wrong MVC с визуализацией моделей и автоматизацией действий">
+    <meta name="description" content="Унифицированная среда WEB разработки Wrong MVC с визуализацией компонентов и автоматизацией действий">
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="icon" type="image/png" sizes="64x64" href="/assets/system/img/favicon-64.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/system/img/favicon-32.png">

@@ -24,6 +24,10 @@ $sth = $dbh->prepare($query);
 $sth->execute();
 $arr = $sth->fetchAll(PDO::FETCH_NUM);
 
+foreach ($arr as $key => $item) {
+    $arr[$key][8] = '<div class="text-nowrap d-flex">' . $arr[$key][8] . '<a title="Массово добавить пользователям этой группы другую группу" data-toggle="modal" data-target="#add-from-group" data-id="' . $item[0] . '" class="text-success ml-auto mr-2" href="#"><i class="fa fa-plus-circle"></i></a><a title="Массово исключить пользователей этой группы из другой группы" data-toggle="modal" data-target="#remove-from-group" data-id="' . $item[0] . '" href="#"><i class="fa fa-minus-circle"></i></a></div>';
+}
+
 $arr = Wrong\Models\Selects::formatter($arr, $columns, $table_name);
 
 $arr_filtered = $arr;

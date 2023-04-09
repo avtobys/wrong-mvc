@@ -8,7 +8,7 @@
 isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
 
 if ($user->id && $request == '/documentation') {
-    header("Location: /system?main");
+    header("Location: /system");
     exit;
 }
 
@@ -41,7 +41,8 @@ if ($user->id && $request == '/documentation') {
             <li><a href="//wrong-mvc.com/docs/weight.html">Системный вес</a></li>
             <li><a href="//wrong-mvc.com/docs/access.html">Проверка прав доступов пользователя</a></li>
             <li><a href="//wrong-mvc.com/docs/from_uid.html">Вход из под другого пользователя</a></li>
-            <li><a href="//wrong-mvc.com/docs/models.html">Модели</a></li>
+            <li><a href="//wrong-mvc.com/docs/models.html">Модели(компоненты)</a></li>
+            <li><a href="//wrong-mvc.com/docs/related_functionality.html">Управление связанным функционалом</a></li>
             <li><a href="//wrong-mvc.com/docs/userlandnaming.html">Руководство по именованию</a></li>
             <li><a href="//wrong-mvc.com/docs/dinamic.html">Динамические модели страниц</a></li>
             <li><a href="//wrong-mvc.com/docs/routing.html">Роутинг, контроллеры URI</a></li>

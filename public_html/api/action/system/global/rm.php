@@ -35,11 +35,11 @@ if ($sth->rowCount()) {
         }
     }
     if ($_POST['table'] == 'groups') {
-        Wrong\Rights\Group::delete_all_owner_models($id);
+        Wrong\Rights\Group::delete_all_owner_models($_POST['id']);
         foreach (['actions', 'modals', 'selects', 'pages', 'users', 'templates'] as $table) {
             foreach ($dbh->query("SELECT * FROM `$table`") as $row) {
                 $arr = json_decode($row->groups);
-                if (($key = array_search($id, $arr)) !== false) {
+                if (($key = array_search($_POST['id'], $arr)) !== false) {
                     unset($arr[$key]);
                     $arr = array_values(array_unique(array_map('intval', $arr)));
                     $dbh->query("UPDATE `$table` SET `groups` = '" . json_encode($arr) . "' WHERE `id` = $row->id");
@@ -47,7 +47,7 @@ if ($sth->rowCount()) {
             }
         }
     }
-    exit(json_encode(['id' => $id, 'message' => $dbh->query("SHOW TABLE STATUS WHERE Name = '{$_POST['table']}'")->fetch()->Comment . ' - успешно удалено!']));
+    exit(json_encode(['id' => $_POST['id'], 'message' => $dbh->query("SHOW TABLE STATUS WHERE Name = '{$_POST['table']}'")->fetch()->Comment . ' - успешно удалено!']));
 }
 
 exit(json_encode(['error' => 'Неизвестная ошибка!']));

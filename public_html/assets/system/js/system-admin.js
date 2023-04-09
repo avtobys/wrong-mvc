@@ -15791,7 +15791,7 @@ return DataTable;
 window.dataTablesConfigs = [
     {
         "pagingType": "numbers",
-        "pageLength": 100,
+        "pageLength": 25,
         "lengthMenu": [
             [1, 2, 3, 4, 5, 10, 25, 50, 100, 125, 150, -1],
             [1, 2, 3, 4, 5, 10, 25, 50, 100, 125, 150, "все"]
@@ -15823,7 +15823,7 @@ window.dataTablesConfigs = [
                 "sortDescending": ": activate to sort column descending"
             }
         },
-        "scrollY": "78vh",
+        "scrollY": "80vh",
         "scrollX": true,
         "scrollCollapse": true,
     }
