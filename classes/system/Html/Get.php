@@ -8,10 +8,10 @@
 
 namespace Wrong\Html;
 
-use MatthiasMullie\Minify;
+use Wrong\Html\Min;
 
 /**
- * @brief Get методы класса возвращают минифицированные css и js коды
+ * @brief Get методы класса возвращают минифицированные css и js коды для встраивания в html
  * 
  */
 
@@ -28,25 +28,10 @@ class Get
     public static function style($filename)
     {
 
-        if (!file_exists($filename)) return '';
-        if (preg_match('#\.min\.css$#', $filename)) {
-            $minifed_path = dirname($filename) . '/' . basename($filename);
-        } else {
-            $minifed_path = dirname($filename) . '/' . basename($filename, '.css') . '.min.css';
-        }
-
-        if (!file_exists($minifed_path) || filemtime($minifed_path) != filemtime($filename)) {
-            $minifier = new Minify\CSS($filename);
-            $data = $minifier->minify($minifed_path);
-            touch($minifed_path);
-            touch($filename);
-            clearstatcache(true, $minifed_path);
-            clearstatcache(true, $filename);
-        } else {
-            $data = file_get_contents($minifed_path);
-        }
+        if (!file_exists($filename) || !($minifed_path = Min::style($filename)) || !file_exists($minifed_path)) return;
+        $data = file_get_contents($minifed_path);
         $data = preg_replace('#\/\*\# sourceMappingURL=[^/]+\/#', '', $data);
-        return '<style>' . trim($data) . '</style>';
+        return '<style>' . trim($data) . '</style>' . PHP_EOL;
     }
 
     /**
@@ -56,12 +41,11 @@ class Get
      * 
      * @return string Строка с тегом.
      * 
-     * TODO: добавить генерацию мин версий
      */
     public static function stylesrc($filename)
     {
-
-        return '<link rel="stylesheet" href="' . str_replace($_SERVER['DOCUMENT_ROOT'], '', realpath($filename)) . '?' . filemtime($filename) . '">';
+        if (!file_exists($filename) || !($minifed_path = Min::style($filename)) || !file_exists($minifed_path)) return;
+        return '<link rel="stylesheet" href="' . str_replace($_SERVER['DOCUMENT_ROOT'], '', realpath($minifed_path)) . '?' . filemtime($minifed_path) . '">' . PHP_EOL;
     }
 
     /**
@@ -73,24 +57,9 @@ class Get
      */
     public static function script($filename)
     {
-        if (!file_exists($filename)) return '';
-        if (preg_match('#\.min\.js$#', $filename)) {
-            $minifed_path = dirname($filename) . '/' . basename($filename);
-        } else {
-            $minifed_path = dirname($filename) . '/' . basename($filename, '.js') . '.min.js';
-        }
-
-        if (!file_exists($minifed_path) || filemtime($minifed_path) != filemtime($filename)) {
-            $minifier = new Minify\JS($filename);
-            $data = $minifier->minify($minifed_path);
-            touch($minifed_path);
-            touch($filename);
-            clearstatcache(true, $minifed_path);
-            clearstatcache(true, $filename);
-        } else {
-            $data = file_get_contents($minifed_path);
-        }
-        return '<script>' . trim($data) . '</script>';
+        if (!file_exists($filename) || !($minifed_path = Min::script($filename)) || !file_exists($minifed_path)) return;
+        $data = file_get_contents($minifed_path);
+        return '<script>' . trim($data) . '</script>' . PHP_EOL;
     }
 
     /**
@@ -103,7 +72,8 @@ class Get
     public static function scriptsrc($filename)
     {
 
-        return '<script src="' . str_replace($_SERVER['DOCUMENT_ROOT'], '', realpath($filename)) . '?' . filemtime($filename) . '"></script>';
+        if (!file_exists($filename) || !($minifed_path = Min::script($filename)) || !file_exists($minifed_path)) return;
+        return '<script src="' . str_replace($_SERVER['DOCUMENT_ROOT'], '', realpath($minifed_path)) . '?' . filemtime($minifed_path) . '"></script>' . PHP_EOL;
     }
 
     /**

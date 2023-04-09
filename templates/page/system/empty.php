@@ -19,12 +19,12 @@ ob_clean();
     <title><?= $row->name ?></title>
     <meta name="description" content="">
     <link rel="icon" type="image/png" sizes="64x64" href="/assets/system/img/favicon-64.png">
-    <?= Wrong\Html\Get::style($_SERVER['DOCUMENT_ROOT'] . '/assets/system/css/main.min.css') ?>
+    <?= Wrong\Html\Get::stylesrc($_SERVER['DOCUMENT_ROOT'] . '/assets/system/css/main.min.css') ?>
 </head>
 
 <body>
     <?= $TEMPLATE_DATA ?>
-    <?= Wrong\Html\Get::script($_SERVER['DOCUMENT_ROOT'] . '/assets/system/js/main.min.js') ?>
+    <?= Wrong\Html\Get::scriptsrc($_SERVER['DOCUMENT_ROOT'] . '/assets/system/js/main.min.js') ?>
 </body>
 
 </html>

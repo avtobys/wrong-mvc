@@ -21,8 +21,8 @@ ob_clean();
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="icon" type="image/png" sizes="64x64" href="/assets/system/img/favicon-64.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/system/img/favicon-32.png">
-    <?= Wrong\Html\Get::style($_SERVER['DOCUMENT_ROOT'] . '/assets/system/css/guest.min.css') ?>
-    <?= Wrong\Html\Get::script($_SERVER['DOCUMENT_ROOT'] . '/assets/system/js/main.min.js') ?>
+    <?= Wrong\Html\Get::stylesrc($_SERVER['DOCUMENT_ROOT'] . '/assets/system/css/guest.min.css') ?>
+    <?= Wrong\Html\Get::scriptsrc($_SERVER['DOCUMENT_ROOT'] . '/assets/system/js/main.min.js') ?>
 </head>
 
 
@@ -31,7 +31,7 @@ ob_clean();
         <?= $TEMPLATE_DATA ?>
     </div>
 </body>
-<?= Wrong\Html\Get::script($_SERVER['DOCUMENT_ROOT'] . '/assets/system/js/guest.min.js') ?>
+<?= Wrong\Html\Get::scriptsrc($_SERVER['DOCUMENT_ROOT'] . '/assets/system/js/guest.min.js') ?>
 <script>
     $(document).on('click', '[data-fancybox]', function(e) {
         if ($(this).data('fancybox') == 'video') {

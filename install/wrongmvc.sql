@@ -85,7 +85,7 @@ CREATE TABLE `crontabs` (
 
 LOCK TABLES `crontabs` WRITE;
 /*!40000 ALTER TABLE `crontabs` DISABLE KEYS */;
-INSERT INTO `crontabs` VALUES (1,NULL,NULL,'/api/action/toggle',1,'* * * * *','POST','[]','{\"id\":\"3\",\"table\":\"groups\"}',2,'2023-04-08 21:41:00','Включает/отключает группу модераторы каждую минуту',1),(2,NULL,NULL,'/api/action/clean-logs',1,'0 0 */1 * *','POST','[]','[]',2,'2023-04-09 00:00:00','Периодическая очистка логов',1),(3,NULL,NULL,'/api/action/erase-group',1,'0 0 * * *','POST','[]','{\"table\":\"groups\",\"id\":\"5\"}',2,'2023-04-09 00:00:00','Очистка от всех демо моделей раз в сутки',1),(4,NULL,NULL,'/api/action/anycomment',1,'0 */1 * * *','GET','[]','[]',2,'2023-04-08 22:00:00','Обновление инфы о новых комментариях и запросах в тех поддержку',1),(5,'{\"min\":10,\"max\":10,\"load\":40,\"fixed\":1}','sleep 15','',0,'* * * * *','CLI','null','[]',2,'2023-04-08 21:41:00','Перманентно спит по 15 сек в 10 потоков одновременно, а если нагрузка более 40% даже не начинает спать',1);
+INSERT INTO `crontabs` VALUES (1,NULL,NULL,'/api/action/toggle',1,'* * * * *','POST','[]','{\"id\":\"3\",\"table\":\"groups\"}',2,'2023-04-09 11:20:00','Включает/отключает группу модераторы каждую минуту',1),(2,NULL,NULL,'/api/action/clean-logs',1,'0 0 */1 * *','POST','[]','[]',2,'2023-04-10 00:00:00','Периодическая очистка логов',1),(3,NULL,NULL,'/api/action/erase-group',1,'0 0 * * *','POST','[]','{\"table\":\"groups\",\"id\":\"5\"}',2,'2023-04-10 00:00:00','Очистка от всех демо моделей раз в сутки',1),(4,NULL,NULL,'/api/action/anycomment',1,'0 */1 * * *','GET','[]','[]',2,'2023-04-09 12:00:00','Обновление инфы о новых комментариях и запросах в тех поддержку',1),(5,'{\"min\":10,\"max\":10,\"load\":40,\"fixed\":1}','sleep 15','',0,'* * * * *','CLI','null','[]',2,'2023-04-09 11:20:00','Перманентно спит по 15 сек в 10 потоков одновременно, а если нагрузка более 40% даже не начинает спать',1);
 /*!40000 ALTER TABLE `crontabs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,7 +118,7 @@ CREATE TABLE `groups` (
 
 LOCK TABLES `groups` WRITE;
 /*!40000 ALTER TABLE `groups` DISABLE KEYS */;
-INSERT INTO `groups` VALUES (1,'Система',1,2147483647,0,'system','Системная, никому не подчиненная группа с наивысшими правами',1,1),(2,'Администраторы',1,2147483646,0,'admin','Администраторы с полными правами',1,1),(3,'Модераторы',2,1000,0,'moder','Для примера, в логике не участвует',0,1),(4,'Пользователи',2,10,0,'user','Для примера, в логике не участвует',0,1),(5,'Demo',2,10,50,'demo','Демо &quot;администраторы&quot;, доступна полностью админ панель и не критичные действия. Может посмотреть и &quot;пощупать&quot; почти всё.',1,1),(6,'Примеры шаблонов',2,99999,0,'examples','Примеры шаблонов простых сайтов/лендингов',0,0);
+INSERT INTO `groups` VALUES (1,'Система',1,2147483647,0,'system','Системная, никому не подчиненная группа с наивысшими правами',1,1),(2,'Администраторы',1,2147483646,0,'admin','Администраторы с полными правами',1,1),(3,'Модераторы',2,1000,0,'moder','Для примера, в логике не участвует',0,0),(4,'Пользователи',2,10,0,'user','Для примера, в логике не участвует',0,1),(5,'Demo',2,10,50,'demo','Демо &quot;администраторы&quot;, доступна полностью админ панель и не критичные действия. Может посмотреть и &quot;пощупать&quot; почти всё.',1,1),(6,'Примеры шаблонов',2,99999,0,'examples','Примеры шаблонов простых сайтов/лендингов',0,0);
 /*!40000 ALTER TABLE `groups` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -141,7 +141,7 @@ CREATE TABLE `logs` (
   KEY `user_id` (`user_id`),
   KEY `ip` (`ip`),
   KEY `request` (`request`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -150,7 +150,6 @@ CREATE TABLE `logs` (
 
 LOCK TABLES `logs` WRITE;
 /*!40000 ALTER TABLE `logs` DISABLE KEYS */;
-INSERT INTO `logs` VALUES (1,1,'/api/action/toggle','{\n    \"method\": \"POST\",\n    \"input\": {\n        \"id\": \"3\",\n        \"table\": \"groups\"\n    },\n    \"output\": {\n        \"id\": \"3\",\n        \"act\": 1,\n        \"table\": \"groups\",\n        \"message\": \"Функционал включен\"\n    }\n}','2023-04-08 21:40:00','127.0.0.1');
 /*!40000 ALTER TABLE `logs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -317,7 +316,7 @@ CREATE TABLE `templates` (
 
 LOCK TABLES `templates` WRITE;
 /*!40000 ALTER TABLE `templates` DISABLE KEYS */;
-INSERT INTO `templates` VALUES (1,'/../templates/page/quest.php','[2,3,4,5,6]',1,'Главная / гости','page','Шаблон главной для не авторизованных',1),(2,'/../templates/page/system-admin.php','[2]',1,'Главная / администратор системы','page','Шаблон главной для администраторов',1),(3,'/../templates/page/empty.php','[2,3,4,5,6]',1,'Пустая страница','page','Шаблон пустой страницы',1),(4,'/../templates/modal/empty.php','[2,3,4,5,6]',1,'Пустое окно','modal','Шаблон пустого окна',1),(5,'/../templates/modal/form.php','[2,3,4,5,6]',1,'Окно с формой','modal','Шаблон окна с формой',1),(6,'/../templates/modal/buttons.php','[2,3,4,5,6]',1,'Окно с кнопками','modal','Шаблон окна с кнопками',1),(7,'/../templates/modal/full.php','[2,3,4,5,6]',1,'Окно на весь экран','modal','Шаблон окна на весь экран',1),(8,'/../templates/page/examples/tivo.php','[2,3,4,5,6]',6,'tivo-1.0.0','page','tivo-1.0.0',1),(9,'/../templates/page/examples/seogram.php','[2,3,4,5,6]',6,'seogram-1.0.0','page','seogram-1.0.0',1),(10,'/../templates/page/examples/delfood.php','[2,3,4,5,6]',6,'delfood-1.0.0','page','delfood-1.0.0',1),(11,'/../templates/page/examples/marshmallow.php','[2,3,4,5,6]',6,'marshmallow','page','marshmallow',1),(12,'/../templates/page/examples/orthoc.php','[2,3,4,5,6]',6,'orthoc','page','orthoc',1),(13,'/../templates/page/examples/eclipse-master.php','[2,3,4,5,6]',6,'eclipse-master','page','eclipse-master',1),(14,'/../templates/page/examples/aesthetic-master.php','[2,3,4,5,6]',6,'aesthetic-master','page','aesthetic-master',1);
+INSERT INTO `templates` VALUES (1,'/../templates/page/system/quest.php','[2,3,4,5,6]',1,'Главная / гости','page','Шаблон главной для не авторизованных',1),(2,'/../templates/page/system/system-admin.php','[2]',1,'Главная / администратор системы','page','Шаблон главной для администраторов',1),(3,'/../templates/page/system/empty.php','[2,3,4,5,6]',1,'Пустая страница','page','Шаблон пустой страницы',1),(4,'/../templates/modal/system/empty.php','[2,3,4,5,6]',1,'Пустое окно','modal','Шаблон пустого окна',1),(5,'/../templates/modal/system/form.php','[2,3,4,5,6]',1,'Окно с формой','modal','Шаблон окна с формой',1),(6,'/../templates/modal/system/buttons.php','[2,3,4,5,6]',1,'Окно с кнопками','modal','Шаблон окна с кнопками',1),(7,'/../templates/modal/system/full.php','[2,3,4,5,6]',1,'Окно на весь экран','modal','Шаблон окна на весь экран',1),(8,'/../templates/page/examples/tivo.php','[2,3,4,5,6]',6,'tivo-1.0.0','page','tivo-1.0.0',1),(9,'/../templates/page/examples/seogram.php','[2,3,4,5,6]',6,'seogram-1.0.0','page','seogram-1.0.0',1),(10,'/../templates/page/examples/delfood.php','[2,3,4,5,6]',6,'delfood-1.0.0','page','delfood-1.0.0',1),(11,'/../templates/page/examples/marshmallow.php','[2,3,4,5,6]',6,'marshmallow','page','marshmallow',1),(12,'/../templates/page/examples/orthoc.php','[2,3,4,5,6]',6,'orthoc','page','orthoc',1),(13,'/../templates/page/examples/eclipse-master.php','[2,3,4,5,6]',6,'eclipse-master','page','eclipse-master',1),(14,'/../templates/page/examples/aesthetic-master.php','[2,3,4,5,6]',6,'aesthetic-master','page','aesthetic-master',1);
 /*!40000 ALTER TABLE `templates` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -373,4 +372,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-08 21:40:21
+-- Dump completed on 2023-04-09 11:19:32

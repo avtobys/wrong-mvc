@@ -114,7 +114,7 @@ if (!$user->access()->action('/api/action/settings')) { // скрываем не
                         <div class="col">
                             <div>
                                 <div class="badge badge-warning px-2">Система:</div>
-                                <a class="badge badge-danger px-2" data-action="cache-clean" data-confirm="true" data-header="Очистить кеш?" data-body="Очистить системный кеш полностью?" data-callback="afterCleanCache" href="#" role="button">Очистить кеш <span id="cache-size"><i class="fa fa-circle-o-notch fa-spin small"></i></span></a>
+                                <a class="badge badge-danger px-2" title="Очистка всего кеша системы" data-action="cache-clean" data-confirm="true" data-header="Очистить кеш?" data-body="Очистить системный кеш полностью?" data-callback="afterCleanCache" href="#" role="button">Очистить кеш <span id="cache-size"><i class="fa fa-circle-o-notch fa-spin small"></i></span></a>
                             </div>
                             <div class="bg-light-info border mt-1 px-2 py-1 rounded">
                                 <div class="custom-control custom-checkbox small">
