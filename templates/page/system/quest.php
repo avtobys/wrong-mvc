@@ -17,6 +17,18 @@ ob_clean();
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $row->name ?></title>
+    <meta name="title" content="<?= $row->name ?>">
+    <meta name="description" content="Унифицированная среда WEB разработки Wrong MVC с визуализацией компонентов и автоматизацией действий">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wrong-mvc.com/">
+    <meta property="og:title" content="<?= $row->name ?>">
+    <meta property="og:description" content="Унифицированная среда WEB разработки Wrong MVC с визуализацией компонентов и автоматизацией действий">
+    <meta property="og:image" content="https://wrong-mvc.com/assets/system/img/wrong.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://wrong-mvc.com/">
+    <meta property="twitter:title" content="<?= $row->name ?>">
+    <meta property="twitter:description" content="Унифицированная среда WEB разработки Wrong MVC с визуализацией компонентов и автоматизацией действий">
+    <meta property="twitter:image" content="https://wrong-mvc.com/assets/system/img/wrong.png">
     <meta name="description" content="Унифицированная среда WEB разработки Wrong MVC с визуализацией компонентов и автоматизацией действий">
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="icon" type="image/png" sizes="64x64" href="/assets/system/img/favicon-64.png">

@@ -1,8 +1,11 @@
 # Wrong MVC - система для WEB разработки
 
+[![License](https://img.shields.io/badge/License-Apache%202-yellow.svg)](https://wrong-mvc.com/docs/_l_i_c_e_n_s_e_source.html)
+
+
 [Документация по установке и использованию wrong-mvc](https://wrong-mvc.com/documentation)
 
-![Screenshot](http://wrong-mvc.com/assets/system/img/wrong.png)
+![Logo](http://wrong-mvc.com/assets/system/img/wrong.png)
 
 Визуально понятная система - среда для WEB разработки, созданная специально для создания других систем, предусматривающих многоуровневые разграничения прав доступов к пользовательскому функционалу и uri, а также автоматизацию действий.
 
