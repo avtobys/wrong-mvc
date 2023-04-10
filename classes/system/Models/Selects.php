@@ -225,10 +225,9 @@ class Selects extends Controller
                 }
             }
 
-            if ($key_column = array_search('id', $columns)) {
-                foreach ($arr as $key => $item) {
-                    $arr[$key][$key_column] = '<a title="Открыть в новом окне" class="link-wrapper" target="_blank" href="' . Pages::find($item[$key_column])->request . '">' . $item[$key_column] . '<i class="fa fa-external-link"></i></a>';
-                }
+            $key_column = array_search('id', $columns);
+            foreach ($arr as $key => $item) {
+                $arr[$key][$key_column] = '<a title="Открыть в новом окне" class="link-wrapper" target="_blank" href="' . Pages::find($item[$key_column])->request . '">' . $item[$key_column] . '<i class="fa fa-external-link"></i></a>';
             }
         }
 
