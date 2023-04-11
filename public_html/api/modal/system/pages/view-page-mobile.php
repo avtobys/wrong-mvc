@@ -42,7 +42,6 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
             setTimeout(() => {
                 $("#view-page-mobile iframe").attr("src", URL);
             }, 100);
-
         });
 
         $(document).on("change", "#view-page-mobile input[name=act]", function() {

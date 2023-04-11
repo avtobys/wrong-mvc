@@ -11,22 +11,21 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
 <div class="modal fade" id="<?= $basename ?>" tabindex="-1" data-backdrop="static">
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable w-100 mw-100 h-100 p-0 m-0 position-fixed" style="max-width: 100%;max-height:100%;" role="document">
         <div class="modal-content w-100 h-100 rounded-0 border-0">
-            <div id="drag-menu" class="position-absolute d-flex flex-column" style="height:150px;justify-content:space-between;z-index:11111111;left:15px;top:20px;">
-                <a class="btn btn-primary btn-sm" title="Закрыть" data-dismiss="modal" href=""><i class="fa fa-times-circle"></i></a>
+            <div id="drag-menu" class="position-absolute d-flex flex-column slide-in-elliptic-left-fwd" style="height:180px;justify-content:space-between;z-index:11111111;left:15px;top:70px;">
+                <a class="btn btn-danger btn-sm" title="Закрыть" data-dismiss="modal" href=""><i class="fa fa-times-circle"></i></a>
+                <a id="reload-frame" class="btn btn-primary btn-sm" title="Перезагрузить" href=""><i class="fas fa-redo-alt"></i></a>
                 <a class="btn btn-primary btn-sm" title="Открыть вне фрейма" target="_blank" href="<?= htmlspecialchars($_GET['uri']) ?>"><i class="fa fa-external-link"></i></a>
                 <a data-toggle="modal" data-target="#view-page-mobile" class="btn btn-primary btn-sm" title="В мобильном" href="#"><i class="fa fa-mobile"></i></a>
                 <span id="drag-menu-button" class="btn btn-primary btn-sm" title="Переместить меню" style="cursor:move;user-select:none;"><i class="fa fa-arrows"></i></span>
             </div>
             <div class="modal-body p-0">
-                <iframe src="<?= htmlspecialchars($_GET['uri']) ?>" frameborder="0" class="w-100"></iframe>
+                <iframe src="<?= htmlspecialchars($_GET['uri']) ?>" frameborder="0" class="w-100" style="min-height:100%;"></iframe>
             </div>
         </div>
     </div>
     <script>
         $('#<?= $basename ?> iframe').on('load', function() {
-            $(this).css({
-                height: (this.contentDocument.documentElement.scrollHeight + 2) + 'px'
-            });
+            this.contentWindow.$('head').append('<style>body::-webkit-scrollbar{width:0;}</style>');
         });
 
         $(function() {
@@ -71,6 +70,15 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
             };
 
             drag.addEventListener('mousedown', mouseDownHandler);
+        });
+
+        $(document).on("click", "#view-page #reload-frame", function(e) {
+            e.preventDefault();
+            let URL = $('#view-page iframe')[0].contentDocument.URL;
+            $("#view-page iframe").attr("src", "");
+            setTimeout(() => {
+                $("#view-page iframe").attr("src", URL);
+            }, 100);
         });
     </script>
 </div>
