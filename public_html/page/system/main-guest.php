@@ -195,7 +195,7 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
             <p>Выше, изложено лишь сумбурное описание системы. В <a target="_blank" href="/documentation">документации</a> изложено уже систематизированное описание методов, свойств, разделов, api и возможностей. На базе Wrong MVC можно создать практически любой расширяемый проект, будь то движок многостраничного портала, интернет магазина, или движок многофункционального web сервиса.</p>
         </div>
     </div>
-    <script src="https://api-maps.yandex.ru/2.1/?lang=ru-RU&apikey=" type="text/javascript"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru-RU&apikey=00661efd-13d4-4773-8046-8f6473ce6e34" type="text/javascript"></script>
     <div class="container mt-4" data-aos="fade-zoom-in" data-aos-offset="-10">
         <div class="description">
             <h2>Откуда взялся?</h2>
