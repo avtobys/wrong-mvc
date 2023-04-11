@@ -286,7 +286,8 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
         window.myMap = new ymaps.Map('map', {
             center: [48.335712, 38.054908],
             zoom: 12,
-            controls: ['zoomControl', 'typeSelector', 'fullscreenControl']
+            controls: ['zoomControl', 'typeSelector', 'fullscreenControl'],
+            behaviors: []
         });
 
         window.myPlacemark = new ymaps.Placemark([48.335712, 38.054908], {

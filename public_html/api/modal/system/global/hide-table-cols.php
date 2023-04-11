@@ -18,7 +18,14 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
                 </button>
             </div>
             <div class="modal-body pt-2">
-                <form></form>
+                <div class="d-flex">
+                    <form class="flex-fill"></form>
+                    <div title="Максимальная высота скролла таблицы" class="bg-success d-flex flex-column align-items-center rounded p-2 mt-2 ml-2">
+                        <span style="font-size:10px;color:#fff;top:21px;position:absolute;text-align:center;"></span>
+                        <input type="range" orient="vertical" class="form-control-range mt-3" name="vh" min="30" max="500" value="80" step="5">
+                        <a onclick="$('#<?= $basename ?> [name=vh]').val(80).trigger('input');return false;" title="Вернуть значение по умолчанию" class="text-white mt-2 mb-1" style="line-height:1;" href="#"><i class="fa fa-reply-all"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -70,5 +77,26 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
             window.localStorage.table_data = JSON.stringify(table_data);
             tableCss();
         });
+
+        try {
+            window.table_data_scroll = JSON.parse(window.localStorage.table_data_scroll) || {};
+            let table = location.pathname.split('/').pop();
+            if (table_data_scroll[table]) {
+                $("#<?= $basename ?> [name=vh]").val(table_data_scroll[table]).trigger('change');
+            }
+        } catch (error) {
+            window.table_data_scroll = {};
+            console.log(error);
+        }
+
+        $("#<?= $basename ?> [type=range]").on('input', function() {
+            $(this).prev().html(+this.value == 500 ? '∞' : this.value + 'vh');
+            let table = location.pathname.split('/').pop();
+            table_data_scroll[table] = table_data_scroll[table] || {};
+            table_data_scroll[table] = this.value;
+            window.localStorage.table_data_scroll = JSON.stringify(table_data_scroll);
+            tableCss();
+        }).trigger('input');
+
     </script>
 </div>

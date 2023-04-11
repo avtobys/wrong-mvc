@@ -30,24 +30,24 @@ $threads = json_decode($row->threads, true) ?: Wrong\Task\Cron::DEFAULT_THERADS_
                         <div class="input-group-prepend w-25">
                             <span class="input-group-text w-100">Минимум <b></b> потоков</span>
                         </div>
-                        <div class="flex-fill bg-light-info border d-flex align-items-center px-2">
-                            <input type="range" name="min" class="custom-range" value="<?= $threads['min'] ?>" min="1" max="1000" placeholder="Минимум потоков" required>
+                        <div class="flex-fill bg-light-info border d-flex align-items-center px-2 rounded-right">
+                            <input type="range" name="min" class="form-control-range" value="<?= $threads['min'] ?>" min="1" max="1000" required>
                         </div>
                     </div>
                     <div class="input-group input-group-sm mt-2">
                         <div class="input-group-prepend w-25">
                             <span class="input-group-text w-100">Максимум <b></b> потоков</span>
                         </div>
-                        <div class="flex-fill bg-light-info border d-flex align-items-center px-2">
-                            <input type="range" name="max" class="custom-range" value="<?= $threads['max'] ?>" min="1" max="1000" placeholder="Максимум потоков" required>
+                        <div class="flex-fill bg-light-info border d-flex align-items-center px-2 rounded-right">
+                            <input type="range" name="max" class="form-control-range" value="<?= $threads['max'] ?>" min="1" max="1000" required>
                         </div>
                     </div>
                     <div class="input-group input-group-sm mt-2">
                         <div class="input-group-prepend w-25">
                             <span class="input-group-text w-100">Предельная нагрузка сервера <b></b>%</span>
                         </div>
-                        <div class="flex-fill bg-light-info border d-flex align-items-center px-2">
-                            <input type="range" name="load" class="custom-range" value="<?= $threads['load'] ?>" min="1" max="1000" placeholder="Предельная нагрузка" required>
+                        <div class="flex-fill bg-light-info border d-flex align-items-center px-2 rounded-right">
+                            <input type="range" name="load" class="form-control-range" value="<?= $threads['load'] ?>" min="1" max="1000" required>
                         </div>
                     </div>
                     <div class="bg-light-info border mt-2 px-2 py-1 rounded">
@@ -90,7 +90,7 @@ $threads = json_decode($row->threads, true) ?: Wrong\Task\Cron::DEFAULT_THERADS_
                 });
         });
 
-        $("#<?= $basename ?> .custom-range").on('input', function() {
+        $("#<?= $basename ?> [type=range]").on('input', function() {
             if ($(this).attr("name") == "min" && +this.value > +$("#<?= $basename ?> [name=max]").val()) {
                 $("#<?= $basename ?> [name=max]").val(this.value).trigger('input');
             }

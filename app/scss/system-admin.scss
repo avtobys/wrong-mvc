@@ -538,3 +538,12 @@ body {
 .ex-reload:hover {
     color: #fff;
 }
+
+input[type=range][orient=vertical]
+{
+    writing-mode: bt-lr;
+    -webkit-appearance: slider-vertical;
+    width: 15px;
+    height: 100%;
+    padding: 0;
+}

@@ -15852,12 +15852,29 @@ function callbackAction(response) {
 }
 
 function tableCss() {
+    if ($('.dataTable tbody tr').length <= 2) {
+        $('.dataTable tbody tr [title]').removeAttr('title');
+        $('.dataTable tbody tr [data-original-title]').removeAttr('data-original-title');
+    }
     try {
         window.table_data = JSON.parse(window.localStorage.table_data) || {};
     } catch (error) {
         window.table_data = {};
     }
+    try {
+        window.table_data_scroll = JSON.parse(window.localStorage.table_data_scroll) || {};
+    } catch (error) {
+        window.table_data_scroll = {};
+    }
     let table = location.pathname.split('/').pop();
+    let ruleCss = '';
+    if (table_data_scroll[table]) {
+        if (+table_data_scroll[table] >= 500) {
+            ruleCss += '.dataTables_scrollBody{max-height:max-content!important;}';
+        } else {
+            ruleCss += '.dataTables_scrollBody{max-height:' + table_data_scroll[table] + 'vh!important;}';
+        }
+    }
     if (!table_data[table]) {
         let hide;
         $('.dataTable th').each((i, el) => {
@@ -15868,9 +15885,11 @@ function tableCss() {
                 window.localStorage.table_data = JSON.stringify(table_data);
             }
         });
-        if (!hide) return;
+        if (!hide) {
+            $('#table-css').html(ruleCss);
+            return;
+        };
     };
-    let ruleCss = '';
     for (let key in table_data[table]) {
         if ($('#table-' + table).length) {
             ruleCss += '.dataTables_scroll thead th:nth-child(' + (+key + 1) + '){display:' + (table_data[table][key] ? 'table-cell' : 'none') + '}';
@@ -15878,7 +15897,6 @@ function tableCss() {
         }
     }
     $('#table-css').html(ruleCss);
-    let title = $('[data-target="#hide-table-cols"]').attr('title') || $('[data-target="#hide-table-cols"]').attr('data-original-title');
 }
 
 $(function () {
