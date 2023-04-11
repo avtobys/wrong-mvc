@@ -20,10 +20,10 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
             <div class="modal-body pt-2">
                 <div class="d-flex">
                     <form class="flex-fill"></form>
-                    <div title="Максимальная высота скролла таблицы" class="bg-success d-flex flex-column align-items-center rounded p-2 mt-2 ml-2">
-                        <span style="font-size:10px;color:#fff;top:21px;position:absolute;text-align:center;"></span>
-                        <input type="range" orient="vertical" class="form-control-range mt-3" name="vh" min="30" max="500" value="80" step="5">
-                        <a onclick="$('#<?= $basename ?> [name=vh]').val(80).trigger('input');return false;" title="Вернуть значение по умолчанию" class="text-white mt-2 mb-1" style="line-height:1;" href="#"><i class="fa fa-reply-all"></i></a>
+                    <div class="align-items-center d-flex flex-column ml-2 mt-2 pb-1 pt-2 px-1">
+                        <span style="font-size:10px;top:15px;position:absolute;text-align:center;"></span>
+                        <input title="Максимальная высота скролла таблицы" data-placement="right" type="range" orient="vertical" class="form-control-range mt-2" name="vh" min="30" max="500" value="80" step="5">
+                        <a onclick="$('#<?= $basename ?> [name=vh]').val(80).trigger('input');return false;" title="Вернуть значение по умолчанию" class="mt-2" style="line-height:1;" href="#"><i class="fa fa-reply-all"></i></a>
                     </div>
                 </div>
             </div>
