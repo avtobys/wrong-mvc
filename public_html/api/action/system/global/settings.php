@@ -98,6 +98,10 @@ $sth = $dbh->prepare("UPDATE `settings` SET `value` = :value WHERE `name` = 'SYS
 $sth->bindValue(':value', intval(isset($_POST['SYSTEM_CLOSED'])));
 $sth->execute();
 
+$sth = $dbh->prepare("UPDATE `settings` SET `value` = :value WHERE `name` = 'DEVELOPER_MODE'");
+$sth->bindValue(':value', intval(isset($_POST['DEVELOPER_MODE'])));
+$sth->execute();
+
 $sth = $dbh->prepare("UPDATE `settings` SET `value` = :value WHERE `name` = 'MAIL_USERNAME'");
 $sth->bindValue(':value', $_POST['MAIL_USERNAME']);
 $sth->execute();

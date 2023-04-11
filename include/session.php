@@ -83,5 +83,5 @@ $user->set_online();
 Write::action();
 
 if (Wrong\Start\Env::$e->CRON_ACT && (!file_exists($_SERVER['DOCUMENT_ROOT'] . '/../temp/lock-cron.lock') || filemtime($_SERVER['DOCUMENT_ROOT'] . '/../temp/lock-cron.lock') + 100 < time())) {
-    Wrong\Task\stackJS::add('(function(){let im=new Image();im.src="/cron.php";})();', 0, 'cron'); /// активация самозапускающегося скрипта выполнения крон задач
+    Wrong\Task\stackJS::add('(function(){let im=new Image();im.src="/cron.php?"+Math.random();})();', 0, 'cron'); /// активация самозапускающегося скрипта выполнения крон задач
 }

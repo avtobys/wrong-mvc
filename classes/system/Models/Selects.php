@@ -227,7 +227,7 @@ class Selects extends Controller
 
             $key_column = array_search('id', $columns);
             foreach ($arr as $key => $item) {
-                $arr[$key][$key_column] = '<a title="Открыть в новом окне" class="link-wrapper" target="_blank" href="' . Pages::find($item[$key_column])->request . '">' . $item[$key_column] . '<i class="fa fa-external-link"></i></a>';
+                $arr[$key][$key_column] = '<a title="Посмотреть страницу" class="link-wrapper" data-toggle="modal" data-target="#view-page" data-uri="' . Pages::find($item[$key_column])->request . '" href="#">' . $item[$key_column] . '<i class="fa fa-external-link"></i></a>';
             }
         }
 

@@ -164,6 +164,14 @@ if (!$user->access()->action('/api/action/settings')) { // скрываем не
                                     <label class="custom-control-label text-danger" for="SYSTEM_CLOSED"><?= Wrong\Database\Controller::find('SYSTEM_CLOSED', 'name', 'settings')->description ?></label>
                                 </div>
                             </div>
+                            <div class="bg-light-info border mt-2 px-2 py-1 rounded">
+                                <div class="custom-control custom-checkbox small">
+                                    <input type="checkbox" name="DEVELOPER_MODE" class="custom-control-input" id="DEVELOPER_MODE" <?= Wrong\Database\Controller::find('DEVELOPER_MODE', 'name', 'settings')->value ? 'checked' : '' ?>>
+                                    <label class="custom-control-label text-danger" for="DEVELOPER_MODE"><?= Wrong\Database\Controller::find('DEVELOPER_MODE', 'name', 'settings')->description ?></label>
+                                </div>
+                            </div>
+
+
                             <div class="badge badge-warning px-2 mt-2">Отправка почты:</div>
                             <div class="bg-light-info border mt-1 px-2 py-1 rounded">
                                 <div class="custom-control custom-checkbox small">

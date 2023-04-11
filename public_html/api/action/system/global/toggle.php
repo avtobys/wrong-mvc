@@ -17,7 +17,7 @@ if (in_array($_POST['table'], ['users', 'groups']) && $user->access()->is_system
     exit(json_encode(['error' => 'Системных пользователей и группы отключать нельзя!']));
 }
 
-if (!$user->access()->write($row)) {
+if (!$user->access()->write($row, true)) {
     exit(json_encode(['error' => 'Недостаточно прав!']));
 }
 

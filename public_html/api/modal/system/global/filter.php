@@ -31,7 +31,7 @@ $filter = isset($_SESSION['filter'][$_GET['table']]) ? $_SESSION['filter'][$_GET
             <div class="modal-body pt-2">
                 <form action="<?= Wrong\Models\Actions::find(41)->request ?>">
                     <input type="hidden" name="table" value="<?= $_GET['table'] ?>">
-                    <div class="border px-2 py-1 rounded bg-light-info <?= in_array($_GET['table'], ['templates']) ? 'd-none' : '' ?>">
+                    <div class="border px-2 py-1 rounded bg-light-info">
                         <div class="custom-control custom-checkbox small">
                             <input type="checkbox" name="act[0]" value="0" class="custom-control-input" id="check-group-0">
                             <label class="custom-control-label" for="check-group-0">Не активные</label>

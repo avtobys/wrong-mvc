@@ -10,6 +10,7 @@
 namespace Wrong\Rights;
 
 use Wrong\Database\Controller;
+use Wrong\Start\Env;
 
 /**
  * @brief Access класс, проверки прав доступов
@@ -57,7 +58,7 @@ class Access
     public function write($row, $extended = false)
     {
         if (!$row) return false;
-        if ($extended) {
+        if ($extended || Env::$e->DEVELOPER_MODE) { // расширенные права на изменение своих системных моделей при включенном режиме разработчика
             return in_array($row->owner_group, $this->user->subordinate_groups) || in_array($row->owner_group, $this->user->groups);
         }
         return in_array($row->owner_group, $this->user->subordinate_groups);
@@ -70,7 +71,7 @@ class Access
      */
     public function is_system($row)
     {
-        return $row->owner_group == 1;
+        return $row->owner_group == 1 && !Env::$e->DEVELOPER_MODE;
     }
 
     /**

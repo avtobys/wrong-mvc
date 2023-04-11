@@ -57,8 +57,7 @@ class Templates extends Controller
     }
 
     /**
-     * доступные шаблоны это шаблоны принадлежащие группам в которых состоит юзер или принадлежат подчиненным группам юзера
-     * или имеющие в группах доступа группы пользователя
+     * доступные шаблоны это шаблоны на которые у пользователя есть права read
      * 
      * @param mixed $value значение для поиска в столбце
      * @param string $column столбец для поиска значения
@@ -83,7 +82,7 @@ class Templates extends Controller
         $sth->execute();
         $arr = $sth->fetchAll();
         return array_filter($arr, function ($row) use ($user) {
-            return in_array($row->owner_group, $user->groups) || in_array($row->owner_group, $user->subordinate_groups) || array_intersect($user->groups, json_decode($row->groups, true));
+            return $user->access()->read($row);
         });
     }
 }

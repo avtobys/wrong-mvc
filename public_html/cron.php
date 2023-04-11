@@ -7,7 +7,7 @@
 
 ignore_user_abort(true);
 error_reporting(0);
-set_time_limit(60);
+set_time_limit(90);
 
 /* отладочные функции */
 require __DIR__ . '/../include/debug.php';

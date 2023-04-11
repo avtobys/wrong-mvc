@@ -32,7 +32,6 @@ $owner_group = $row->owner_group;
                         <small><a onclick="if(~~this.dataset.checked){$(this).html('Отметить все');this.dataset.checked=0;$(this).parents('form').find('[name^=groups]').prop('checked', false);}else{$(this).html('Снять все');this.dataset.checked=1;$(this).parents('form').find('[name^=groups]').prop('checked', true);}return false;" href="#">Отметить все</a></small>
                         <?php
                         foreach (Wrong\Rights\Group::$groups_not_system as $row) {
-                            if ($_GET['table'] == 'templates' && $row->id == 0) continue;
                             if ($_GET['table'] == 'users' && !in_array($row->id, $user->subordinate_groups)) continue;
                             echo '<div class="custom-control custom-checkbox small">
                             <input type="checkbox" name="groups[' . $row->id . ']" class="custom-control-input" id="check-group-' . $row->id . '" ' . (in_array($row->id, $groups) ? 'checked' : '') . '>
