@@ -145,10 +145,16 @@ class Group
                 } else if ($a->weight > $b->weight) {
                     return -1;
                 } else {
-                    if ($a->owner_group > $b->owner_group) {
+                    if ($a->act < $b->act) {
                         return 1;
-                    } else {
+                    } else if ($a->act > $b->act) {
                         return -1;
+                    } else {
+                        if (self::row($a->owner_group)->weight > self::row($b->owner_group)->weight) {
+                            return 1;
+                        } else {
+                            return -1;
+                        }
                     }
                 }
             });

@@ -134,7 +134,7 @@ class Model
             case 'pages':
                 return (object) ['file' => '/page/(' . implode('|', $user->writeble_paths) . ')', 'request' => ''];
             case 'templates':
-                return (object) ['file' => '/\.\./templates/(page|modal)', 'request' => ''];
+                return (object) ['file' => '/\.\./templates/(page|modal|action|incode|select)', 'request' => ''];
                 break;
             case 'crontabs':
                 return (object) ['file' => '', 'request' => ''];

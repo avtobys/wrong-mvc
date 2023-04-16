@@ -10,6 +10,7 @@ namespace Wrong\Models;
 
 use Wrong\Database\Controller;
 use Wrong\Database\Connect;
+use Wrong\File\Path;
 
 /**
  * 
@@ -17,23 +18,19 @@ use Wrong\Database\Connect;
  * 
  */
 
-class Templates extends Controller
+class Templates extends Controller implements ModelsInterface
 {
     /**
      * создает в бд запись для новой модели типа "шаблон" и копирует указанный файл шаблона
      * 
      * @param array $arr массив данных модели
-     * @param array $replace_path массив путей для замены в файле и параметры запроса.
      * 
      * @return int Последний вставленный идентификатор.
      */
-    public static function create($arr, $replace_path = [])
+    public static function create($arr)
     {
-        if ($replace_path) {
-            $arr['file'] = strtr($arr['file'], $replace_path);
-            $arr['request'] = strtr($arr['request'], $replace_path);
-        }
-        if (copy($_SERVER['DOCUMENT_ROOT'] . '/../templates/' . $arr['type'] . '/empty.php', $_SERVER['DOCUMENT_ROOT'] . $arr['file'])) {
+        Path::mkdir($_SERVER['DOCUMENT_ROOT'] . $arr['file']);
+        if (copy($_SERVER['DOCUMENT_ROOT'] . '/../templates/' . $arr['type'] . '/system/empty.php', $_SERVER['DOCUMENT_ROOT'] . $arr['file'])) {
             if ($arr['type'] == 'modal') { // запишем имя в modal-title
                 $file = new \SplFileObject($_SERVER['DOCUMENT_ROOT'] . $arr['file'], 'a+b');
                 $file->flock(LOCK_EX);
@@ -53,6 +50,8 @@ class Templates extends Controller
             $sth->bindValue(':type', $arr['type']);
             $sth->execute();
             return Connect::$dbh->lastInsertId();
+        } else {
+            Path::rmdir($_SERVER['DOCUMENT_ROOT'] . $arr['file']);
         }
     }
 
@@ -74,8 +73,8 @@ class Templates extends Controller
         $table = $table ?: self::table(get_called_class());
         if (!in_array($table, self::$tables)) return;
         if ($value) {
-            $sth = Connect::$dbh->prepare("SELECT * FROM `$table` WHERE `$column` = ?");
-            $sth->bindValue(1, $value);
+            $sth = Connect::$dbh->prepare("SELECT * FROM `$table` WHERE `$column` = :value");
+            $sth->bindValue(':value', $value);
         } else {
             $sth = Connect::$dbh->prepare("SELECT * FROM `$table`");
         }

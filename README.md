@@ -45,6 +45,8 @@
 ![Screenshot](http://wrong-mvc.com/assets/system/img/modals.png)
 ![Screenshot](http://wrong-mvc.com/assets/system/img/actions.png)
 ![Screenshot](http://wrong-mvc.com/assets/system/img/cron.png)
+![Screenshot](http://wrong-mvc.com/assets/system/img/cron2.png)
+![Screenshot](http://wrong-mvc.com/assets/system/img/settings.png)
 
 © **[Меня зовут Димыч](https://t.me/tdsdm)**
 

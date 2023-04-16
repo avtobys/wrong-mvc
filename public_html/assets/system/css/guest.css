@@ -2067,6 +2067,39 @@ select {
   justify-content: space-between !important;
 }
 
+#view-page-mobile label {
+  background: 0 0;
+  cursor: pointer;
+  font-size: 25px;
+  line-height: 1;
+  margin: 0 80px;
+  border: 1px solid #3d3c3d;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 4px 1px #3d3c3d;
+}
+
+.ex-reload {
+  position: absolute;
+  bottom: 30px;
+  z-index: 105;
+  font-size: 30px;
+  text-decoration: none;
+}
+
+.ex-reload:hover {
+  color: #fff;
+}
+
+@media (max-width: 767px) {
+  [data-target="#view-page-mobile"] {
+    display: none !important;
+  }
+}
 :root {
   --blue: #2d7dd2;
   --indigo: #6610f2;

@@ -16,7 +16,7 @@ use Wrong\Database\Connect;
  * 
  */
 
-class Crontabs extends Controller
+class Crontabs extends Controller implements ModelsInterface
 {
     /**
      * создает в бд новую модель типа "крон задача"

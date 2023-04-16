@@ -17,11 +17,11 @@ use Wrong\File\Path;
  * 
  */
 
-class Actions extends Controller
+class Actions extends Controller implements ModelsInterface
 {
 
     /**
-     * создает в бд запиь для новой модели типа "действие" и копирует файл шаблона
+     * создает в бд запись для новой модели типа "действие" и копирует файл шаблона
      * 
      * @param array $arr массив данных модели
      * @param array $replace_path массив путей для замены в файле и параметры запроса.
@@ -35,7 +35,8 @@ class Actions extends Controller
             $arr['request'] = strtr($arr['request'], $replace_path);
         }
         Path::mkdir($_SERVER['DOCUMENT_ROOT'] . $arr['file']);
-        if (copy($_SERVER['DOCUMENT_ROOT'] . '/../templates/action/empty.php', $_SERVER['DOCUMENT_ROOT'] . $arr['file'])) {
+        $arr['template_filename'] = Templates::all_available($arr['template_id'])[0]->file;
+        if (copy($_SERVER['DOCUMENT_ROOT'] . $arr['template_filename'], $_SERVER['DOCUMENT_ROOT'] . $arr['file'])) {
             $sth = Connect::$dbh->prepare("INSERT INTO `actions` (`request`, `file`, `groups`, `owner_group`) VALUES (:request, :file, :groups, :owner_group)");
             $arr['groups'] = json_encode($arr['groups']);
             $sth->bindValue(':request', $arr['request']);
@@ -44,6 +45,8 @@ class Actions extends Controller
             $sth->bindValue(':owner_group', $arr['owner_group']);
             $sth->execute();
             return Connect::$dbh->lastInsertId();
+        } else {
+            Path::rmdir($_SERVER['DOCUMENT_ROOT'] . $arr['file']);
         }
     }
 

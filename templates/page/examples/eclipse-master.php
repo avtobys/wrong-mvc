@@ -6,9 +6,7 @@
  */
 
 isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
-$TEMPLATE_DATA = ob_get_contents();
-ob_clean();
-
+$CONTENT_PAGE_FILE = $_SERVER['DOCUMENT_ROOT'] . $row->file;
 const USE_ASSETS_PATH = '/assets/examples/eclipse-master';
 
 ?>
@@ -106,7 +104,7 @@ const USE_ASSETS_PATH = '/assets/examples/eclipse-master';
     </header>
     <!-- ================ End Header Area ================= -->
 
-    <?= $TEMPLATE_DATA ?>
+    <?php require $CONTENT_PAGE_FILE; ?>
 
     <!-- ================ start footer Area ================= -->
     <footer class="footer-area section-gap">

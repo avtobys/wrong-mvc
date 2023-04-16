@@ -18,7 +18,7 @@ use Wrong\Models\Templates;
  * 
  */
 
-class Modals extends Controller
+class Modals extends Controller implements ModelsInterface
 {
 
     /**
@@ -46,6 +46,8 @@ class Modals extends Controller
             $sth->bindValue(':owner_group', $arr['owner_group']);
             $sth->execute();
             return Connect::$dbh->lastInsertId();
+        } else {
+            Path::rmdir($_SERVER['DOCUMENT_ROOT'] . $arr['file']);
         }
     }
 

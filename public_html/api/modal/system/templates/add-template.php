@@ -23,7 +23,6 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
                         <small>Группы доступа <a onclick="if(~~this.dataset.checked){$(this).html('отметить все');this.dataset.checked=0;$(this).parents('form').find('[name^=groups]').prop('checked', false);}else{$(this).html('снять все');this.dataset.checked=1;$(this).parents('form').find('[name^=groups]').prop('checked', true);}return false;" href="#">отметить все</a></small>
                         <?php
                         foreach (Wrong\Rights\Group::$groups_not_system as $row) {
-                            if ($row->id == 0) continue;
                             echo '<div class="custom-control custom-checkbox small">
                             <input type="checkbox" name="groups[' . $row->id . ']" class="custom-control-input" id="check-group-' . $row->id . '">
                             <label class="custom-control-label" for="check-group-' . $row->id . '">' . Wrong\Rights\Group::text($row->id) . '</label>
@@ -55,15 +54,18 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
                             <span class="input-group-text w-100">Тип шаблона</span>
                         </div>
                         <select name="type" class="custom-select">
-                            <option value="page">Страница</option>
-                            <option value="modal">Модальное окно</option>
+                            <option value="page">page</option>
+                            <option value="incode">incode</option>
+                            <option value="modal">modal</option>
+                            <option value="select">select</option>
+                            <option value="action">action</option>
                         </select>
                     </div>
                     <div class="input-group input-group-sm mt-2">
                         <div class="input-group-prepend w-50">
                             <span class="input-group-text w-100">Файл шаблона</span>
                         </div>
-                        <input title="Доступные каталоги: modal, page" type="text" name="file" class="form-control" value="/../templates/page/template.php" placeholder="/../templates/page/template.php" autocomplete="off" required>
+                        <input title="Доступные каталоги: modal, page, incode, select, action" type="text" name="file" class="form-control" value="/../templates/page/<?= Wrong\Rights\Group::row($user->main_group_id)->path ?>/template.php" placeholder="/../templates/page/<?= Wrong\Rights\Group::row($user->main_group_id)->path ?>/template.php" autocomplete="off" required>
                     </div>
                     <button type="submit" class="btn btn-sm btn-block btn-success mt-3">Сохранить</button>
                 </form>
@@ -102,11 +104,12 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
         $(function() {
             function setPath() {
                 let path = $('#<?= $basename ?> [name="type"]').val();
+                let path2 = $('#<?= $basename ?> [name="owner_group"] option:selected').data('path');
                 let file = $("#<?= $basename ?> form [name=file]").val();
-                file = file.replace(/^(\/\.\.\/templates\/)[^/]+/, '$1' + path);
+                file = file.replace(/^(\/\.\.\/templates\/)[^/]+\/[^/]+/, '$1' + path + '/' + path2);
                 $("#<?= $basename ?> form [name=file]").val(file);
             }
-            $('#<?= $basename ?> [name="type"]').on('change', setPath);
+            $('#<?= $basename ?> [name="type"], #<?= $basename ?> [name="owner_group"]').on('change', setPath);
             $('#<?= $basename ?> [name="type"]').trigger('change');
         });
     </script>

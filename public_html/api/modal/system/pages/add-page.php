@@ -45,12 +45,6 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
                     </div>
                     <div class="input-group input-group-sm mt-2">
                         <div class="input-group-prepend w-50">
-                            <span class="input-group-text w-100">Название</span>
-                        </div>
-                        <input type="text" name="name" class="form-control" value="" placeholder="Название, будет тайтлом" autocomplete="off">
-                    </div>
-                    <div class="input-group input-group-sm mt-2">
-                        <div class="input-group-prepend w-50">
                             <span class="input-group-text w-100">Шаблон</span>
                         </div>
                         <select name="template_id" class="custom-select">
@@ -60,6 +54,12 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
                             }
                             ?>
                         </select>
+                    </div>
+                    <div class="input-group input-group-sm mt-2">
+                        <div class="input-group-prepend w-50">
+                            <span class="input-group-text w-100">Название</span>
+                        </div>
+                        <input type="text" name="name" class="form-control" value="" placeholder="Название, будет тайтлом" autocomplete="off">
                     </div>
                     <div class="input-group input-group-sm mt-2">
                         <div class="input-group-prepend w-50">
@@ -108,7 +108,7 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
         });
 
         $("#<?= $basename ?> form [name=request]").keyup(function() {
-            let filename = ($(this).val().trim().match(/[^\/]+$/)?. [0] || '') + '.php';
+            let filename = ($(this).val().trim().match(/[^\/]+$/)?.[0] || '') + '.php';
             let replace = $("#<?= $basename ?> form [name=file]").val().trim().replace(/[^\/]+$/, filename);
             $("#<?= $basename ?> form [name=file]").val(replace);
         });

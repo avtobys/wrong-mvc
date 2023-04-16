@@ -17,7 +17,7 @@ use Wrong\File\Path;
  * 
  */
 
-class Pages extends Controller
+class Pages extends Controller implements ModelsInterface
 {
     /**
      * создает в бд запись для новой модели типа "страница" и создаёт пустой файл страницы

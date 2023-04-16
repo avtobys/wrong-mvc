@@ -6,8 +6,7 @@
  */
 
 isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
-$TEMPLATE_DATA = ob_get_contents();
-ob_clean();
+$CONTENT_PAGE_FILE = $_SERVER['DOCUMENT_ROOT'] . $row->file;
 
 ?>
 <!DOCTYPE html>
@@ -75,7 +74,7 @@ ob_clean();
         </div>
     </nav>
     <div class="container-fluid py-2" style="margin-top:35px;">
-        <?= $TEMPLATE_DATA ?>
+        <?php require $CONTENT_PAGE_FILE; ?>
         <footer class="border-top mt-2 pt-2">
             <div class="row mb-3">
                 <div class="col-6">

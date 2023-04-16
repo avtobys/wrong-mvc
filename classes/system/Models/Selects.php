@@ -22,7 +22,7 @@ use Wrong\Models\Users;
  * 
  */
 
-class Selects extends Controller
+class Selects extends Controller implements ModelsInterface
 {
 
     /**
@@ -40,7 +40,8 @@ class Selects extends Controller
             $arr['request'] = strtr($arr['request'], $replace_path);
         }
         Path::mkdir($_SERVER['DOCUMENT_ROOT'] . $arr['file']);
-        if (copy($_SERVER['DOCUMENT_ROOT'] . '/../templates/select/empty.php', $_SERVER['DOCUMENT_ROOT'] . $arr['file'])) {
+        $arr['template_filename'] = Templates::all_available($arr['template_id'])[0]->file;
+        if (copy($_SERVER['DOCUMENT_ROOT'] . $arr['template_filename'], $_SERVER['DOCUMENT_ROOT'] . $arr['file'])) {
             $sth = Connect::$dbh->prepare("INSERT INTO `selects` (`request`, `file`, `groups`, `owner_group`) VALUES (:request, :file, :groups, :owner_group)");
             $arr['groups'] = json_encode($arr['groups']);
             $sth->bindValue(':request', $arr['request']);
@@ -49,6 +50,8 @@ class Selects extends Controller
             $sth->bindValue(':owner_group', $arr['owner_group']);
             $sth->execute();
             return Connect::$dbh->lastInsertId();
+        } else {
+            Path::rmdir($_SERVER['DOCUMENT_ROOT'] . $arr['file']);
         }
     }
 
@@ -139,7 +142,7 @@ class Selects extends Controller
             $key_column = array_search('ip', $columns);
             foreach ($arr as $key => $item) {
                 $owner_group = $item[$owner_column];
-                if (!in_array($owner_group, $user->subordinate_groups) && $owner_group != $user->main_group_id && !$item[$key_column] == $user->ip) {
+                if (!in_array($owner_group, $user->subordinate_groups) && $owner_group != $user->main_group_id && $item[$key_column] != $user->ip) {
                     $arr[$key][$key_column] = '***';
                 }
             }
@@ -353,11 +356,28 @@ class Selects extends Controller
 
         if ($key_column = array_search('groups', $columns)) {
             if (empty($_SESSION['filter'][$table]['groups'])) {
+                foreach ($arr as $key => $item) {
+                    if (json_decode($arr[$key][$key_column], true)) {
+                        unset($arr[$key]);
+                    }
+                }
+            } else {
+                foreach ($arr as $key => $item) {
+                    if (!array_intersect(json_decode($arr[$key][$key_column], true), $_SESSION['filter'][$table]['groups'])) {
+                        unset($arr[$key]);
+                    }
+                }
+            }
+        }
+
+        if ($table == 'templates' && ($key_column = array_search('type', $columns))) {
+            $template_types = ['page', 'incode', 'modal', 'select', 'action'];
+            if (empty($_SESSION['filter'][$table]['type'])) {
                 return [];
             }
 
             foreach ($arr as $key => $item) {
-                if (!array_intersect(json_decode($arr[$key][$key_column], true), $_SESSION['filter'][$table]['groups'])) {
+                if (!in_array(array_search($arr[$key][$key_column], $template_types), $_SESSION['filter'][$table]['type'])) {
                     unset($arr[$key]);
                 }
             }

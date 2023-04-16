@@ -6,9 +6,7 @@
  */
 
 isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
-$TEMPLATE_DATA = ob_get_contents();
-ob_clean();
-
+$CONTENT_PAGE_FILE = $_SERVER['DOCUMENT_ROOT'] . $row->file;
 const USE_ASSETS_PATH = '/assets/examples/tivo-1.0.0';
 
 ?>
@@ -40,8 +38,8 @@ const USE_ASSETS_PATH = '/assets/examples/tivo-1.0.0';
     <?= Wrong\Html\Get::style($_SERVER['DOCUMENT_ROOT'] . '/assets/system/css/main.min.css') ?>
     <link href="css/fontawesome-all.css" rel="stylesheet">
     <link href="css/swiper.css" rel="stylesheet">
-	<link href="css/magnific-popup.css" rel="stylesheet">
-	<link href="css/styles.css" rel="stylesheet">
+    <link href="css/magnific-popup.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
 
     <!-- Favicon  -->
     <link rel="icon" href="images/favicon.png">
@@ -112,7 +110,7 @@ const USE_ASSETS_PATH = '/assets/examples/tivo-1.0.0';
     <!-- end of navigation -->
 
     <!-- Content -->
-    <?= $TEMPLATE_DATA ?>
+    <?php require $CONTENT_PAGE_FILE; ?>
     <!-- end Content -->
 
 

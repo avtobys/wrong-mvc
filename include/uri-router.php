@@ -7,6 +7,10 @@
 
 routing_start:
 
+if ($request == '/forbidden') {
+    ob_clean();
+}
+
 if (preg_match('#//#', $request)) { // убираем 2 и более слешей в url
     $uri = preg_replace('#[/]+$#', '', $request);
     $uri = preg_replace('#[/]{2,}#', '/', $uri);
@@ -118,20 +122,21 @@ if ($arr = Wrong\Models\Pages::all($request, 'request')) { // запросы к 
     $arr = array_filter($arr, function ($row) use ($user) {
         return $user->access()->read($row);
     });
-    if (!$arr) {
+    if (!$arr && $request != '/forbidden') {
         $request = '/forbidden';
         goto routing_start;
     }
     foreach ($arr as $row) {
         if (file_exists($_SERVER['DOCUMENT_ROOT'] . $row->file)) {
-            (function () {
-                global $request, $user, $dbh, $row;
-                require $_SERVER['DOCUMENT_ROOT'] . $row->file;
-            })();
-            if ($file = Wrong\Models\Templates::find($row->template_id)->file) {
-                require $_SERVER['DOCUMENT_ROOT'] . $file;
-            } else {
-                require $_SERVER['DOCUMENT_ROOT'] . Wrong\Models\Templates::find(3)->file;
+            if (
+                ($template = Wrong\Models\Templates::find($row->template_id)) &&
+                $user->access()->read($template) &&
+                file_exists($_SERVER['DOCUMENT_ROOT'] . $template->file)
+            ) { // шаблон доступен
+                require $_SERVER['DOCUMENT_ROOT'] . $template->file;
+            } else if ($request != '/forbidden') { // шаблон недоступен - 403
+                $request = '/forbidden';
+                goto routing_start;
             }
             $user->set_request($request);
             exit;
@@ -169,14 +174,15 @@ if ($arr = Wrong\Models\Pages::all($request, 'request')) { // запросы к 
 //     }
 //     foreach ($arr as $row) {
 //         if (file_exists($_SERVER['DOCUMENT_ROOT'] . $row->file)) {
-//             (function () {
-//                 global $request, $user, $dbh, $row, $data_page;
-//                 require $_SERVER['DOCUMENT_ROOT'] . $row->file;
-//             })();
-//             if ($file = Wrong\Models\Templates::find($row->template_id)->file) {
-//                 require $_SERVER['DOCUMENT_ROOT'] . $file;
-//             } else {
-//                 require $_SERVER['DOCUMENT_ROOT'] . Wrong\Models\Templates::find(3)->file;
+//             if (
+//                 ($template = Wrong\Models\Templates::find($row->template_id)) &&
+//                 $user->access()->read($template) &&
+//                 file_exists($_SERVER['DOCUMENT_ROOT'] . $template->file)
+//             ) { // шаблон доступен
+//                 require $_SERVER['DOCUMENT_ROOT'] . $template->file;
+//             } else if ($request != '/forbidden') { // шаблон недоступен - 403
+//                 $request = '/forbidden';
+//                 goto routing_start;
 //             }
 //             $user->set_request($request);
 //             exit;

@@ -539,6 +539,12 @@ body {
     color: #fff;
 }
 
+@media (max-width: 767px) {
+    [data-target="#view-page-mobile"] {
+        display: none !important;
+    }
+}
+
 input[type=range][orient=vertical]
 {
     writing-mode: bt-lr;

@@ -17,8 +17,8 @@ if (empty($_POST['name'])) {
     $_POST['name'] = 'Безымянный';
 }
 
-if (empty($_POST['type']) || !in_array($_POST['type'], ['page', 'modal'])) {
-    exit(json_encode(['error' => 'Название шаблона не указано']));
+if (empty($_POST['type']) || !in_array($_POST['type'], ['page', 'modal', 'incode', 'select', 'action'])) {
+    exit(json_encode(['error' => 'Тип шаблона не указан']));
 }
 
 $i = 1;

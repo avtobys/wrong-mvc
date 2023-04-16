@@ -6,9 +6,7 @@
  */
 
 isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
-$TEMPLATE_DATA = ob_get_contents();
-ob_clean();
-
+$CONTENT_PAGE_FILE = $_SERVER['DOCUMENT_ROOT'] . $row->file;
 const USE_ASSETS_PATH = '/assets/examples/orthoc';
 
 ?>
@@ -50,7 +48,7 @@ const USE_ASSETS_PATH = '/assets/examples/orthoc';
 
 <body>
 
-    <?= $TEMPLATE_DATA ?>
+    <?php require $CONTENT_PAGE_FILE; ?>
 
     <?= Wrong\Html\Get::script($_SERVER['DOCUMENT_ROOT'] . '/assets/system/js/main.min.js') ?>
     <!-- owl slider -->

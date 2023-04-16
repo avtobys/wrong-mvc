@@ -45,6 +45,18 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
                     </div>
                     <div class="input-group input-group-sm mt-2">
                         <div class="input-group-prepend w-50">
+                            <span class="input-group-text w-100">Шаблон</span>
+                        </div>
+                        <select name="template_id" class="custom-select">
+                            <?php
+                            foreach (Wrong\Models\Templates::all_available('select', 'type') as $row) {
+                                echo '<option value="' . $row->id . '">' . $row->name . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="input-group input-group-sm mt-2">
+                        <div class="input-group-prepend w-50">
                             <span class="input-group-text w-100">Запрос</span>
                         </div>
                         <input type="text" name="request" class="form-control" value="/api/select/request" placeholder="/api/select/request" autocomplete="off" required>
@@ -90,7 +102,7 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
         });
 
         $("#<?= $basename ?> form [name=request]").keyup(function() {
-            let filename = ($(this).val().trim().match(/[^\/]+$/)?. [0] || '') + '.php';
+            let filename = ($(this).val().trim().match(/[^\/]+$/)?.[0] || '') + '.php';
             let replace = $("#<?= $basename ?> form [name=file]").val().trim().replace(/[^\/]+$/, filename);
             $("#<?= $basename ?> form [name=file]").val(replace);
         });

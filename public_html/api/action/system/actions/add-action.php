@@ -17,6 +17,10 @@ $_POST['groups'] = array_map('intval', array_values(array_intersect(array_column
 
 Wrong\Check\Model::create($_POST, 'actions');
 
+if (!in_array($_POST['template_id'], array_column(Wrong\Models\Templates::all_available(), 'id'))) {
+    exit(json_encode(['error' => 'У вас недостаточно прав для использования этого шаблона']));
+}
+
 $modal_id = null;
 if (!empty($_POST['add-modal'])) {
     Wrong\Check\Model::create($_POST, 'modals', ['/api/action' => '/api/modal']);

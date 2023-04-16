@@ -16,7 +16,7 @@ use Wrong\Start\Env;
  * 
  */
 
-class Users extends Controller
+class Users extends Controller implements ModelsInterface
 {
     /**
      * создает нового пользователя в базе данных
@@ -28,7 +28,7 @@ class Users extends Controller
      * 
      * @return int $id Последний вставленный идентификатор.
      */
-    public static function create($email, $password, $groups, $owner_group = 1)
+    public static function create($email, $password = '', $groups = [], $owner_group = 1)
     {
         global $dbh;
         $email = mb_strtolower(trim($email), 'utf-8');
@@ -42,7 +42,7 @@ class Users extends Controller
         if ($sth->fetchColumn()) {
             return;
         }
-        $sth = $dbh->prepare("INSERT INTO `users` (`groups`, `owner_group`, `email`, `md5password`, `x_auth_token`, `api_act`, `act`, `ip`) VALUES (:groups, :owner_group, :email, :md5password, :x_auth_token, :api_act, :act, :ip)");
+        $sth = $dbh->prepare("INSERT INTO `users` (`groups`, `owner_group`, `email`, `md5password`, `date_online`, `x_auth_token`, `api_act`, `act`, `ip`) VALUES (:groups, :owner_group, :email, :md5password, '0000-00-00 00:00:00', :x_auth_token, :api_act, :act, :ip)");
         $sth->bindValue(':groups', $groups);
         $sth->bindValue(':owner_group', $owner_group);
         $sth->bindValue(':email', $email);

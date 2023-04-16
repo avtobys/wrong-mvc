@@ -17,6 +17,10 @@ $_POST['groups'] = array_map('intval', array_values(array_intersect(array_column
 
 Wrong\Check\Model::create($_POST, 'selects');
 
+if (!in_array($_POST['template_id'], array_column(Wrong\Models\Templates::all_available(), 'id'))) {
+    exit(json_encode(['error' => 'У вас недостаточно прав для использования этого шаблона']));
+}
+
 if (Wrong\Models\Selects::create($_POST)) {
     exit(json_encode(['result' => 'ok', 'message' => 'Выборка успешно создана']));
 }

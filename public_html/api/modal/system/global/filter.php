@@ -16,6 +16,13 @@ $initial = [
     'owner_group' => array_map('strval', array_column(Wrong\Rights\Group::$groups_owners, 'id')),
     'groups' => array_map('strval', array_column(Wrong\Rights\Group::$groups_not_system, 'id'))
 ];
+
+if ($_GET['table'] == 'templates') {
+    $template_types = ['page', 'incode', 'modal', 'select', 'action'];
+    $initial['type'] = array_map('strval', array_keys($template_types));
+}
+// ksort($initial);
+
 $filter = isset($_SESSION['filter'][$_GET['table']]) ? $_SESSION['filter'][$_GET['table']] : $initial;
 
 ?>
@@ -41,6 +48,19 @@ $filter = isset($_SESSION['filter'][$_GET['table']]) ? $_SESSION['filter'][$_GET
                             <label class="custom-control-label" for="check-group-1">Активные</label>
                         </div>
                     </div>
+                    <?php if ($_GET['table'] == 'templates') : ?>
+                        <div class="border px-2 py-1 rounded bg-light-info masscheck mt-2">
+                            <small>Типы шаблонов <a onclick="if(~~this.dataset.checked){$(this).html('отметить все');this.dataset.checked=0;$(this).parents('form').find('[name^=type]').prop('checked', false);}else{$(this).html('снять все');this.dataset.checked=1;$(this).parents('form').find('[name^=type]').prop('checked', true);}$('#<?= $basename ?> form').trigger('change');return false;" href="#"></a></small>
+                            <?php
+                            foreach ($initial['type'] as $key) {
+                                echo '<div class="custom-control custom-checkbox small">
+                                <input type="checkbox" name="type[' . $key . ']" value="' . $key . '" class="custom-control-input" id="check-type-' . $key . '">
+                                <label class="custom-control-label" for="check-type-' . $key . '">' . $template_types[$key] . '</label>
+                                </div>';
+                            }
+                            ?>
+                        </div>
+                    <?php endif; ?>
                     <div class="border px-2 py-1 rounded bg-light-info masscheck mt-2">
                         <small>Группа владелец <a onclick="if(~~this.dataset.checked){$(this).html('отметить все');this.dataset.checked=0;$(this).parents('form').find('[name^=owner_group]').prop('checked', false);}else{$(this).html('снять все');this.dataset.checked=1;$(this).parents('form').find('[name^=owner_group]').prop('checked', true);}$('#<?= $basename ?> form').trigger('change');return false;" href="#"></a></small>
                         <?php
@@ -91,6 +111,27 @@ $filter = isset($_SESSION['filter'][$_GET['table']]) ? $_SESSION['filter'][$_GET
             $(this).trigger('submit');
         });
 
+        function isEqual(object1, object2) {
+            const props1 = Object.getOwnPropertyNames(object1);
+            const props2 = Object.getOwnPropertyNames(object2);
+
+            if (props1.length !== props2.length) {
+                return false;
+            }
+
+            for (let i = 0; i < props1.length; i += 1) {
+                const prop = props1[i];
+                const bothAreObjects = typeof(object1[prop]) === 'object' && typeof(object2[prop]) === 'object';
+
+                if ((!bothAreObjects && (object1[prop] !== object2[prop])) ||
+                    (bothAreObjects && !isEqual(object1[prop], object2[prop]))) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         $("#<?= $basename ?> form").submit(function(e) {
             e.preventDefault();
             $.ajax({
@@ -108,7 +149,7 @@ $filter = isset($_SESSION['filter'][$_GET['table']]) ? $_SESSION['filter'][$_GET
                         errorToast(response.error);
                         return;
                     }
-                    if (JSON.stringify(response.filter) != '<?= json_encode($initial) ?>') {
+                    if (!isEqual(response.filter, <?= json_encode($initial) ?>)) {
                         $('#reset-filter').show();
                         $('.toast').toast('hide');
                         successToast(response.message);

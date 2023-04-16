@@ -11,7 +11,7 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
 <div class="modal fade" id="<?= $basename ?>" tabindex="-1" data-backdrop="static">
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable w-100 mw-100 h-100 p-0 m-0 position-fixed" style="max-width: 100%;max-height:100%;" role="document">
         <div class="modal-content w-100 h-100 rounded-0 border-0">
-            <div id="drag-menu" class="position-absolute d-flex flex-column slide-in-elliptic-left-fwd" style="height:180px;justify-content:space-between;z-index:11111111;left:15px;top:70px;">
+            <div id="drag-menu" class="position-absolute d-flex flex-column slide-in-elliptic-left-fwd" style="height:180px;justify-content:space-between;z-index:11111111;left:15px;top:100px;">
                 <a class="btn btn-danger btn-sm" title="Закрыть" data-dismiss="modal" href=""><i class="fa fa-times-circle"></i></a>
                 <a id="reload-frame" class="btn btn-primary btn-sm" title="Перезагрузить" href=""><i class="fas fa-redo-alt"></i></a>
                 <a class="btn btn-primary btn-sm" title="Открыть вне фрейма" target="_blank" href="<?= htmlspecialchars($_GET['uri']) ?>"><i class="fa fa-external-link"></i></a>

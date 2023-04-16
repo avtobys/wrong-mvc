@@ -17,7 +17,7 @@ use Wrong\Rights\Group;
  * 
  */
 
-class Groups extends Controller
+class Groups extends Controller implements ModelsInterface
 {
     /**
      * создает в бд запись для новой модели типа "группа"

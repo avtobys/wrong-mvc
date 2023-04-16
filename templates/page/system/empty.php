@@ -6,8 +6,7 @@
  */
 
 isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
-$TEMPLATE_DATA = ob_get_contents();
-ob_clean();
+$CONTENT_PAGE_FILE = $_SERVER['DOCUMENT_ROOT'] . $row->file;
 
 ?>
 <!DOCTYPE html>
@@ -23,7 +22,7 @@ ob_clean();
 </head>
 
 <body>
-    <?= $TEMPLATE_DATA ?>
+    <?php require $CONTENT_PAGE_FILE; ?>
     <?= Wrong\Html\Get::scriptsrc($_SERVER['DOCUMENT_ROOT'] . '/assets/system/js/main.min.js') ?>
 </body>
 

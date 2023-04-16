@@ -6,9 +6,7 @@
  */
 
 isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
-$TEMPLATE_DATA = ob_get_contents();
-ob_clean();
-
+$CONTENT_PAGE_FILE = $_SERVER['DOCUMENT_ROOT'] . $row->file;
 const USE_ASSETS_PATH = '/assets/examples/aesthetic-master';
 
 ?>
@@ -129,7 +127,7 @@ const USE_ASSETS_PATH = '/assets/examples/aesthetic-master';
     </header>
     <!-- Header Section End -->
 
-    <?= $TEMPLATE_DATA ?>
+    <?php require $CONTENT_PAGE_FILE; ?>
 
     <!-- Footer Section Begin -->
     <footer class="footer">

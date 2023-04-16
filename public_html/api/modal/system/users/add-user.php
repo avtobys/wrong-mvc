@@ -100,5 +100,7 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
         $('#<?= $basename ?> [name="password"]').on('copy', function(e) {
             successToast('Пароль скопирован');
         });
+
+        $('#<?= $basename ?> [name="email"]').val(Math.random().toString(36).slice(2, 10) + '@wrong-mvc.com');
     </script>
 </div>
