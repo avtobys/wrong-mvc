@@ -34,7 +34,7 @@
                     <div class="body">
                         <h5 class="text-secondary">SEO Consultancy</h5>
                         <p>We help you define your SEO objective & develop a realistic strategy with you</p>
-                        <a href="./seogram/service" class="btn btn-primary">Read More</a>
+                        <a href="./service" class="btn btn-primary">Read More</a>
                     </div>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                     <div class="body">
                         <h5 class="text-secondary">Content Marketing</h5>
                         <p>We help you define your SEO objective & develop a realistic strategy with you</p>
-                        <a href="./seogram/service" class="btn btn-primary">Read More</a>
+                        <a href="./service" class="btn btn-primary">Read More</a>
                     </div>
                 </div>
             </div>
@@ -58,7 +58,7 @@
                     <div class="body">
                         <h5 class="text-secondary">Keyword Research</h5>
                         <p>We help you define your SEO objective & develop a realistic strategy with you</p>
-                        <a href="./seogram/service" class="btn btn-primary">Read More</a>
+                        <a href="./service" class="btn btn-primary">Read More</a>
                     </div>
                 </div>
             </div>
@@ -354,7 +354,7 @@
             </div>
 
             <div class="col-12 mt-4 text-center wow fadeInUp">
-                <a href="./seogram/blog" class="btn btn-primary">View More</a>
+                <a href="./blog" class="btn btn-primary">View More</a>
             </div>
         </div>
     </div>

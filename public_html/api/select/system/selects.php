@@ -11,7 +11,7 @@ header("Content-type: application/json");
 
 $table_name = basename($request);
 
-$columns = ['id', 'request', 'file', 'groups', 'owner_group', 'note', 'act'];
+$columns = ['id', 'request', 'file', 'groups', 'owner_group', 'note', 'cache_time', 'act'];
 
 $order_column = isset($_GET['order'][0]['column']) && isset($columns[$_GET['order'][0]['column']]) ? $columns[$_GET['order'][0]['column']] : $columns[0];
 $order_dir = isset($_GET['order'][0]['dir']) && $_GET['order'][0]['dir'] == 'asc' ? 'ASC' : 'DESC';

@@ -71,7 +71,7 @@ const USE_ASSETS_PATH = '/assets/examples/delfood-1.0.0';
                 <div class="info_links">
                     <ul>
                         <li class="active">
-                            <a href="/">
+                            <a href="./index">
                                 Home
                             </a>
                         </li>

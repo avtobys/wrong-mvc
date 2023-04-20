@@ -41,7 +41,7 @@
                     </div>
                     <div id="myNav" class="overlay">
                         <div class="overlay-content">
-                            <a href="./">Home</a>
+                            <a href="./index">Home</a>
                             <a href="./about">About</a>
                             <a href="./blog">Blog</a>
                             <a href="./testimonial">Testimonial</a>

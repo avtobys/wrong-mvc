@@ -50,7 +50,7 @@ const USE_ASSETS_PATH = '/assets/examples/eclipse-master';
     <header class="default-header">
         <nav class="navbar navbar-expand-lg  navbar-light">
             <div class="container">
-                <a class="navbar-brand" href="/">
+                <a class="navbar-brand" href="./index">
                     <img src="img/logo.png" alt="" />
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

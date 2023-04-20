@@ -18,7 +18,7 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
                 <th>Файл обработчик</th>
                 <th>Группы доступа</th>
                 <th>Группа владелец</th>
-                <th style="max-width:200px;">Комментарий</th>
+                <th style="max-width:220px;">Комментарий</th>
                 <th data-name="Вкл / выкл" style="width:60px;"><i class="fa fa-power-off"></i></th>
                 <th data-name="Редактор кода" style="width:25px;"><i class="fa fa-file-code-o"></i></th>
                 <th data-name="Копия" style="width:25px;"><i class="fa fa-copy"></i></th>

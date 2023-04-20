@@ -41,7 +41,7 @@ const USE_ASSETS_PATH = '/assets/examples/seogram-1.0.0/assets';
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-white sticky" data-offset="300">
             <div class="container">
-                <a href="/" class="navbar-brand">Seo<span class="text-primary">Gram.</span></a>
+                <a href="./index" class="navbar-brand">Seo<span class="text-primary">Gram.</span></a>
 
                 <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>

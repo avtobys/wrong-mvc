@@ -195,6 +195,12 @@ class Selects extends Controller implements ModelsInterface
             }
         }
 
+        if ($key_column = array_search('cache_time', $columns)) {
+            foreach ($arr as $key => $item) {
+                $arr[$key][$key_column] = '<div title="Время кеширования: ' . $item[$key_column] . ' сек." class="edit-wrapper edit-wrapper-text editable-act text-nowrap" data-id="' . $item[0] . '" data-target="#edit-cache-time" data-toggle="modal" data-table="' . $table . '">' . $item[$key_column] . ' сек.<i class="fa fa-edit"></i></div>';
+            }
+        }
+
         if ($table == 'groups') {
             if ($key_column = array_search('weight', $columns)) {
                 foreach ($arr as $key => $item) {

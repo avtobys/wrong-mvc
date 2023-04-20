@@ -15,8 +15,8 @@ if (preg_match('#//#', $request)) { // убираем 2 и более слеше
     $uri = preg_replace('#[/]+$#', '', $request);
     $uri = preg_replace('#[/]{2,}#', '/', $uri);
     $uri = $uri ?: '/';
-    if (parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY)) {
-        $uri .= '?' . parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+    if ($QUERY_STRING = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY)) {
+        $uri .= '?' . $QUERY_STRING;
     }
     header("HTTP/1.1 301 Moved Permanently");
     header("Location: $uri");
@@ -33,8 +33,8 @@ if ($request != '/' && preg_match('#/$#', $request)) { // убираем кра�
         require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
     }
     $uri = $uri ?: '/';
-    if (parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY)) {
-        $uri .= '?' . parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+    if ($QUERY_STRING = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY)) {
+        $uri .= '?' . $QUERY_STRING;
     }
     header("HTTP/1.1 301 Moved Permanently");
     header("Location: $uri");
@@ -65,6 +65,17 @@ if (preg_match('#^/api/(modal|action|select)/[a-z0-9\-]+#', $request, $matches))
             if (file_exists($_SERVER['DOCUMENT_ROOT'] . $row->file)) {
                 header("X-Robots-Tag: noindex");
                 $basename = basename($request);
+
+                if (strpos($request, '/api/select') !== false && $row->cache_time) { // если кешируется
+                    $mem = new Wrong\Memory\Cache('api-select');
+                    if ($data = $mem->get($_SERVER['REQUEST_URI'], $row->cache_time)) { // если есть в кеше отдаём из кеша
+                        exit($data);
+                    }
+                    register_shutdown_function(function ($mem, $timeout) {
+                        $mem->set($_SERVER['REQUEST_URI'], ob_get_contents(), $timeout);
+                    }, $mem, $row->cache_time);
+                }
+
                 require $_SERVER['DOCUMENT_ROOT'] . $row->file;
                 exit;
             }
@@ -133,6 +144,27 @@ if ($arr = Wrong\Models\Pages::all($request, 'request')) { // запросы к 
                 $user->access()->read($template) &&
                 file_exists($_SERVER['DOCUMENT_ROOT'] . $template->file)
             ) { // шаблон доступен
+                
+                if ($row->cache_time) { // если страница кешируется
+                    $mem = new Wrong\Memory\Cache('page-cache');
+                    if ($data = $mem->get($_SERVER['REQUEST_URI'], $row->cache_time)) { // если есть в кеше отдаём из кеша
+                        exit($data);
+                    }
+                    register_shutdown_function(function ($mem, $timeout) {
+                        $mem->set($_SERVER['REQUEST_URI'], ob_get_contents(), $timeout);
+                    }, $mem, $row->cache_time);
+                }
+
+                if ($template->cache_time) { // если шаблон кешируется
+                    $mem = new Wrong\Memory\Cache('template-cache');
+                    if ($data = $mem->get($_SERVER['REQUEST_URI'], $template->cache_time)) { // если есть в кеше отдаём из кеша
+                        exit($data);
+                    }
+                    register_shutdown_function(function ($mem, $timeout) {
+                        $mem->set($_SERVER['REQUEST_URI'], ob_get_contents(), $timeout);
+                    }, $mem, $template->cache_time);
+                }
+
                 require $_SERVER['DOCUMENT_ROOT'] . $template->file;
             } else if ($request != '/forbidden') { // шаблон недоступен - 403
                 $request = '/forbidden';

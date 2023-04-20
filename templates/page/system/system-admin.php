@@ -38,7 +38,7 @@ $CONTENT_PAGE_FILE = $_SERVER['DOCUMENT_ROOT'] . $row->file;
                     <a class="nav-link border-secondary px-3 px-lg-2" href="<?= Wrong\Models\Pages::find(11)->request ?>"><i class="fa fa-bug d-lg-none d-xl-inline-block mr-2"></i>Логи</a>
                 </li>
                 <li class="nav-item flex-fill">
-                    <a class="nav-link border-secondary px-3 px-lg-2" href="<?= Wrong\Models\Pages::find(10)->request ?>"><i class="fa fa-clock d-lg-none d-xl-inline-block mr-2"></i>Задачи</a>
+                    <a class="nav-link border-secondary px-3 px-lg-2" href="<?= Wrong\Models\Pages::find(10)->request ?>"><i class="fa fa-calendar d-lg-none d-xl-inline-block mr-2"></i>Задачи</a>
                 </li>
                 <li class="nav-item flex-fill">
                     <a class="nav-link border-secondary px-3 px-lg-2" href="<?= Wrong\Models\Pages::find(4)->request ?>"><i class="fa fa-flash d-lg-none d-xl-inline-block mr-2"></i>Действия</a>
