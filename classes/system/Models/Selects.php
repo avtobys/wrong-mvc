@@ -80,6 +80,15 @@ class Selects extends Controller implements ModelsInterface
             }
         }
 
+        if (Env::$e->HIDE_NON_ACTIVE_GROUP_MODELS) {
+            foreach ($arr as $key => $row) {
+                $owner_group = $row[$key_column];
+                if (!Group::is_active($owner_group)) {
+                    unset($arr[$key]);
+                }
+            }
+        }
+
         if (in_array($table, ['actions', 'modals', 'selects', 'templates', 'pages'])) {
             $key_file = array_search('file', $columns);
             foreach ($arr as $key => $row) {

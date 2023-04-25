@@ -85,7 +85,7 @@ CREATE TABLE `crontabs` (
 
 LOCK TABLES `crontabs` WRITE;
 /*!40000 ALTER TABLE `crontabs` DISABLE KEYS */;
-INSERT INTO `crontabs` VALUES (1,NULL,NULL,'/api/action/toggle',1,'* * * * *','POST','[]','{\"id\":\"3\",\"table\":\"groups\"}',2,'2023-04-20 13:57:00','Включает/отключает группу модераторы каждую минуту',1),(2,NULL,NULL,'/api/action/clean-logs',1,'0 0 */1 * *','POST','[]','[]',2,'2023-04-21 00:00:00','Периодическая очистка логов',1),(3,NULL,NULL,'/api/action/erase-group',1,'0 0 * * *','POST','[]','{\"table\":\"groups\",\"id\":\"5\"}',2,'2023-04-21 00:00:00','Очистка от всех демо моделей раз в сутки',1),(4,NULL,NULL,'/api/action/anycomment',1,'0 */1 * * *','GET','[]','[]',2,'2023-04-20 14:00:00','Обновление инфы о новых комментариях и запросах в тех поддержку',1),(5,'{\"min\":5,\"max\":5,\"load\":40,\"fixed\":1}','sleep 15','',0,'* * * * *','CLI','null','[]',2,'2023-04-20 13:57:00','Перманентно спит по 15 сек в 5 потоков одновременно, а если нагрузка более 40% даже не начинает спать',1);
+INSERT INTO `crontabs` VALUES (1,NULL,NULL,'/api/action/toggle',1,'* * * * *','POST','[]','{\"id\":\"3\",\"table\":\"groups\"}',2,'2023-04-26 01:35:00','Включает/отключает группу модераторы каждую минуту',1),(2,NULL,NULL,'/api/action/clean-logs',1,'0 0 */1 * *','POST','[]','[]',2,'2023-04-27 00:00:00','Периодическая очистка логов',1),(3,NULL,NULL,'/api/action/erase-group',1,'0 0 * * *','POST','[]','{\"table\":\"groups\",\"id\":\"5\"}',2,'2023-04-27 00:00:00','Очистка от всех демо моделей раз в сутки',1),(4,NULL,NULL,'/api/action/anycomment',1,'0 */1 * * *','GET','[]','[]',2,'2023-04-26 02:00:00','Обновление инфы о новых комментариях и запросах в тех поддержку',1),(5,'{\"min\":5,\"max\":5,\"load\":40,\"fixed\":1}','sleep 15','',0,'* * * * *','CLI','null','[]',2,'2023-04-26 01:35:00','Перманентно спит по 15 сек в 5 потоков одновременно, а если нагрузка более 40% даже не начинает спать',1);
 /*!40000 ALTER TABLE `crontabs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,7 +118,7 @@ CREATE TABLE `groups` (
 
 LOCK TABLES `groups` WRITE;
 /*!40000 ALTER TABLE `groups` DISABLE KEYS */;
-INSERT INTO `groups` VALUES (1,'Система',1,2147483647,0,'system','Системная, никому не подчиненная группа с наивысшими правами',1,1),(2,'Администраторы',1,2147483646,0,'admin','Администраторы с полными правами',1,1),(3,'Модераторы',2,1000,0,'moder','Для примера, в логике не участвует',0,0),(4,'Пользователи',2,10,0,'user','Для примера, в логике не участвует',0,1),(5,'Demo',2,10,50,'demo','Демо &quot;администраторы&quot;, доступна полностью админ панель и не критичные действия. Может посмотреть и &quot;пощупать&quot; почти всё.',1,1),(6,'Примеры лендингов',2,99999,0,'examples','Примеры шаблонов простых сайтов/лендингов',0,0);
+INSERT INTO `groups` VALUES (1,'Система',1,2147483647,0,'system','Системная, никому не подчиненная группа с наивысшими правами',1,1),(2,'Администраторы',1,2147483646,0,'admin','Администраторы с полными правами',1,1),(3,'Модераторы',2,1000,0,'moder','Для примера, в логике не участвует',0,1),(4,'Пользователи',2,10,0,'user','Для примера, в логике не участвует',0,1),(5,'Demo',2,10,50,'demo','Демо &quot;администраторы&quot;, доступна полностью админ панель и не критичные действия. Может посмотреть и &quot;пощупать&quot; почти всё.',1,1),(6,'Примеры лендингов',2,99999,0,'examples','Примеры шаблонов простых сайтов/лендингов',0,1);
 /*!40000 ALTER TABLE `groups` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -274,7 +274,7 @@ CREATE TABLE `settings` (
   `value` text NOT NULL,
   `description` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Настройки';
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Настройки';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -283,7 +283,7 @@ CREATE TABLE `settings` (
 
 LOCK TABLES `settings` WRITE;
 /*!40000 ALTER TABLE `settings` DISABLE KEYS */;
-INSERT INTO `settings` VALUES (1,'HCAPTCHA_SITEKEY','','Публичный hcaptcha ключ'),(2,'HCAPTCHA_SECRET','','Секретный hcapctha ключ'),(3,'OWNER_GROUP_USERS','2','Группа владелец новых пользователей по умолчанию'),(4,'GROUPS_USERS','[5]','Группы нового пользователя по умолчанию'),(5,'RETURN_TO_REQUEST','0','Запоминать url и возвращать на него авторизованных пользователей'),(6,'HIDE_OUT_LINKS','1','Скрывать на страницах ссылки на недоступные модели страниц'),(7,'EMAIL_CONFIRMATION','0','Включить подтверждение почты при регистрации'),(8,'API','1','Включить API с авторизацией по заголовкам X-Auth-Token на уровне системы'),(9,'USER_ACT','1','Включить аккаунт для новых пользователей по умолчанию'),(10,'USER_API','1','Включить API по заголовкам X-Auth-Token для новых пользователей по умолчанию'),(11,'HIDE_OUT_ACTIONS_MODALS','1','Скрывать на страницах триггеры вызова недоступных модальных окон и действий'),(12,'CRON_ACT','1','Включить выполнение cron задач'),(13,'SUBORDINATE_MODELS','0','Отображать только модели подчиненных групп'),(14,'EMAIL','0','Включить отправку писем с сервера'),(15,'GOOGLE_OAUTH_CLIENT_ID','','Публичный google oauth ключ'),(16,'GOOGLE_OAUTH_CLIENT_SECRET','','Секретный google oauth ключ'),(17,'YANDEX_OAUTH_CLIENT_ID','','Публичный яндекс oauth ключ'),(18,'YANDEX_OAUTH_CLIENT_SECRET','','Секретный яндекс oauth ключ'),(19,'ANYCOMMENT_SECRET','','API токен от anycomment.io'),(20,'SYSTEM_CLOSED','0','Закрыть систему для всех кроме группы \"Система\" (403 - доступ запрещён)'),(21,'SMTP','0','Отправлять письма через SMTP (используется библиотека phpmailer)'),(22,'SMTP_HOST','smtp.mail.ru','SMTP хост сервера'),(23,'MAIL_USERNAME','support@wrong-mvc.com','Почта отправителя писем'),(24,'SMTP_PASSWORD','','SMTP пароль'),(25,'SMTP_PORT','465','SMTP порт'),(26,'CRON_CLI','1','Поддержка CLI команд в CRON задачах'),(27,'DEVELOPER_MODE','0','Включить режим разработчика(отключает защиту на изменение системных моделей)');
+INSERT INTO `settings` VALUES (1,'HCAPTCHA_SITEKEY','','Публичный hcaptcha ключ'),(2,'HCAPTCHA_SECRET','','Секретный hcapctha ключ'),(3,'OWNER_GROUP_USERS','2','Группа владелец новых пользователей по умолчанию'),(4,'GROUPS_USERS','[5]','Группы нового пользователя по умолчанию'),(5,'RETURN_TO_REQUEST','0','Запоминать url и возвращать на него авторизованных пользователей'),(6,'HIDE_OUT_LINKS','1','Скрывать на страницах ссылки на недоступные модели страниц'),(7,'EMAIL_CONFIRMATION','0','Включить подтверждение почты при регистрации'),(8,'API','1','Включить API с авторизацией по заголовкам X-Auth-Token на уровне системы'),(9,'USER_ACT','1','Включить аккаунт для новых пользователей по умолчанию'),(10,'USER_API','1','Включить API по заголовкам X-Auth-Token для новых пользователей по умолчанию'),(11,'HIDE_OUT_ACTIONS_MODALS','1','Скрывать на страницах триггеры вызова недоступных модальных окон и действий'),(12,'CRON_ACT','1','Включить выполнение cron задач'),(13,'SUBORDINATE_MODELS','0','Отображать только модели подчиненных групп'),(14,'EMAIL','0','Включить отправку писем с сервера'),(15,'GOOGLE_OAUTH_CLIENT_ID','','Публичный google oauth ключ'),(16,'GOOGLE_OAUTH_CLIENT_SECRET','','Секретный google oauth ключ'),(17,'YANDEX_OAUTH_CLIENT_ID','','Публичный яндекс oauth ключ'),(18,'YANDEX_OAUTH_CLIENT_SECRET','','Секретный яндекс oauth ключ'),(19,'ANYCOMMENT_SECRET','','API токен от anycomment.io'),(20,'SYSTEM_CLOSED','0','Закрыть систему для всех кроме группы \"Система\" (403 - доступ запрещён)'),(21,'SMTP','0','Отправлять письма через SMTP (используется библиотека phpmailer)'),(22,'SMTP_HOST','smtp.mail.ru','SMTP хост сервера'),(23,'MAIL_USERNAME','support@wrong-mvc.com','Почта отправителя писем'),(24,'SMTP_PASSWORD','','SMTP пароль'),(25,'SMTP_PORT','465','SMTP порт'),(26,'CRON_CLI','1','Поддержка CLI команд в CRON задачах'),(27,'DEVELOPER_MODE','0','Включить режим разработчика(отключает защиту на изменение системных моделей)'),(28,'HIDE_NON_ACTIVE_GROUP_MODELS','0','Скрывать модели принадлежащие отключенным группам');
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -375,4 +375,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-20 13:57:08
+-- Dump completed on 2023-04-26  1:34:59

@@ -11,6 +11,7 @@ namespace Wrong\Rights;
 
 use Wrong\Database\Controller;
 use Wrong\Start\Env;
+use Wrong\Rights\Group;
 
 /**
  * @brief Access класс, проверки прав доступов
@@ -32,7 +33,7 @@ class Access
 
     /** 
      * Проверяет доступность модели для пользователя на доступ
-     * (юзер состоит в группах доступа модели и она включена, либо юзер состоит в группе - владельца модели)
+     * (юзер состоит в группах доступа модели и она включена, либо юзер состоит в группе - владельца модели) группа владелец модели должна быть также включена
      * функция не сравнивает наличие прав по весу подчиненных групп, проверяются только группы доступа модели и его владелец
      * 
      * @param object $row проверяемая модель
@@ -43,7 +44,7 @@ class Access
     public function read($row)
     {
         if (!$row) return false;
-        return (bool) ((array_intersect($this->user->groups, json_decode($row->groups, true)) && $row->act) || ($this->user->id && in_array($row->owner_group, $this->user->groups)));
+        return (bool) ((array_intersect($this->user->groups, json_decode($row->groups, true)) && $row->act && Group::is_active($row->owner_group)) || ($this->user->id && in_array($row->owner_group, $this->user->groups)));
     }
 
     /** 

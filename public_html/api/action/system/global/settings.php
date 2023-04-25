@@ -94,6 +94,10 @@ $sth = $dbh->prepare("UPDATE `settings` SET `value` = :value WHERE `name` = 'SUB
 $sth->bindValue(':value', intval(isset($_POST['SUBORDINATE_MODELS'])));
 $sth->execute();
 
+$sth = $dbh->prepare("UPDATE `settings` SET `value` = :value WHERE `name` = 'HIDE_NON_ACTIVE_GROUP_MODELS'");
+$sth->bindValue(':value', intval(isset($_POST['HIDE_NON_ACTIVE_GROUP_MODELS'])));
+$sth->execute();
+
 $sth = $dbh->prepare("UPDATE `settings` SET `value` = :value WHERE `name` = 'SYSTEM_CLOSED'");
 $sth->bindValue(':value', intval(isset($_POST['SYSTEM_CLOSED'])));
 $sth->execute();

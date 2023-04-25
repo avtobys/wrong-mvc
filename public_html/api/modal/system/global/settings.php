@@ -111,6 +111,8 @@ if (!$user->access()->action('/api/action/settings')) { // скрываем не
                                 </div>
                             </div>
                         </div>
+
+
                         <div class="col">
                             <div>
                                 <div class="badge badge-warning px-2">Система:</div>
@@ -156,6 +158,12 @@ if (!$user->access()->action('/api/action/settings')) { // скрываем не
                                 <div class="custom-control custom-checkbox small">
                                     <input type="checkbox" name="SUBORDINATE_MODELS" class="custom-control-input" id="SUBORDINATE_MODELS" <?= Wrong\Database\Controller::find('SUBORDINATE_MODELS', 'name', 'settings')->value ? 'checked' : '' ?>>
                                     <label class="custom-control-label" for="SUBORDINATE_MODELS"><?= Wrong\Database\Controller::find('SUBORDINATE_MODELS', 'name', 'settings')->description ?></label>
+                                </div>
+                            </div>
+                            <div class="bg-light-info border mt-2 px-2 py-1 rounded">
+                                <div class="custom-control custom-checkbox small">
+                                    <input type="checkbox" name="HIDE_NON_ACTIVE_GROUP_MODELS" class="custom-control-input" id="HIDE_NON_ACTIVE_GROUP_MODELS" <?= Wrong\Database\Controller::find('HIDE_NON_ACTIVE_GROUP_MODELS', 'name', 'settings')->value ? 'checked' : '' ?>>
+                                    <label class="custom-control-label" for="HIDE_NON_ACTIVE_GROUP_MODELS"><?= Wrong\Database\Controller::find('HIDE_NON_ACTIVE_GROUP_MODELS', 'name', 'settings')->description ?></label>
                                 </div>
                             </div>
                             <div class="bg-light-info border mt-2 px-2 py-1 rounded">

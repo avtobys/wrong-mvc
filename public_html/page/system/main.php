@@ -75,7 +75,7 @@ if ($user->id && $request == '/documentation') {
             <li><a href="//wrong-mvc.com/docs/_l_i_c_e_n_s_e_source.html">LICENSE</a></li>
             <li><a data-toggle="modal" data-target="#comments" href="//wrong-mvc.com/comments">Техническая поддержка</a><?= Wrong\Rights\Group::is_available_group(Wrong\Models\Actions::find(45)) && file_exists($_SERVER['DOCUMENT_ROOT'] . '/../temp/comments') && ($data = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/../temp/comments'), true)) && $data['new'] > 0 ? '<small id="new-comments" style="top:-3px;left:5px;position:relative;"><span class="badge badge-success badge-pill slide-in-elliptic-left-fwd" style="padding:3px 6px 2px 6px;font-weight:300;">Новые сообщения: ' . $data['new'] . '</span></small><script>$(function(){successToast("Новые сообщения в техподдержку: <b>' . $data['new'] . '</b>");})</script>' : '' ?></li>
 
-            <li><a target="_blank" title="График работы над проектом" href="https://wakatime.com/@avtobys/projects/yebubsozfj"><img src="https://wakatime.com/badge/user/bc703945-8673-421d-a0a4-b33295014658/project/b450665a-946a-4a02-9629-56122f1754cc.svg" alt="wakatime"></a></li>
+            <!-- <li><a target="_blank" title="График работы над проектом" href="https://wakatime.com/@avtobys/projects/yebubsozfj"><img src="https://wakatime.com/badge/user/bc703945-8673-421d-a0a4-b33295014658/project/b450665a-946a-4a02-9629-56122f1754cc.svg" alt="wakatime"></a></li> -->
         </ul>
     </div>
 </div>
