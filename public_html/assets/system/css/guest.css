@@ -2099,6 +2099,10 @@ select {
   [data-target="#view-page-mobile"] {
     display: none !important;
   }
+
+  #drag-menu-button {
+    display: none !important;
+  }
 }
 :root {
   --blue: #2d7dd2;

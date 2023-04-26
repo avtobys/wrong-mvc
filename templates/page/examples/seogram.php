@@ -47,7 +47,7 @@ const USE_ASSETS_PATH = '/assets/examples/seogram-1.0.0/assets';
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="navbar-collapse collapsed" id="navbarContent">
+                <div class="navbar-collapse collapse" id="navbarContent">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
                             <a class="nav-link" href="./index">Home</a>
