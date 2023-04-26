@@ -84,8 +84,6 @@ if (preg_match('#^/api/(modal|action|select)/[a-z0-9\-]+#', $request, $matches))
 }
 
 
-
-
 if (isset($_GET['FROM_UID'])) { // переадресация на главную и сброс "гостевой" сессии
     !empty($_COOKIE['FROM_UID']) && Wrong\Auth\User::session_reset();
     $user = new Wrong\Auth\User(Wrong\Auth\User::session());
@@ -104,7 +102,7 @@ if ($request == '/' && Wrong\Start\Env::$e->RETURN_TO_REQUEST && $user->id && $r
 
 if (preg_match('#^/remind/([0-9]+)/([a-z0-9]+)#i', $request, $matches) && Wrong\Auth\User::is_remind($matches[1], $matches[2])) { // восставновление пароля
     header("X-Robots-Tag: noindex");
-    Wrong\Task\stackJS::add('
+    Wrong\Task\Stackjs::add('
         _modal("#sign-remind", null, "user_id=' . $matches[1] . '&md5=' . $matches[2] . '");
         history.pushState(null, null, "/");
     ', 0, 'sign-remind');
@@ -113,7 +111,7 @@ if (preg_match('#^/remind/([0-9]+)/([a-z0-9]+)#i', $request, $matches) && Wrong\
 
 if (preg_match('#^/email-confirm/([0-9]+)/([a-z0-9]+)#i', $request, $matches) && Wrong\Auth\User::is_confirm($matches[1], $matches[2]) && !$user->email_confirmed) { // подтверждение email
     header("X-Robots-Tag: noindex");
-    Wrong\Task\stackJS::add('history.pushState(null, null, "/");setTimeout(()=>{successToast("Почта успешно подтверждена");},100)', 0, 'email-confirm');
+    Wrong\Task\Stackjs::add('history.pushState(null, null, "/");setTimeout(()=>{successToast("Почта успешно подтверждена");},100)', 0, 'email-confirm');
     $user->set_confirm(1);
     if ($user->access()->page('/system')) {
         header("Location: /system");
@@ -125,7 +123,7 @@ if (preg_match('#^/email-confirm/([0-9]+)/([a-z0-9]+)#i', $request, $matches) &&
 
 if (Wrong\Start\Env::$e->EMAIL_CONFIRMATION && $user->id && !$user->email_confirmed) { // окно подтверждения email
     $request = '/disabled';
-    Wrong\Task\stackJS::add('_modal("#email-confirm");', 0, 'email-confirm');
+    Wrong\Task\Stackjs::add('_modal("#email-confirm");', 0, 'email-confirm');
 }
 
 if ($arr = Wrong\Models\Pages::all($request, 'request')) { // запросы к url страницам
@@ -144,7 +142,6 @@ if ($arr = Wrong\Models\Pages::all($request, 'request')) { // запросы к 
                 $user->access()->read($template) &&
                 file_exists($_SERVER['DOCUMENT_ROOT'] . $template->file)
             ) { // шаблон доступен
-                
                 if ($row->cache_time) { // если страница кешируется
                     $mem = new Wrong\Memory\Cache('page-cache');
                     if ($data = $mem->get($_SERVER['REQUEST_URI'], $row->cache_time)) { // если есть в кеше отдаём из кеша

@@ -37,9 +37,9 @@ setcookie('FROM_UID', $uid, [
 
 $user = new Wrong\Auth\User($row->id);
 if ($user->access()->page('/system')) {
-    Wrong\Task\stackJS::add('location.href="/system";', 0, 'location');
+    Wrong\Task\Stackjs::add('location.href="/system";', 0, 'location');
 } else {
-    Wrong\Task\stackJS::add('location.href="/";', 0, 'location');
+    Wrong\Task\Stackjs::add('location.href="/";', 0, 'location');
 }
 
 exit(json_encode(['result' => 'ok']));

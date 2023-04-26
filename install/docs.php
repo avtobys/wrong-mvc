@@ -1641,7 +1641,7 @@
  * 
  * Итак, добавим на страницу
  * @code
- * Wrong\Task\stackJS::add('successToast("Js-Php стек");', 30, 'key-stack-test');
+ * Wrong\Task\Stackjs::add('successToast("Js-Php стек");', 30, 'key-stack-test');
  * @endcode
  * И спустя 30 секунд после её загрузки увидим всплывающее сообщение. А если мы спустя 10 секунд уйдем на другую страницу, то там оно покажется уже через 20 секунд.
  * А если мы перезагрузим эту страницу, до выполнения js кода из стека, то код и таймаут в стеке обновятся, и повторно,
@@ -1658,7 +1658,7 @@
  * Наглядно проедмонстрируем это в цикле, на той же странице добавим:
  * @code
  * for ($i = 0; $i < 33; $i++) {
- *   Wrong\Task\stackJS::add('successToast("Js-Php стек, итерация на ' . $i . ' секунде");', $i, $i);
+ *   Wrong\Task\Stackjs::add('successToast("Js-Php стек, итерация на ' . $i . ' секунде");', $i, $i);
  * }
  * @endcode
  * 
@@ -1671,15 +1671,15 @@
  * Пунктуально поздравим наших пользователей с Новым Годом, секунда в секунду(если он конечно будет на странице,
  * а если у него сохранится сессия, то он увидит поздравление позже):
  * @code
- * Wrong\Task\stackJS::add('successToast("С Новым Годом!");', strtotime('first day of January next year') - time(), 'new-year');
+ * Wrong\Task\Stackjs::add('successToast("С Новым Годом!");', strtotime('first day of January next year') - time(), 'new-year');
  * @endcode
  * 
  * Усложняем задачи. Пример простейшей рекурсии, которая размещается и стартует при запросе к /api/action/my-any-action выполняясь каждые 5 секунд:
  * @code
  * <?php
  * 
- * Wrong\Task\stackJS::add('successToast("Рекурсивный Js-Php стек");$.getScript('/api/action/my-any-action');', 5, 'key-stack-test');
- * exit(Wrong\Task\stackJS::set());
+ * Wrong\Task\Stackjs::add('successToast("Рекурсивный Js-Php стек");$.getScript('/api/action/my-any-action');', 5, 'key-stack-test');
+ * exit(Wrong\Task\Stackjs::set());
  * @endcode
  * Теперь нам достаточно лишь однажды вызвать javascript действие /api/action/my-any-action и код будет выполняться на сайте бесконечно, пока мы не убьем свою сессию
  * @code
@@ -1699,10 +1699,10 @@
  * 
  * Вот ещё пример применения на странице:
  * @code
- * Wrong\Task\stackJS::add('successToast("Я выполняюсь моментально без задержек! Но я вижу что ещё там в стеке кое что ниже есть через 3 секунды, поставлю ещё таймаут 3 секунды и вызову api когда придёт это время");', 0, 'key1');
- * Wrong\Task\stackJS::add('_modal("#error", null, "error=Время пришло, api запрошено. Но я вижу там ещё кое что есть, через 4 сек, поставлю ещё таймаут на 4 секунды");', 3, 'key2');
- * Wrong\Task\stackJS::add('$("#error").modal("hide");successToast("Окно скрыто. А что там, есть ещё что то в стеке?");', 7, 'key3');
- * Wrong\Task\stackJS::add('dangerToast("Да, есть я в стеке! Но меня ждать ещё 23 секунды. Если дождёшься - я исполнюсь, а если перейдешь на другие страницы, то я всё равно исполнюсь, но ровно в свой срок!");', 30, 'key4');
+ * Wrong\Task\Stackjs::add('successToast("Я выполняюсь моментально без задержек! Но я вижу что ещё там в стеке кое что ниже есть через 3 секунды, поставлю ещё таймаут 3 секунды и вызову api когда придёт это время");', 0, 'key1');
+ * Wrong\Task\Stackjs::add('_modal("#error", null, "error=Время пришло, api запрошено. Но я вижу там ещё кое что есть, через 4 сек, поставлю ещё таймаут на 4 секунды");', 3, 'key2');
+ * Wrong\Task\Stackjs::add('$("#error").modal("hide");successToast("Окно скрыто. А что там, есть ещё что то в стеке?");', 7, 'key3');
+ * Wrong\Task\Stackjs::add('dangerToast("Да, есть я в стеке! Но меня ждать ещё 23 секунды. Если дождёшься - я исполнюсь, а если перейдешь на другие страницы, то я всё равно исполнюсь, но ровно в свой срок!");', 30, 'key4');
  * @endcode
  * 
  * 

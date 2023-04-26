@@ -111,7 +111,7 @@ if (!empty($_POST)) {
     rd('Установка завершена...');
     echo "Данные для входа администратора:\nEmail: <kbd contenteditable=\"true\">" . $user->email . "</kbd>\nПароль: <kbd contenteditable=\"true\">" . $_POST['ADMIN_PASSWORD'] . "</kbd>\n\n";
     Locker::unlock(basename(__FILE__, '.php'), true);
-    Wrong\Task\stackJS::add('$(function(){successToast("Система WRONG MVC успешно установлена!");$("#wrong").click();});', 0, 'install');
+    Wrong\Task\Stackjs::add('$(function(){successToast("Система WRONG MVC успешно установлена!");$("#wrong").click();});', 0, 'install');
     exit('<a id="completed" class="btn btn-primary btn-lg" href="/">Готово!</a>');
 }
 

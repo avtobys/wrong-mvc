@@ -23,7 +23,7 @@ if ($row->method == 'CLI' && !Wrong\Start\Env::$e->CRON_CLI) {
     exit(json_encode(['error' => 'Поддержка CLI команд отключена в системных настройках!']));
 }
 
-Wrong\Task\stackJS::add('successToast("Задача выполняется...");', 0);
+Wrong\Task\Stackjs::add('successToast("Задача выполняется...");', 0);
 session_write_close();
 
 $cmd = 'php -f ' . dirname(__DIR__, 4) . '/cron.php ' . $row->id . ' ' . microtime(true);

@@ -9,7 +9,7 @@
 
 use Wrong\Auth\User;
 use Wrong\Rights\Group;
-use Wrong\Task\stackJS;
+use Wrong\Task\Stackjs;
 use Wrong\Database\Connect;
 use Wrong\Start\Env;
 use Wrong\Html\Hideout;
@@ -39,7 +39,7 @@ register_shutdown_function(function () {
     $out = ob_get_contents();
     if (stripos($out, '</body>') === false) return; // значит это не html страница, а api запрос
     ob_clean();
-    $script = '<script>window.CSRF = "' . Env::$e->CSRF . '";' . stackJS::execute() . '</script>';
+    $script = '<script>window.CSRF = "' . Env::$e->CSRF . '";' . Stackjs::execute() . '</script>';
     $out = str_replace('</body>', '<div class="position-fixed" id="toast" style="top:0;left:0;z-index:1051;"></div>' . $script . '</body>', $out);
     if (!empty($_COOKIE['FROM_UID'])) {
         $out = str_replace('</body>', '<div class="position-fixed" style="bottom:10px;right:10px;z-index:1051;"><a title="Вернуться в свой аккаунт" class="btn btn-secondary border-0 rounded-circle" href="/?FROM_UID"><i class="fa fa-user"></i></a></div></body>', $out);
@@ -83,5 +83,5 @@ $user->set_online();
 Write::action();
 
 if (Wrong\Start\Env::$e->CRON_ACT && (!file_exists($_SERVER['DOCUMENT_ROOT'] . '/../temp/lock-cron.lock') || filemtime($_SERVER['DOCUMENT_ROOT'] . '/../temp/lock-cron.lock') + 100 < time())) {
-    Wrong\Task\stackJS::add('(function(){let im=new Image();im.src="/cron.php?"+Math.random();})();', 0, 'cron'); /// активация самозапускающегося скрипта выполнения крон задач
+    Wrong\Task\Stackjs::add('(function(){let im=new Image();im.src="/cron.php?"+Math.random();})();', 0, 'cron'); /// активация самозапускающегося скрипта выполнения крон задач
 }

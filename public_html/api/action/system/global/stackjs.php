@@ -7,4 +7,4 @@
 
 isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
 
-exit(Wrong\Task\stackJS::execute());
+exit(Wrong\Task\Stackjs::execute());

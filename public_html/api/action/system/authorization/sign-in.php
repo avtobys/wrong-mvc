@@ -34,9 +34,9 @@ if (!$user->act) {
 
 if ($user = new Wrong\Auth\User(Wrong\Auth\User::session($user->id))) {
     if ($user->access()->page('/system')) {
-        Wrong\Task\stackJS::add('location.href="/system";', 0, 'location');
+        Wrong\Task\Stackjs::add('location.href="/system";', 0, 'location');
     } else {
-        Wrong\Task\stackJS::add('location.reload();', 0, 'location');
+        Wrong\Task\Stackjs::add('location.reload();', 0, 'location');
     }
     exit(json_encode(['result' => 'ok']));
 }

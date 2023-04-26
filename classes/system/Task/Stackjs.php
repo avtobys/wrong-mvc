@@ -9,11 +9,11 @@
 namespace Wrong\Task;
 
 /**
- * @brief stackJS класс добавляющий и вызывающий javascript стеки
+ * @brief Stackjs класс добавляющий и вызывающий javascript стеки
  * 
  */
 
-class stackJS
+class Stackjs
 {
     /**
      * Добавляет js код в стек
@@ -24,15 +24,15 @@ class stackJS
      */
     public static function add($code, $timeout = 0, $key = '')
     {
-        $_SESSION['stackJS'] = empty($_SESSION['stackJS']) ? [] : $_SESSION['stackJS'];
+        $_SESSION['Stackjs'] = empty($_SESSION['Stackjs']) ? [] : $_SESSION['Stackjs'];
         if ($key) {
-            $_SESSION['stackJS'][$key] = [
+            $_SESSION['Stackjs'][$key] = [
                 'code' => $code,
                 'timeout' => $timeout,
                 'timestamp' => time()
             ];
         } else {
-            $_SESSION['stackJS'][] = [
+            $_SESSION['Stackjs'][] = [
                 'code' => $code,
                 'timeout' => $timeout,
                 'timestamp' => time()
@@ -46,14 +46,14 @@ class stackJS
      */
     public static function execute()
     {
-        if (empty($_SESSION['stackJS'])) {
+        if (empty($_SESSION['Stackjs'])) {
             return '';
         }
         $code = '';
-        foreach ($_SESSION['stackJS'] as $key => $value) {
+        foreach ($_SESSION['Stackjs'] as $key => $value) {
             if ($value['timestamp'] + $value['timeout'] <= time()) {
                 $code .= $value['code'];
-                unset($_SESSION['stackJS'][$key]);
+                unset($_SESSION['Stackjs'][$key]);
             }
         }
         $code .= self::set();
@@ -65,11 +65,11 @@ class stackJS
      */
     public static function set()
     {
-        if (empty($_SESSION['stackJS'])) {
+        if (empty($_SESSION['Stackjs'])) {
             return '';
         }
         $arr = [];
-        foreach ($_SESSION['stackJS'] as $key => $value) {
+        foreach ($_SESSION['Stackjs'] as $key => $value) {
             if ($value['timestamp'] + $value['timeout'] <= time()) {
                 $arr[] = 0;
             } else {

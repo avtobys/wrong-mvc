@@ -248,6 +248,7 @@
   height: 280px;
   overflow: hidden;
   position: relative;
+  box-shadow: 2px 2px 5px 1px rgba(128,128,128,.2);
 }
 
 .owl-carousel .item a {
@@ -261,6 +262,11 @@
 .owl-carousel .item a:hover {
   -webkit-animation: slide-top 2.5s ease-in-out infinite both;
 	        animation: slide-top 2.5s ease-in-out infinite both;
+}
+
+.owl-carousel:not(:hover) .owl-item.active a {
+  -webkit-animation: slide-top 2.5s ease-in-out both;
+	        animation: slide-top 2.5s ease-in-out both;
 }
 
  @-webkit-keyframes slide-top {

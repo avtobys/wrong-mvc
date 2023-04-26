@@ -35,10 +35,10 @@ if ($id = Wrong\Auth\User::session(Wrong\Models\Users::create($_POST['email'], $
     $user = new Wrong\Auth\User($id);
     Wrong\Mail\Send::confirm($user);
     if ($user->access()->page('/system')) {
-        Wrong\Task\stackJS::add('location.href="/system";', 0, 'location');
+        Wrong\Task\Stackjs::add('location.href="/system";', 0, 'location');
     } else {
-        Wrong\Task\stackJS::add('location.reload();', 0, 'location');
+        Wrong\Task\Stackjs::add('location.reload();', 0, 'location');
     }
-    Wrong\Task\stackJS::add('$(function(){successToast("Приятной работы в системе!");});', 1, 'sign-up');
+    Wrong\Task\Stackjs::add('$(function(){successToast("Приятной работы в системе!");});', 1, 'sign-up');
     exit(json_encode(['result' => 'ok']));
 }

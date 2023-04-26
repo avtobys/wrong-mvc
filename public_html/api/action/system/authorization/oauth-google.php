@@ -63,7 +63,7 @@ if (!empty($_GET['code'])) {
                 if ($id = Wrong\Auth\User::session(Wrong\Models\Users::create($info['email'], substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'), 0, 10), Wrong\Start\Env::$e->GROUPS_USERS, Wrong\Start\Env::$e->OWNER_GROUP_USERS))) {
                     $user = new Wrong\Auth\User($id);
                     $user->set_confirm(1);
-                    Wrong\Task\stackJS::add('$(function(){successToast("Приятной работы в системе!");});', 2, 'sign-up');
+                    Wrong\Task\Stackjs::add('$(function(){successToast("Приятной работы в системе!");});', 2, 'sign-up');
                 }
             }
             if ($user->access()->page('/system')) {

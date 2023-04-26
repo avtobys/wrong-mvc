@@ -8,6 +8,7 @@
 isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
 $CONTENT_PAGE_FILE = $_SERVER['DOCUMENT_ROOT'] . $row->file;
 
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">

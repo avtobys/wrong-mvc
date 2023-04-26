@@ -156,7 +156,7 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
     <div class="container mt-4" data-aos="fade-up">
         <div class="description">
             <h2>Нет ничего проще сайта в два клика?</h2>
-            <h3>Тогда запускайте лендинги в 1 клик!</h3>
+            <h3>Тогда запускайте лендинги в 1 клик</h3>
             <div class="owl-carousel-projects owl-carousel owl-theme mt-3">
                 <div class="item">
                     <a data-toggle="modal" data-target="#view-page" data-uri="/examples/tivo/index" href="#">
@@ -204,8 +204,8 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
                     </a>
                 </div>
                 <div class="item">
-                    <a data-toggle="modal" data-target="#view-page" data-uri="/examples/aesthetic-master/index" href="#">
-                        <img src="/assets/system/img/aesthetic.png" alt="slider" loading="lazy">
+                    <a data-toggle="modal" data-target="#view-page" data-uri="/examples/orthoc/index" href="#">
+                        <img src="/assets/system/img/orthoc.png" alt="slider" loading="lazy">
                     </a>
                 </div>
             </div>
@@ -217,6 +217,11 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
                     stagePadding: 100,
                     margin: 20,
                     nav: false,
+                    autoplay: true,
+                    autoplayTimeout: 3000,
+                    autoplayHoverPause: true,
+                    smartSpeed: 2500,
+                    dots: false,
                     responsive: {
                         0: {
                             items: 1
