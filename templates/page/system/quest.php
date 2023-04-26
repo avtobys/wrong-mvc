@@ -33,6 +33,8 @@ $CONTENT_PAGE_FILE = $_SERVER['DOCUMENT_ROOT'] . $row->file;
     <link rel="icon" type="image/png" sizes="64x64" href="/assets/system/img/favicon-64.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/system/img/favicon-32.png">
     <?= Wrong\Html\Get::stylesrc($_SERVER['DOCUMENT_ROOT'] . '/assets/system/css/guest.min.css') ?>
+    <?= Wrong\Html\Get::stylesrc($_SERVER['DOCUMENT_ROOT'] . '/assets/system/vendors/owl.carousel/css/owl.carousel.css') ?>
+    <?= Wrong\Html\Get::stylesrc($_SERVER['DOCUMENT_ROOT'] . '/assets/system/vendors/owl.carousel/css/owl.theme.default.min.css') ?>
     <?= Wrong\Html\Get::scriptsrc($_SERVER['DOCUMENT_ROOT'] . '/assets/system/js/main.min.js') ?>
 </head>
 

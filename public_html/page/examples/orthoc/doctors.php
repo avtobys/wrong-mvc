@@ -14,7 +14,7 @@
         <header class="header_section">
             <div class="container">
                 <nav class="navbar navbar-expand-lg custom_nav-container ">
-                    <a class="navbar-brand" href="./">
+                    <a class="navbar-brand" href="./index">
                         <span>
                             Orthoc
                         </span>

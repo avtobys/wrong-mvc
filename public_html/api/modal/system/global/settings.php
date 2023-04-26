@@ -16,7 +16,7 @@ if (!$user->access()->action('/api/action/settings')) { // скрываем не
 }
 
 ?>
-<div class="modal fade" id="<?= $basename ?>" tabindex="-1" data-backdrop="static" data-keyboard="false">
+<div class="modal fade" id="<?= $basename ?>" tabindex="-1" data-backdrop="static">
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable w-100 mw-100 h-100 p-0 m-0 position-fixed" style="max-width: 100%;max-height:100%;" role="document">
         <div class="modal-content w-100 h-100 rounded-0 border-0">
             <div class="modal-header">

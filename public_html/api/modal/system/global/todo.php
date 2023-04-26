@@ -8,7 +8,7 @@
 isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
 
 ?>
-<div class="modal fade" id="<?= $basename ?>" tabindex="-1" data-backdrop="static" data-keyboard="false">
+<div class="modal fade" id="<?= $basename ?>" tabindex="-1" data-backdrop="static">
     <div class="modal-dialog modal-xl modal-dialog-centered w-100 mw-100 h-100 p-0 m-0 position-fixed" role="document">
         <div class="modal-content w-100 h-100 rounded-0 border-0">
             <div class="modal-header rounded-0" style="background: #3b4346 url(/assets/system/img/bg01.jpg);

@@ -50,6 +50,13 @@ const USE_ASSETS_PATH = '/assets/examples/delfood-1.0.0';
 </head>
 
 <body>
+    <div class="spinner-wrapper">
+        <div class="spinner">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+    </div>
 
     <?php require $CONTENT_PAGE_FILE; ?>
 
@@ -130,7 +137,9 @@ const USE_ASSETS_PATH = '/assets/examples/delfood-1.0.0';
     <!-- custom js -->
     <script src="js/custom.js"></script>
 
-
+    <script>
+        $('.spinner-wrapper').fadeOut();
+    </script>
 </body>
 
 </html>

@@ -153,6 +153,88 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
             <p>Для разделения и распределения абсолютно любой Вашей бизнес-логики! Менеджмент, пользователи, покупатели, заказчики, доставщики, руководители, водители и их родители, могильщики и похоронщики - благодаря групповым политикам доступов ко всем моделям, легко организовать и построить абсолютно любую архитектуру и подчиненность процессов в любых Ваших приложениях и управлять ею онлайн! А в сочетании со встроенной автоматизацией по расписаниям - это пушка бомба. Это не CRM система, это среда разработки на базе которой можно построить любую свою систему, включая CRM!</p>
         </div>
     </div>
+    <div class="container mt-4" data-aos="fade-up">
+        <div class="description">
+            <h2>Нет ничего проще сайта в два клика?</h2>
+            <h3>Тогда запускайте лендинги в 1 клик!</h3>
+            <div class="owl-carousel-projects owl-carousel owl-theme mt-3">
+                <div class="item">
+                    <a data-toggle="modal" data-target="#view-page" data-uri="/examples/tivo/index" href="#">
+                        <img src="/assets/system/img/tivo.png" alt="slider" loading="lazy">
+                    </a>
+                </div>
+                <div class="item">
+                    <a data-toggle="modal" data-target="#view-page" data-uri="/examples/seogram/index" href="#">
+                        <img src="/assets/system/img/seogram.png" alt="slider" loading="lazy">
+                    </a>
+                </div>
+                <div class="item">
+                    <a data-toggle="modal" data-target="#view-page" data-uri="/examples/aesthetic-master/index" href="#">
+                        <img src="/assets/system/img/aesthetic.png" alt="slider" loading="lazy">
+                    </a>
+                </div>
+                <div class="item">
+                    <a data-toggle="modal" data-target="#view-page" data-uri="/examples/delfood/index" href="#">
+                        <img src="/assets/system/img/delfood.png" alt="slider" loading="lazy">
+                    </a>
+                </div>
+                <div class="item">
+                    <a data-toggle="modal" data-target="#view-page" data-uri="/examples/marshmallow/index" href="#">
+                        <img src="/assets/system/img/marshmallow.png" alt="slider" loading="lazy">
+                    </a>
+                </div>
+                <div class="item">
+                    <a data-toggle="modal" data-target="#view-page" data-uri="/examples/orthoc/index" href="#">
+                        <img src="/assets/system/img/orthoc.png" alt="slider" loading="lazy">
+                    </a>
+                </div>
+                <div class="item">
+                    <a data-toggle="modal" data-target="#view-page" data-uri="/examples/eclipse-master/index" href="#">
+                        <img src="/assets/system/img/eclipse.png" alt="slider" loading="lazy">
+                    </a>
+                </div>
+                <div class="item">
+                    <a data-toggle="modal" data-target="#view-page" data-uri="/examples/tivo/index" href="#">
+                        <img src="/assets/system/img/tivo.png" alt="slider" loading="lazy">
+                    </a>
+                </div>
+                <div class="item">
+                    <a data-toggle="modal" data-target="#view-page" data-uri="/examples/seogram/index" href="#">
+                        <img src="/assets/system/img/seogram.png" alt="slider" loading="lazy">
+                    </a>
+                </div>
+                <div class="item">
+                    <a data-toggle="modal" data-target="#view-page" data-uri="/examples/aesthetic-master/index" href="#">
+                        <img src="/assets/system/img/aesthetic.png" alt="slider" loading="lazy">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(function() {
+                $('.owl-carousel-projects').owlCarousel({
+                    loop: true,
+                    stagePadding: 100,
+                    margin: 20,
+                    nav: false,
+                    responsive: {
+                        0: {
+                            items: 1
+                        },
+                        500: {
+                            items: 2
+                        },
+                        767: {
+                            items: 3
+                        },
+                        1000: {
+                            items: 4
+                        }
+                    }
+                });
+            });
+        </script>
+    </div>
     <div class="container mt-4" data-aos="zoom-in-right">
         <div class="description">
             <h2>Что за зверь такой?</h2>
@@ -306,3 +388,4 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
         });
     }
 </script>
+<?= Wrong\Html\Get::scriptsrc($_SERVER['DOCUMENT_ROOT'] . '/assets/system/vendors/owl.carousel/js/owl.carousel.js') ?>

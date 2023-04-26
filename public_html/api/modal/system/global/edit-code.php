@@ -13,7 +13,7 @@ if (!($row = Wrong\Database\Controller::find($_GET['id'], 'id', $_GET['table']))
 
 
 ?>
-<div class="modal fade p-0" id="<?= $basename ?>" tabindex="-1" data-backdrop="static" data-keyboard="false">
+<div class="modal fade p-0" id="<?= $basename ?>" tabindex="-1" data-backdrop="static">
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable w-100 mw-100 h-100 p-0 m-0" style="max-width: 100%;max-height:100%;" role="document">
         <div class="modal-content w-100 h-100 rounded-0 border-0">
             <div class="bg-secondary modal-header py-0 text-white rounded-0 border-0 pl-1 pr-0 align-items-center">
