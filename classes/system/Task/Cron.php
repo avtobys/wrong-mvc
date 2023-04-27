@@ -33,17 +33,15 @@ class Cron
     {
 
         if (!Env::$e->CRON_ACT) return;
-        if (!Connect::$dbh) {
-            Connect::$dbh = Connect::start();
-        }
-        $sth = Connect::$dbh->query("SELECT * FROM `crontabs` WHERE `run_at` BETWEEN NOW() - INTERVAL 1 YEAR AND NOW() AND `act` = 1");
+        $dbh = Connect::getInstance()->dbh;
+        $sth = $dbh->query("SELECT * FROM `crontabs` WHERE `run_at` BETWEEN NOW() - INTERVAL 1 YEAR AND NOW() AND `act` = 1");
         self::set_run_at();
         while ($row = $sth->fetch()) {
             $threads = json_decode($row->threads, true) ?: self::DEFAULT_THERADS_SET;
             self::run_stack($row->id, self::available_threads($row->id, $threads), $threads);
         }
         $sth = null;
-        Connect::close();
+        Connect::getInstance()->close();
     }
 
 
@@ -61,7 +59,7 @@ class Cron
         if (intval(shell_exec("echo $(nproc) $(cat /proc/loadavg | awk '{print $1}') | awk '$2>$1/100*" . $threads['load'] . " {print 1}'"))) exit;
 
         if ($row->method == 'CLI' && $row->cli && Env::$e->CRON_CLI) {
-            Connect::close();
+            Connect::getInstance()->close();
             exec($row->cli);
             exit;
         }
@@ -70,7 +68,7 @@ class Cron
         $x_auth_token = false;
         if ($row->user_id && !($x_auth_token = self::get_token($row->user_id))) return;
         $headers = json_decode($row->headers, true);
-        Connect::close();
+        Connect::getInstance()->close();
         if ($x_auth_token) {
             $headers[] = 'X-Auth-Token: ' . $x_auth_token;
         }
@@ -96,10 +94,8 @@ class Cron
     private static function get_token($user_id)
     {
         if (!Env::$e->API) return;
-        if (!Connect::$dbh) {
-            Connect::$dbh = Connect::start();
-        }
-        $user = Connect::$dbh->query("SELECT * FROM `users` WHERE `id` = $user_id")->fetch();
+        $dbh = Connect::getInstance()->dbh;
+        $user = $dbh->query("SELECT * FROM `users` WHERE `id` = $user_id")->fetch();
         if (!$user->act || !$user->api_act || !$user->x_auth_token) return;
         return $user->x_auth_token;
     }
@@ -111,14 +107,12 @@ class Cron
     public static function set_run_at()
     {
 
-        if (!Connect::$dbh) {
-            Connect::$dbh = Connect::start();
-        }
-        $sth = Connect::$dbh->query("SELECT * FROM `crontabs`");
+        $dbh = Connect::getInstance()->dbh;
+        $sth = $dbh->query("SELECT * FROM `crontabs`");
         while ($row = $sth->fetch()) {
             $cron = CronExpression::factory($row->shedule);
             $run_at = $cron->getNextRunDate(null, 0)->format('Y-m-d H:i:s');
-            Connect::$dbh->query("UPDATE `crontabs` SET `run_at` = '$run_at' WHERE `id` = $row->id");
+            $dbh->query("UPDATE `crontabs` SET `run_at` = '$run_at' WHERE `id` = $row->id");
         }
     }
 
@@ -194,7 +188,7 @@ class Cron
         if (!$row->act || !Env::$e->CRON_ACT) {
             exit;
         }
-        Connect::close();
+        Connect::getInstance()->close();
         $threads = json_decode($row->threads, true) ?: self::DEFAULT_THERADS_SET;
         self::run_stack($row->id, self::available_threads($row->id, $threads), $threads);
     }

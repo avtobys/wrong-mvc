@@ -31,6 +31,7 @@ class Modals extends Controller implements ModelsInterface
      */
     public static function create($arr, $replace_path = [])
     {
+        $dbh = Connect::getInstance()->dbh;
         if ($replace_path) {
             $arr['file'] = strtr($arr['file'], $replace_path);
             $arr['request'] = strtr($arr['request'], $replace_path);
@@ -38,14 +39,14 @@ class Modals extends Controller implements ModelsInterface
         Path::mkdir($_SERVER['DOCUMENT_ROOT'] . $arr['file']);
         $arr['template_filename'] = Templates::all_available($arr['template_id'])[0]->file;
         if (copy($_SERVER['DOCUMENT_ROOT'] . $arr['template_filename'], $_SERVER['DOCUMENT_ROOT'] . $arr['file'])) {
-            $sth = Connect::$dbh->prepare("INSERT INTO `modals` (`request`, `file`, `groups`, `owner_group`) VALUES (:request, :file, :groups, :owner_group)");
+            $sth = $dbh->prepare("INSERT INTO `modals` (`request`, `file`, `groups`, `owner_group`) VALUES (:request, :file, :groups, :owner_group)");
             $arr['groups'] = json_encode($arr['groups']);
             $sth->bindValue(':request', $arr['request']);
             $sth->bindValue(':file', $arr['file']);
             $sth->bindValue(':groups', $arr['groups']);
             $sth->bindValue(':owner_group', $arr['owner_group']);
             $sth->execute();
-            return Connect::$dbh->lastInsertId();
+            return $dbh->lastInsertId();
         } else {
             Path::rmdir($_SERVER['DOCUMENT_ROOT'] . $arr['file']);
         }

@@ -85,7 +85,7 @@ CREATE TABLE `crontabs` (
 
 LOCK TABLES `crontabs` WRITE;
 /*!40000 ALTER TABLE `crontabs` DISABLE KEYS */;
-INSERT INTO `crontabs` VALUES (1,NULL,NULL,'/api/action/toggle',1,'* * * * *','POST','[]','{\"id\":\"3\",\"table\":\"groups\"}',2,'2023-04-26 19:40:00','Включает/отключает группу модераторы каждую минуту',1),(2,NULL,NULL,'/api/action/clean-logs',1,'0 0 */1 * *','POST','[]','[]',2,'2023-04-27 00:00:00','Периодическая очистка логов',1),(3,NULL,NULL,'/api/action/erase-group',1,'0 0 * * *','POST','[]','{\"table\":\"groups\",\"id\":\"5\"}',2,'2023-04-27 00:00:00','Очистка от всех демо моделей раз в сутки',1),(4,NULL,NULL,'/api/action/anycomment',1,'0 */1 * * *','GET','[]','[]',2,'2023-04-26 20:00:00','Обновление инфы о новых комментариях и запросах в тех поддержку',1),(5,'{\"min\":5,\"max\":5,\"load\":40,\"fixed\":1}','sleep 15','',0,'* * * * *','CLI','null','[]',2,'2023-04-26 19:40:00','Перманентно спит по 15 сек в 5 потоков одновременно, а если нагрузка более 40% даже не начинает спать',1);
+INSERT INTO `crontabs` VALUES (1,NULL,NULL,'/api/action/toggle',1,'* * * * *','POST','[]','{\"id\":\"3\",\"table\":\"groups\"}',2,'2023-04-27 08:20:00','Включает/отключает группу модераторы каждую минуту',1),(2,NULL,NULL,'/api/action/clean-logs',1,'0 0 */1 * *','POST','[]','[]',2,'2023-04-28 00:00:00','Периодическая очистка логов',1),(3,NULL,NULL,'/api/action/erase-group',1,'0 0 * * *','POST','[]','{\"table\":\"groups\",\"id\":\"5\"}',2,'2023-04-28 00:00:00','Очистка от всех демо моделей раз в сутки',1),(4,NULL,NULL,'/api/action/anycomment',1,'0 */1 * * *','GET','[]','[]',2,'2023-04-27 09:00:00','Обновление инфы о новых комментариях и запросах в тех поддержку',1),(5,'{\"min\":5,\"max\":5,\"load\":40,\"fixed\":1}','sleep 15','',0,'* * * * *','CLI','null','[]',2,'2023-04-27 08:20:00','Перманентно спит по 15 сек в 5 потоков одновременно, а если нагрузка более 40% даже не начинает спать',1);
 /*!40000 ALTER TABLE `crontabs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -141,7 +141,7 @@ CREATE TABLE `logs` (
   KEY `user_id` (`user_id`),
   KEY `ip` (`ip`),
   KEY `request` (`request`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -150,7 +150,6 @@ CREATE TABLE `logs` (
 
 LOCK TABLES `logs` WRITE;
 /*!40000 ALTER TABLE `logs` DISABLE KEYS */;
-INSERT INTO `logs` VALUES (1,1,'/api/action/toggle','{\n    \"method\": \"POST\",\n    \"input\": {\n        \"id\": \"3\",\n        \"table\": \"groups\"\n    },\n    \"output\": {\n        \"id\": \"3\",\n        \"act\": 1,\n        \"table\": \"groups\",\n        \"message\": \"Функционал включен\"\n    }\n}','2023-04-26 19:39:00','127.0.0.1');
 /*!40000 ALTER TABLE `logs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -376,4 +375,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-26 19:39:21
+-- Dump completed on 2023-04-27  8:20:01

@@ -27,7 +27,8 @@ class Crontabs extends Controller implements ModelsInterface
      */
     public static function create($arr)
     {
-        $sth = Connect::$dbh->prepare("INSERT INTO `crontabs` (`cli`, `request`, `user_id`, `shedule`, `method`, `headers`, `data`, `owner_group`, `note`, `run_at`) VALUES (:cli, :request, :user_id, :shedule, :method, :headers, :data, :owner_group, :note, :run_at)");
+        $dbh = Connect::getInstance()->dbh;
+        $sth = $dbh->prepare("INSERT INTO `crontabs` (`cli`, `request`, `user_id`, `shedule`, `method`, `headers`, `data`, `owner_group`, `note`, `run_at`) VALUES (:cli, :request, :user_id, :shedule, :method, :headers, :data, :owner_group, :note, :run_at)");
         $sth->bindValue(':cli', $arr['cli']);
         $sth->bindValue(':request', $arr['request']);
         $sth->bindValue(':user_id', $arr['user_id']);
@@ -39,7 +40,7 @@ class Crontabs extends Controller implements ModelsInterface
         $sth->bindValue(':note', $arr['note']);
         $sth->bindValue(':run_at', $arr['run_at']);
         $sth->execute();
-        return Connect::$dbh->lastInsertId();
+        return $dbh->lastInsertId();
     }
 
     /**
@@ -49,7 +50,8 @@ class Crontabs extends Controller implements ModelsInterface
      */
     public static function set_performer($arr)
     {
-        $sth = Connect::$dbh->prepare("UPDATE `crontabs` SET `user_id` = :user_id WHERE `id` = :id");
+        $dbh = Connect::getInstance()->dbh;
+        $sth = $dbh->prepare("UPDATE `crontabs` SET `user_id` = :user_id WHERE `id` = :id");
         $sth->bindValue(':user_id', $arr['user_id']);
         $sth->bindValue(':id', $arr['id']);
         $sth->execute();

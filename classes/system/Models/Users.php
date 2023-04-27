@@ -10,6 +10,7 @@ namespace Wrong\Models;
 
 use Wrong\Database\Controller;
 use Wrong\Start\Env;
+use Wrong\Database\Connect;
 
 /**
  * @brief Groups контроллер управления моделями пользователей, расширяет Controller
@@ -30,7 +31,7 @@ class Users extends Controller implements ModelsInterface
      */
     public static function create($email, $password = '', $groups = [], $owner_group = 1)
     {
-        global $dbh;
+        $dbh = Connect::getInstance()->dbh;
         $email = mb_strtolower(trim($email), 'utf-8');
         $password = trim($password);
         $groups = json_encode($groups);

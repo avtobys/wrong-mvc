@@ -29,6 +29,7 @@ class Templates extends Controller implements ModelsInterface
      */
     public static function create($arr)
     {
+        $dbh = Connect::getInstance()->dbh;
         Path::mkdir($_SERVER['DOCUMENT_ROOT'] . $arr['file']);
         if (copy($_SERVER['DOCUMENT_ROOT'] . '/../templates/' . $arr['type'] . '/system/empty.php', $_SERVER['DOCUMENT_ROOT'] . $arr['file'])) {
             if ($arr['type'] == 'modal') { // запишем имя в modal-title
@@ -41,7 +42,7 @@ class Templates extends Controller implements ModelsInterface
                 $file->fwrite($data);
                 $file->flock(LOCK_UN);
             }
-            $sth = Connect::$dbh->prepare("INSERT INTO `templates` (`file`, `groups`, `owner_group`, `name`, `type`) VALUES (:file, :groups, :owner_group, :name, :type)");
+            $sth = $dbh->prepare("INSERT INTO `templates` (`file`, `groups`, `owner_group`, `name`, `type`) VALUES (:file, :groups, :owner_group, :name, :type)");
             $arr['groups'] = json_encode($arr['groups']);
             $sth->bindValue(':file', $arr['file']);
             $sth->bindValue(':groups', $arr['groups']);
@@ -49,7 +50,7 @@ class Templates extends Controller implements ModelsInterface
             $sth->bindValue(':name', $arr['name']);
             $sth->bindValue(':type', $arr['type']);
             $sth->execute();
-            return Connect::$dbh->lastInsertId();
+            return $dbh->lastInsertId();
         } else {
             Path::rmdir($_SERVER['DOCUMENT_ROOT'] . $arr['file']);
         }
@@ -67,16 +68,17 @@ class Templates extends Controller implements ModelsInterface
     public static function all_available($value = '', $column = 'id', $table = '')
     {
         global $user;
+        $dbh = Connect::getInstance()->dbh;
         if (empty(self::$tables)) {
             self::set_tables();
         }
         $table = $table ?: self::table(get_called_class());
         if (!in_array($table, self::$tables)) return;
         if ($value) {
-            $sth = Connect::$dbh->prepare("SELECT * FROM `$table` WHERE `$column` = :value");
+            $sth = $dbh->prepare("SELECT * FROM `$table` WHERE `$column` = :value");
             $sth->bindValue(':value', $value);
         } else {
-            $sth = Connect::$dbh->prepare("SELECT * FROM `$table`");
+            $sth = $dbh->prepare("SELECT * FROM `$table`");
         }
         $sth->execute();
         $arr = $sth->fetchAll();

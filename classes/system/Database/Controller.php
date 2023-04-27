@@ -33,13 +33,11 @@ class Controller
         if (empty(self::$tables)) {
             self::set_tables();
         }
-        if (!Connect::$dbh) {
-            Connect::$dbh = Connect::start();
-        }
+        $dbh = Connect::getInstance()->dbh;
         $table = $table ?: self::table(get_called_class());
         if (!$table) return;
         if (!in_array($table, self::$tables)) return;
-        $sth = Connect::$dbh->prepare("SELECT * FROM `$table` WHERE `$column` = :value");
+        $sth = $dbh->prepare("SELECT * FROM `$table` WHERE `$column` = :value");
         $sth->bindValue(':value', $value);
         $sth->execute();
         return $sth->fetch();
@@ -59,16 +57,14 @@ class Controller
         if (empty(self::$tables)) {
             self::set_tables();
         }
-        if (!Connect::$dbh) {
-            Connect::$dbh = Connect::start();
-        }
+        $dbh = Connect::getInstance()->dbh;
         $table = $table ?: self::table(get_called_class());
         if (!in_array($table, self::$tables)) return;
         if ($value !== '') {
-            $sth = Connect::$dbh->prepare("SELECT * FROM `$table` WHERE `$column` = :value");
+            $sth = $dbh->prepare("SELECT * FROM `$table` WHERE `$column` = :value");
             $sth->bindValue(':value', $value);
         } else {
-            $sth = Connect::$dbh->prepare("SELECT * FROM `$table`");
+            $sth = $dbh->prepare("SELECT * FROM `$table`");
         }
         $sth->execute();
         return $sth->fetchAll();
@@ -89,16 +85,14 @@ class Controller
         if (empty(self::$tables)) {
             self::set_tables();
         }
-        if (!Connect::$dbh) {
-            Connect::$dbh = Connect::start();
-        }
+        $dbh = Connect::getInstance()->dbh;
         $table = $table ?: self::table(get_called_class());
         if (!in_array($table, self::$tables)) return;
         if ($value !== '') {
-            $sth = Connect::$dbh->prepare("SELECT COUNT(*) FROM `$table` WHERE `$column` = :value $where");
+            $sth = $dbh->prepare("SELECT COUNT(*) FROM `$table` WHERE `$column` = :value $where");
             $sth->bindValue(':value', $value);
         } else {
-            $sth = Connect::$dbh->prepare("SELECT COUNT(*) FROM `$table` $where");
+            $sth = $dbh->prepare("SELECT COUNT(*) FROM `$table` $where");
         }
         $sth->execute();
         return $sth->fetchColumn();
@@ -115,10 +109,8 @@ class Controller
      */
     public static function toggle($id, $table)
     {
-        if (!Connect::$dbh) {
-            Connect::$dbh = Connect::start();
-        }
-        $sth = Connect::$dbh->prepare("UPDATE `$table` SET `act` = IF (`act` = 1, 0, 1) WHERE `id` = :id");
+        $dbh = Connect::getInstance()->dbh;
+        $sth = $dbh->prepare("UPDATE `$table` SET `act` = IF (`act` = 1, 0, 1) WHERE `id` = :id");
         $sth->bindValue(':id', $id);
         $sth->execute();
         if ($sth->rowCount()) {
@@ -154,10 +146,7 @@ class Controller
      */
     public static function set_tables()
     {
-        global $dbh;
-        if (!$dbh) {
-            $dbh = Connect::$dbh = Connect::start();
-        }
+        $dbh = Connect::getInstance()->dbh;
         self::$tables = $dbh->query("SHOW TABLES")->fetchAll(\PDO::FETCH_COLUMN);
     }
 

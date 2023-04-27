@@ -39,16 +39,18 @@ class Hideout extends Assets
     {
         global $user;
 
+        $dbh = Connect::getInstance()->dbh;
+
         if (defined('USE_ASSETS_PATH')) {
             $str = self::path($str);
         }
 
         if (Env::$e->HIDE_OUT_ACTIONS_MODALS) {
-            self::$actions = Group::weightSort(Connect::$dbh->query("SELECT * FROM `actions`")->fetchAll());
-            self::$modals = Group::weightSort(Connect::$dbh->query("SELECT * FROM `modals`")->fetchAll());
+            self::$actions = Group::weightSort($dbh->query("SELECT * FROM `actions`")->fetchAll());
+            self::$modals = Group::weightSort($dbh->query("SELECT * FROM `modals`")->fetchAll());
         }
         if (Env::$e->HIDE_OUT_LINKS) {
-            self::$pages = Group::weightSort(Connect::$dbh->query("SELECT * FROM `pages`")->fetchAll());
+            self::$pages = Group::weightSort($dbh->query("SELECT * FROM `pages`")->fetchAll());
         }
 
         $hide_rules = [];

@@ -185,6 +185,7 @@ class Group
      */
     public static function groups()
     {
+        $dbh = Connect::getInstance()->dbh;
         $obj = (object) [
             'id'          => 0,
             'name'        => 'Гости',
@@ -193,7 +194,7 @@ class Group
             'weight'      => 0
         ];
         self::$groups[0] = $obj;
-        foreach (Connect::$dbh->query("SELECT * FROM `groups` ORDER BY `id` ASC")->fetchAll() as $row) {
+        foreach ($dbh->query("SELECT * FROM `groups` ORDER BY `id` ASC")->fetchAll() as $row) {
             self::$groups[] = $row;
         }
         self::$groups_active = array_filter(self::$groups, function ($row) {
@@ -290,7 +291,8 @@ class Group
      */
     public static function set_groups($id, $arr, $table_name)
     {
-        $sth = Connect::$dbh->prepare("UPDATE {$table_name} SET `groups` = :groups WHERE `id` = :id");
+        $dbh = Connect::getInstance()->dbh;
+        $sth = $dbh->prepare("UPDATE {$table_name} SET `groups` = :groups WHERE `id` = :id");
         $sth->bindValue(':groups', json_encode($arr));
         $sth->bindValue(':id', $id);
         $sth->execute();
@@ -308,7 +310,8 @@ class Group
      */
     public static function set_owner($id, $owner_group, $table_name)
     {
-        $sth = Connect::$dbh->prepare("UPDATE {$table_name} SET `owner_group` = :owner_group WHERE `id` = :id");
+        $dbh = Connect::getInstance()->dbh;
+        $sth = $dbh->prepare("UPDATE {$table_name} SET `owner_group` = :owner_group WHERE `id` = :id");
         $sth->bindValue(':owner_group', $owner_group);
         $sth->bindValue(':id', $id);
         $sth->execute();
@@ -365,7 +368,7 @@ class Group
      */
     public static function count_all_available_models($id)
     {
-        global $dbh;
+        $dbh = Connect::getInstance()->dbh;
         $tables = ['actions', 'modals', 'selects', 'templates', 'pages', 'users'];
         $count = 0;
         foreach ($tables as $table) {
@@ -386,10 +389,11 @@ class Group
      */
     public static function is_one_owner_file($file)
     {
+        $dbh = Connect::getInstance()->dbh;
         $tables = ['actions', 'modals', 'selects', 'templates', 'pages'];
         $owners = [];
         foreach ($tables as $table) {
-            $owners[] = Connect::$dbh->query("SELECT `owner_group` FROM `$table` WHERE `file` = '$file' LIMIT 1")->fetchColumn();
+            $owners[] = $dbh->query("SELECT `owner_group` FROM `$table` WHERE `file` = '$file' LIMIT 1")->fetchColumn();
         }
         $owners = array_unique(array_filter($owners));
         return count($owners) > 1 ? false : true;

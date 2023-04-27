@@ -11,6 +11,7 @@ namespace Wrong\Auth;
 use Wrong\Rights\Group;
 use Wrong\Start\Env;
 use Wrong\Rights\Access;
+use Wrong\Database\Connect;
 
 /**
  * @brief User отвечает за работу с данными пользователя
@@ -93,7 +94,7 @@ class User
      */
     public function set_password($password)
     {
-        global $dbh;
+        $dbh = Connect::getInstance()->dbh;
         if (!$this->id) return;
         $password = trim($password);
         $sth = $dbh->prepare("UPDATE `users` SET `md5password` = :md5password WHERE `id` = :id");
@@ -113,7 +114,7 @@ class User
      */
     public function set_email($email)
     {
-        global $dbh;
+        $dbh = Connect::getInstance()->dbh;
         if (!$this->id) return;
         $email = mb_strtolower(trim($email), 'utf-8');
         $sth = $dbh->prepare("UPDATE `users` SET `email` = ? WHERE `id` = ?");
@@ -129,7 +130,7 @@ class User
      */
     public function set_online()
     {
-        global $dbh;
+        $dbh = Connect::getInstance()->dbh;
         if (!$this->id) {
             self::session_reset();
             return;
@@ -149,7 +150,7 @@ class User
      */
     public function set_request($request)
     {
-        global $dbh;
+        $dbh = Connect::getInstance()->dbh;
         if (!$this->id || in_array($request, ['/disabled', '/forbidden'])) {
             return;
         }
@@ -169,7 +170,7 @@ class User
      */
     public static function get($id)
     {
-        global $dbh;
+        $dbh = Connect::getInstance()->dbh;
         if (!$id) return;
         $sth = $dbh->prepare("SELECT * FROM `users` WHERE `id` = ?");
         $sth->execute([$id]);
@@ -254,7 +255,7 @@ class User
      */
     public static function match($email)
     {
-        global $dbh;
+        $dbh = Connect::getInstance()->dbh;
         $email = trim($email);
         if (empty($email)) {
             return;
@@ -303,7 +304,7 @@ class User
      */
     public function set_confirm($email_confirmed = 1)
     {
-        global $dbh;
+        $dbh = Connect::getInstance()->dbh;
         $dbh->query("UPDATE `users` SET `email_confirmed` = $email_confirmed WHERE `id` = $this->id");
         $this->email_confirmed = $email_confirmed;
     }

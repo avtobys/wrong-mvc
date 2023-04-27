@@ -41,8 +41,8 @@ class Write
                     "output" => $output
                 ];
                 $text = json_encode($arr, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-                Connect::$dbh or Connect::start();
-                $sth = Connect::$dbh->prepare("INSERT INTO `logs` (`user_id`, `request`, `text`, `ip`) VALUES (:user_id, :request, :text, :ip)");
+                $dbh = Connect::getInstance()->dbh;
+                $sth = $dbh->prepare("INSERT INTO `logs` (`user_id`, `request`, `text`, `ip`) VALUES (:user_id, :request, :text, :ip)");
                 $sth->bindValue(':user_id', $user->id);
                 $sth->bindValue(':request', $_SERVER['REQUEST_URI']);
                 $sth->bindValue(':text', $text);

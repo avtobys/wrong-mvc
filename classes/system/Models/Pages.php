@@ -29,6 +29,7 @@ class Pages extends Controller implements ModelsInterface
      */
     public static function create($arr, $replace_path = [])
     {
+        $dbh = Connect::getInstance()->dbh;
         if ($replace_path) {
             $arr['file'] = strtr($arr['file'], $replace_path);
             $arr['request'] = strtr($arr['request'], $replace_path);
@@ -55,7 +56,7 @@ EOF;
             $file->flock(LOCK_UN);
         }
 
-        $sth = Connect::$dbh->prepare("INSERT INTO `pages` (`request`, `file`, `groups`, `owner_group`, `template_id`, `name`) VALUES (:request, :file, :groups, :owner_group, :template_id, :name)");
+        $sth = $dbh->prepare("INSERT INTO `pages` (`request`, `file`, `groups`, `owner_group`, `template_id`, `name`) VALUES (:request, :file, :groups, :owner_group, :template_id, :name)");
         $arr['groups'] = json_encode($arr['groups']);
         $sth->bindValue(':request', $arr['request']);
         $sth->bindValue(':file', $arr['file']);
@@ -64,6 +65,6 @@ EOF;
         $sth->bindValue(':template_id', $arr['template_id']);
         $sth->bindValue(':name', $arr['name']);
         $sth->execute();
-        return Connect::$dbh->lastInsertId();
+        return $dbh->lastInsertId();
     }
 }

@@ -15,8 +15,8 @@ use Wrong\Start\Env;
 use Wrong\Html\Hideout;
 use Wrong\Logs\Write;
 
-/** Статический метод, который подключается к базе данных и возвращает объект подключения. */
-$dbh = Connect::start();
+/** подключение к бд */
+$dbh = Connect::getInstance()->dbh;
 
 try {
     Env::add($dbh->query("SELECT `name`, `value` FROM `settings`")->fetchAll(\PDO::FETCH_KEY_PAIR));

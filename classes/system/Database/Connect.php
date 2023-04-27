@@ -15,9 +15,9 @@ use Wrong\Start\Env;
  * 
  */
 
-class Connect
+final class Connect
 {
-    public static $dbh;
+    private static $instance = null;
 
     /**
      * создает новый объект PDO и сохраняет его в статическом свойстве $dbh
@@ -27,24 +27,40 @@ class Connect
      * 
      * @return object PDO Обработчик базы данных.
      */
-    public static function start($ignore_error = false)
+    private function __construct($ignore_error = false)
     {
         $dsn = 'mysql:dbname=' . Env::$e->DB_DATABASE . ';host=' . Env::$e->DB_HOST . ';port=' . Env::$e->DB_PORT . ';charset=utf8mb4';
         try {
-            self::$dbh = new \PDO($dsn, Env::$e->DB_USERNAME, Env::$e->DB_PASSWORD, [\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ]);
+            $this->dbh = new \PDO($dsn, Env::$e->DB_USERNAME, Env::$e->DB_PASSWORD, [\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ]);
         } catch (\PDOException $e) {
             if (!$ignore_error) {
                 exit($e->getMessage());
             }
         }
-        return self::$dbh;
+    }
+
+    public static function getInstance()
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
     }
 
     /**
      * закрывает соединение с базой данных
      */
-    public static function close()
+    public function close()
     {
-        self::$dbh = null;
+        $this->dbh = null;
+        self::$instance = null;
+    }
+
+    public function __clone()
+    {
+    }
+
+    public function __wakeup()
+    {
     }
 }

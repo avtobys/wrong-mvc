@@ -30,7 +30,7 @@ $mem = new Wrong\Memory\Cache('env-cron');
 if ($arr = $mem->get('env-cron')) {
     Wrong\Start\Env::add($arr);
 } else {
-    $dbh = Wrong\Database\Connect::start();
+    $dbh = Wrong\Database\Connect::getInstance()->dbh;
     Wrong\Start\Env::add($dbh->query("SELECT `name`, `value` FROM `settings`")->fetchAll(\PDO::FETCH_KEY_PAIR));
     $mem->set('env-cron', array_map('intval', [
         'API' => Wrong\Start\Env::$e->API,

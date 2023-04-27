@@ -22,7 +22,7 @@ use Wrong\Database\Connect;
 use Wrong\Auth\User;
 use Wrong\Models\Users;
 
-if (($dbh = Connect::start(true)) && $dbh->query("SHOW TABLES")->fetchAll() && $dbh->query("SELECT COUNT(*) FROM `users`")->fetchColumn()) {
+if (($dbh = Connect::getInstance(true)->dbh) && $dbh->query("SHOW TABLES")->fetchAll() && $dbh->query("SELECT COUNT(*) FROM `users`")->fetchColumn()) {
     dd('Система установлена и есть зарегистрированные юзеры! Удалите в файле ' . $_SERVER['DOCUMENT_ROOT'] . '/index.php включение require \'../install/install.php\'; или очистите БД от таблиц и проведите установку заново');
 }
 
@@ -63,7 +63,7 @@ if (!empty($_POST)) {
     }
 
     rd('Подключаемся к базе данных...');
-    $dbh = Connect::start();
+    $dbh = Connect::getInstance()->dbh;
 
     try {
         if (round($dbh->query("SELECT VERSION()")->fetchColumn(), 2) < 10.3) {
