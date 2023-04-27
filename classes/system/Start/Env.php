@@ -34,6 +34,7 @@ class Env
         $this->IS_SECURE          = $this->is_secure();
         $this->SYSTEM_SECRET_KEY  = md5($this->DB_PASSWORD . $this->DB_DATABASE . $this->HTTP_HOST . __FILE__);
         $this->IS_CLI             = in_array(PHP_SAPI, array('cli', 'cli-server', 'phpdbg'));
+        $this->TEMP_PATH          = realpath(__DIR__ .'/../../../temp');
         self::$e                  = $this;
     }
 

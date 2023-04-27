@@ -22,7 +22,7 @@ if (!isset($_POST['copy'])) {
     !isset($_GET['save']) && exit('location.href="' . $request . '?save&id=' . $_REQUEST['id'] . '&table=' . $_REQUEST['table'] . '";');
 }
 
-$zipname = 'model-' . $_REQUEST['table'] . '-' . $_REQUEST['id'] . '.zip';
+$zipname = Wrong\Start\Env::$e->TEMP_PATH . '/model-' . $_REQUEST['table'] . '-' . $_REQUEST['id'] . '.zip';
 
 $zip = new ZipArchive;
 $zip->open($zipname, ZipArchive::CREATE);
@@ -42,7 +42,7 @@ if (isset($_POST['copy'])) {
 
 
 header('Content-Type: application/zip');
-header('Content-disposition: attachment; filename=' . $zipname);
+header('Content-disposition: attachment; filename=' . basename($zipname));
 header('Content-Length: ' . filesize($zipname));
 readfile($zipname);
 unlink($zipname);
