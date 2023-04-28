@@ -39,10 +39,10 @@ final class Connect
         }
     }
 
-    public static function getInstance()
+    public static function getInstance($ignore_error = false)
     {
         if (self::$instance === null) {
-            self::$instance = new self();
+            self::$instance = new self($ignore_error);
         }
         return self::$instance;
     }
