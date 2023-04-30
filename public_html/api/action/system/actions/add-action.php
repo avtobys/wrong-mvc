@@ -24,8 +24,9 @@ if (!in_array($_POST['template_id'], array_column(Wrong\Models\Templates::all_av
 $modal_id = null;
 if (!empty($_POST['add-modal'])) {
     Wrong\Check\Model::create($_POST, 'modals', ['/api/action' => '/api/modal']);
-    $_POST['template_id'] = 5;
-    $modal_id = Wrong\Models\Modals::create($_POST, ['/api/action' => '/api/modal']);
+    $post = $_POST;
+    $post['template_id'] = 5;
+    $modal_id = Wrong\Models\Modals::create($post, ['/api/action' => '/api/modal']);
 }
 
 if ($action_id = Wrong\Models\Actions::create($_POST)) {

@@ -60,11 +60,17 @@ if ($user->access()->page('/system')) {
                     <div class="text-right small">
                         <a data-dismiss="modal" data-toggle="modal" data-target="#sign-forgot" href="#">Забыли пароль?</a>
                     </div>
-                    <p class="text-center">Или войдите при помощи:</p>
-                    <div class="btn-group w-100">
-                        <a data-action="oauth-google" data-response="script" href="#" class="btn btn-outline-info w-50"><i class="fa fa-google"></i>&nbsp; Google</a>
-                        <a data-action="oauth-yandex" data-response="script" href="#" class="btn btn-outline-info w-50"><i class="fa-brands fa-yandex"></i>&nbsp; Yandex</a>
-                    </div>
+                    <?php if (Wrong\Start\Env::$e->GOOGLE_OAUTH_CLIENT_SECRET || Wrong\Start\Env::$e->YANDEX_OAUTH_CLIENT_SECRET) : ?>
+                        <p class="text-center">Или войдите при помощи:</p>
+                        <div class="btn-group w-100">
+                            <?php if (Wrong\Start\Env::$e->GOOGLE_OAUTH_CLIENT_SECRET) : ?>
+                                <a data-action="oauth-google" data-response="script" href="#" class="btn btn-outline-info w-50"><i class="fa fa-google"></i>&nbsp; Google</a>
+                            <?php endif; ?>
+                            <?php if (Wrong\Start\Env::$e->YANDEX_OAUTH_CLIENT_SECRET) : ?>
+                                <a data-action="oauth-yandex" data-response="script" href="#" class="btn btn-outline-info w-50"><i class="fa-brands fa-yandex"></i>&nbsp; Yandex</a>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
                 </form>
                 <p class="text-center text-muted small mt-3">Уже зарегистрированы? <a data-dismiss="modal" data-toggle="modal" data-target="#sign-in" href="#">Войдите!</a></p>
             </div>

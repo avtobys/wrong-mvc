@@ -15877,7 +15877,7 @@ function tableCss() {
     }
     if (!table_data[table]) {
         let hide;
-        $('.dataTable th').each((i, el) => {
+        $('.dataTable thead:first th').each((i, el) => {
             if ($(el).is('[data-hide]')) {
                 table_data[table] = table_data[table] || {};
                 table_data[table][i] = false;
@@ -15919,7 +15919,7 @@ $(window).on("interaction", function () {
     let cols = [];
     for (let key in table_data[table]) {
         if (table_data[table][key] === false) {
-            cols.push($('.dataTable th').eq(key).attr('data-name') || $('.dataTable th').eq(key).text());
+            cols.push($('.dataTable thead:first th').eq(key).attr('data-name') || $('.dataTable thead:first th').eq(key).text());
         }
     }
     if (!cols.length) return;

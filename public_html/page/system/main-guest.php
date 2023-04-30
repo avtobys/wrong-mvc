@@ -30,7 +30,7 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
                     <div class="small mt-3 mt-xl-4" data-aos="zoom-in-left" data-aos-duration="1000">Текущая актуальная версия: <?= Wrong\Start\Env::$e->VERSION ?></div>
                 </div>
                 <div class="col-6 col-12-medium imp-medium">
-                    <a data-fancybox="video" href="/assets/system/video/wrong-mvc.mp4" class="w-100 rounded-lg position-relative text-decoration-none d-block">
+                    <a data-fancybox="video" href="//wrong-mvc.com/assets/system/video/wrong-mvc.mp4" class="w-100 rounded-lg position-relative text-decoration-none d-block">
                         <img class="w-100" src="/assets/system/img/wrong.png" alt="wrong mvc" data-aos="flip-up" data-aos-duration="1500">
                         <span class="position-absolute text-white px-3 py-1 small" style="left:0;bottom:0px;" data-aos="zoom-in-left" data-aos-duration="1000"><i class="fa fa-video-camera mr-2"></i>Посмотреть видео презентацию</span>
                     </a>

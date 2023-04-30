@@ -18,6 +18,10 @@ table.dataTable .fa {
     font-size: 16px;
 }
 
+table.dataTable th:first-child {
+    max-width: 30px;
+}
+
 div.table-responsive>div.dataTables_wrapper>div.row {
     align-items: center;
     width: 100%;
@@ -503,8 +507,9 @@ body {
     background: #f7f7f7 url(/assets/system/img/bg04.png);
 }
 
-.modal-body {
-    background: #f7f7f7 url(/assets/system/img/bg04.png);
+.modal-content {
+    background-color: #f7f7f7 !important;
+    background-image: url(/assets/system/img/bg04.png);
 }
 
 .input-group-text {

@@ -98,11 +98,11 @@ class Model
         $path = self::pattern($table)->request;
 
         if (in_array($table, ['pages', 'actions'])) {
-            $rx = '#^' . $path . '/([/a-z0-9\-\.]*)$#i';
+            $rx = '#^' . $path . '/([/a-z0-9\_\-\.]*)$#i';
         } else if ($table == 'crontabs') {
             $rx = '#^' . $path . '/([a-z0-9]*)#i';
         } else {
-            $rx = '#^' . $path . '/([a-z0-9\-]+)$#i';
+            $rx = '#^' . $path . '/([a-z0-9\_\-]+)$#i';
         }
 
         if (!preg_match($rx, $arr['request'], $matches) || preg_match('#//#', $matches[1]) || preg_match('#^/#', $matches[1]) || preg_match('#/$#', $matches[1])) {

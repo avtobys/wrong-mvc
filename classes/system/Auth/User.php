@@ -183,6 +183,7 @@ class User
      */
     public static function session_reset()
     {
+        global $user;
         if (!empty($_COOKIE['FROM_UID'])) {
             setcookie('FROM_UID', 0, [
                 'expires' => time() - 31536000,
@@ -192,6 +193,10 @@ class User
                 'httponly' => false,
                 'samesite' => Env::$e->IS_SECURE ? 'None' : 'Lax'
             ]) or setcookie('FROM_UID', 0, time() - 31536000, '/', $_SERVER['HTTP_HOST'], Env::$e->IS_SECURE);
+            $_COOKIE['FROM_UID'] = 0;
+            if (!empty($_SESSION['user_id'])) {
+                $user = new User($_SESSION['user_id']);
+            }
             return;
         }
         setcookie('UID', 0, [
@@ -204,6 +209,7 @@ class User
         ]) or setcookie('UID', 0, time() - 31536000, '/', $_SERVER['HTTP_HOST'], Env::$e->IS_SECURE);
         $_COOKIE['UID'] = 0;
         $_SESSION['user_id'] = 0;
+        $user = new User(0);
     }
 
     /**

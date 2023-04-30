@@ -71,8 +71,7 @@ class Selects extends Controller implements ModelsInterface
 
         $arr = self::filter($arr, $columns, $table);
 
-        $key_column = array_search('owner_group', $columns);
-        if (Env::$e->SUBORDINATE_MODELS) {
+        if (($key_column = array_search('owner_group', $columns)) && Env::$e->SUBORDINATE_MODELS) {
             foreach ($arr as $key => $row) {
                 $owner_group = $row[$key_column];
                 if (!in_array($owner_group, $user->subordinate_groups)) {
