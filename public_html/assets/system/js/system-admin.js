@@ -15852,10 +15852,6 @@ function callbackAction(response) {
 }
 
 function tableCss() {
-    if ($('.dataTable tbody tr').length <= 2) {
-        $('.dataTable tbody tr [title]').removeAttr('title');
-        $('.dataTable tbody tr [data-original-title]').removeAttr('data-original-title');
-    }
     try {
         window.table_data = JSON.parse(window.localStorage.table_data) || {};
     } catch (error) {

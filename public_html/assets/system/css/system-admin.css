@@ -287,6 +287,10 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^=col-]:last-
     padding-top: 5px;
   }
 }
+div.dataTables_scrollBody table {
+  min-height: 200px;
+}
+
 #admin-navbar .navbar-nav .nav-link {
   color: rgba(255, 255, 255, 0.65);
 }

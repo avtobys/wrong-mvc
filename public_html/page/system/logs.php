@@ -13,6 +13,7 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
     <table id="table-logs" class="table table-hover table-striped table-bordered table-sm small" style="width:100%">
         <thead class="bg-info text-center">
             <tr>
+                <th>ID</th>
                 <th>Пользователь</th>
                 <th>Запрос</th>
                 <th style="max-width:50%;">Данные</th>
@@ -38,7 +39,7 @@ isset($user) or require $_SERVER['DOCUMENT_ROOT'] . '/page/404.php';
             $(window).trigger('interaction');
         }
         window.dataTablesConfigs[0].order = [
-            [3, 'desc']
+            [4, 'desc']
         ];
         $('#table-logs').DataTable(window.dataTablesConfigs[0]);
 
