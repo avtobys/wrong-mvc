@@ -67,7 +67,7 @@ class Model
 
         $path = self::pattern($table)->file;
 
-        $rx = '#^' . $path . '/([/a-z0-9\-\.]+)\.php$#';
+        $rx = '#^' . $path . '/([/a-z0-9\_\-\.]+)\.php$#';
 
         if (!preg_match($rx, $arr['file'], $matches) || preg_match('#//#', $matches[2]) || preg_match('#^/#', $matches[2]) || preg_match('#/$#', $matches[2])) {
             exit(json_encode(['error' => 'Неверный формат для "Файл обработчик"']));

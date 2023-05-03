@@ -52,7 +52,7 @@ $response_arr = array_slice($arr_filtered, $start, $length);
 $hide_ip = !$user->access()->action(24);
 
 foreach ($response_arr as $key => $item) {
-    $response_arr[$key][1] = Wrong\Models\Users::find($item[0])->email . ' (ID: ' . $item[0] . ')';
+    $response_arr[$key][1] = Wrong\Models\Users::find($item[1])->email . ' (ID: ' . $item[1] . ')';
     $response_arr[$key][3] = '<pre class="log-show" style="max-width:1000px;white-space:normal;margin:0;display:none;-webkit-line-clamp: 1;-webkit-box-orient:vertical;overflow: hidden;text-overflow: ellipsis;">' . strip_tags($item[3]) . '</pre>';
     if ($hide_ip) {
         $response_arr[$key][5] = '******';
