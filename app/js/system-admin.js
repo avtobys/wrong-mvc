@@ -185,3 +185,56 @@ $(document).on('click', '[href="#donate"]', function (e) {
 $(document).on('xhr.dt', '.dataTable', function (e, settings, json) {
     json.uptime && $('#uptime').length && $('#uptime').html(json.uptime);
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.body.addEventListener("input", function (event) {
+        const target = event.target;
+        if (target.tagName === "TEXTAREA") {
+            autoresizeTextarea(target);
+        }
+    });
+});
+
+function autoresizeTextarea(textarea) {
+    const minHeight = parseInt(window.getComputedStyle(textarea).getPropertyValue('height'));
+    const maxHeight = window.innerHeight * 0.7;
+
+    textarea.style.height = '0';
+    let currentHeight = textarea.scrollHeight;
+
+    if (currentHeight > maxHeight) {
+        textarea.style.overflowY = 'scroll';
+        currentHeight = maxHeight;
+    } else {
+        textarea.style.overflowY = 'hidden';
+    }
+
+    textarea.style.height = currentHeight > minHeight ? currentHeight + 'px' : minHeight + 'px';
+
+    textarea.addEventListener('input', function () {
+        textarea.style.height = '0';
+        let currentHeight = textarea.scrollHeight;
+
+        if (currentHeight > maxHeight) {
+            textarea.style.overflowY = 'scroll';
+            currentHeight = maxHeight;
+        } else {
+            textarea.style.overflowY = 'hidden';
+        }
+
+        textarea.style.height = currentHeight > minHeight ? currentHeight + 'px' : minHeight + 'px';
+    });
+}
+
+
+$(document).on('shown.bs.modal', '.modal', function() {
+    var textareas = $(this).find('textarea:visible');
+    var inputEvent = new Event('input', {
+        bubbles: true,
+        cancelable: true
+    });
+    textareas.each(function() {
+        this.dispatchEvent(inputEvent);
+    });
+});
+

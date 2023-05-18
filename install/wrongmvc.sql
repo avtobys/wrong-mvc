@@ -1,8 +1,8 @@
--- MariaDB dump 10.19  Distrib 10.5.18-MariaDB, for debian-linux-gnu (x86_64)
+-- MariaDB dump 10.19  Distrib 10.5.19-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: 127.0.0.1    Database: wrongmvc-production
 -- ------------------------------------------------------
--- Server version	10.5.18-MariaDB-0+deb11u1
+-- Server version	10.5.19-MariaDB-0+deb11u2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -85,7 +85,7 @@ CREATE TABLE `crontabs` (
 
 LOCK TABLES `crontabs` WRITE;
 /*!40000 ALTER TABLE `crontabs` DISABLE KEYS */;
-INSERT INTO `crontabs` VALUES (1,NULL,NULL,'/api/action/toggle',1,'* * * * *','POST','[]','{\"id\":\"3\",\"table\":\"groups\"}',2,'2023-05-03 08:17:00','Включает/отключает группу модераторы каждую минуту',1),(2,NULL,NULL,'/api/action/clean-logs',1,'0 0 */1 * *','POST','[]','[]',2,'2023-05-04 00:00:00','Периодическая очистка логов',1),(3,NULL,NULL,'/api/action/erase-group',1,'0 0 * * *','POST','[]','{\"table\":\"groups\",\"id\":\"5\"}',2,'2023-05-04 00:00:00','Очистка от всех демо моделей раз в сутки',1),(4,NULL,NULL,'/api/action/anycomment',1,'0 */1 * * *','GET','[]','[]',2,'2023-05-03 09:00:00','Обновление инфы о новых комментариях и запросах в тех поддержку',1),(5,'{\"min\":5,\"max\":5,\"load\":40,\"fixed\":1}','sleep 15','',0,'* * * * *','CLI','null','[]',2,'2023-05-03 08:17:00','Перманентно спит по 15 сек в 5 потоков одновременно, а если нагрузка более 40% даже не начинает спать',1);
+INSERT INTO `crontabs` VALUES (1,NULL,NULL,'/api/action/toggle',1,'* * * * *','POST','[]','{\"id\":\"3\",\"table\":\"groups\"}',2,'2023-05-19 00:38:00','Включает/отключает группу модераторы каждую минуту',1),(2,NULL,NULL,'/api/action/clean-logs',1,'0 0 */1 * *','POST','[]','[]',2,'2023-05-20 00:00:00','Периодическая очистка логов',1),(3,NULL,NULL,'/api/action/erase-group',1,'0 0 * * *','POST','[]','{\"table\":\"groups\",\"id\":\"5\"}',2,'2023-05-20 00:00:00','Очистка от всех демо моделей раз в сутки',1),(4,NULL,NULL,'/api/action/anycomment',1,'0 */1 * * *','GET','[]','[]',2,'2023-05-19 01:00:00','Обновление инфы о новых комментариях и запросах в тех поддержку',1),(5,'{\"min\":5,\"max\":5,\"load\":40,\"fixed\":1}','sleep 15','',0,'* * * * *','CLI','null','[]',2,'2023-05-19 00:38:00','Перманентно спит по 15 сек в 5 потоков одновременно, а если нагрузка более 40% даже не начинает спать',1);
 /*!40000 ALTER TABLE `crontabs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -375,4 +375,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-03  8:16:27
+-- Dump completed on 2023-05-19  0:42:12
